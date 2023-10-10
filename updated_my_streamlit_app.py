@@ -2,6 +2,8 @@ import streamlit as st
 import pickle
 import pandas as pd
 from pickle import load
+import base64
+import sys, path
 def header():
     custom_css = """
         <style>
