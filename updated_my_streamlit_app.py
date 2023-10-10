@@ -5,6 +5,8 @@ from pickle import load
 import base64
 import sys
 import path
+dir = path.Path(__file__)
+sys.path.append(dir.parent.parent)
 def header():
     custom_css = """
         <style>
