@@ -3,7 +3,8 @@ import pickle
 import pandas as pd
 from pickle import load
 import base64
-import sys, path
+import sys
+import path
 def header():
     custom_css = """
         <style>
