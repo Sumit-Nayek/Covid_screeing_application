@@ -105,13 +105,13 @@ HEAD_NO = """
 #     st.write("Combined DataFrame:")
 #     st.write(combined_df)
     
-bayes = pickle.load(open('./content/bayes.pkl', 'rb'))
-logistic = pickle.load(open('./content/logistic.pkl', 'rb'))
-random_tree = pickle.load(open('./content/random_tree.pkl', 'rb'))
-svm_linear = pickle.load(open('./content/svm_linear.pkl', 'rb'))
-svm_rbf = pickle.load(open('./content/svm_rbf.pkl', 'rb'))
+bayes = pickle.load(open('/content/bayes.pkl', 'rb'))
+logistic = pickle.load(open('/content/logistic.pkl', 'rb'))
+random_tree = pickle.load(open('/content/random_tree.pkl', 'rb'))
+svm_linear = pickle.load(open('/content/svm_linear.pkl', 'rb'))
+svm_rbf = pickle.load(open('/content/svm_rbf.pkl', 'rb'))
 svm_sigmoid = pickle.load(open('./content/svm_sigmoid.pkl', 'rb'))
-tree = pickle.load(open('./content/tree.pkl', 'rb'))
+tree = pickle.load(open('/content/tree.pkl', 'rb'))
 # Dropdown menu for model selection
 selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
 prediction=0
