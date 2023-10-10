@@ -3,8 +3,7 @@ import pickle
 import pandas as pd
 from pickle import load
 import base64
-import sys
-import path
+import sys, path
 dir = path.Path(__file__)
 sys.path.append(dir.parent.parent)
 def header():
