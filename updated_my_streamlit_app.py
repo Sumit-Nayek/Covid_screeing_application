@@ -180,7 +180,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'Logistic Regression':
         prediction = logistic.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -193,7 +193,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'Decision Tree':
         prediction = tree.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -206,7 +206,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'Random Forest':
         prediction = random_tree.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -219,7 +219,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'SVM (Linear)':
         prediction = svm_linear.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -232,7 +232,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'SVM (RBF)':
         prediction = svm_rbf.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -245,7 +245,7 @@ if st.button('Make Predictions'):
     elif selected_model == 'SVM (Sigmoid)':
         prediction = svm_sigmoid.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
