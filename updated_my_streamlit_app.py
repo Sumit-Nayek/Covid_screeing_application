@@ -74,7 +74,7 @@ with col2:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h3 style="color: ##00FF00;">Symptoms selection</h3>
+          <h3 style="color: ##00FF00;">Symptoms Selection</h3>
           </div>
           """,
           unsafe_allow_html=True,
