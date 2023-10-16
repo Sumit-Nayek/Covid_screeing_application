@@ -49,7 +49,7 @@ with col1:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h3 style="color: ##00FF00;">Input Data</h3>
+          <h3 style="color: ##00FF00;">Personal and Clinical Data</h3>
 
           </div>
           """,
@@ -115,6 +115,8 @@ with col2:
       new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[1], 'Pre_medical' : USER_INPUT[2]}, index = [0])
       # Concatenate the two DataFrames vertically
       combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
+      new_table_df=combined_df
+      new_table_df.columns = list(new_data.columns) + list(symptom_df.columns)
 
 
 # Panel 3: Full-width panel
@@ -126,13 +128,13 @@ st.markdown(
         border: 1px solid #FFA500;
         border-radius: 5px;text-align: center;
     ">
-    <h3 style="color: ##00FF00;">Diagonosis recomendation</h3>
+    <h3 style="color: ##00FF00;">Diagonostic recomendation</h3>
     </div>
     """,
     unsafe_allow_html=True,
 )
-st.write('Sample of the Input')
-st.write(combined_df)
+st.write('Data Overview')
+st.write(new_table_df)
 bayes = load(open('content/bayes.pkl', 'rb'))
 logistic = load(open('content/logistic.pkl', 'rb'))
 random_tree =load(open('content/random_tree.pkl', 'rb'))
@@ -167,7 +169,7 @@ if st.button('Make Predictions'):
     if selected_model == 'Naive Bayes':
         prediction = bayes.predict(combined_df)
         st.write("Predicted Results:")
-        st.write(f"Fraction Value: {prediction*100}")
+        #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
             st.markdown(HEAD_YES, unsafe_allow_html=True)
