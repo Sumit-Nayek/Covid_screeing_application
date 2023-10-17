@@ -53,10 +53,10 @@ with col1:
           """,
           unsafe_allow_html=True,
       )
-      patient_name =st.text_input('Patient's Name',f'<b>Patient\'s Name</b>')
-      AGE = st.number_input("Patient's Age", format="%.f",f'<b>Patient\'s Age</b>')
+      patient_name =st.text_input('Patient\'s Name',f'<b>Patient\'s Name</b>')
+      AGE = st.number_input("Patient\'s Age", format="%.f",f'<b>Patient\'s Age</b>')
       USER_INPUT[0] = process_input(AGE)
-      gender = st.selectbox('Patient's Gender', ('Male', 'Female'),f'<b>Patient\'s Gender</b>')
+      gender = st.selectbox('Patient\'s Gender', ('Male', 'Female'),f'<b>Patient\'s Gender</b>')
       USER_INPUT[3] = process_input(gender)
       state=st.text_input('State',f'<b>State</b>')
       country=st.text_input('Country',f'<b>Country</b>')
