@@ -9,7 +9,7 @@ def header():
              .header{
                 color: #fff;
                 text-align: left;
-                font-size: 30px;
+                font-size: 39px;
                 font-weight: bold;
 
     }
