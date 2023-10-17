@@ -54,12 +54,12 @@ with col1:
           unsafe_allow_html=True,
       )
       patient_name =st.text_input("Patient's Name",f'<b>Patient\'s Name</b>')
-      AGE = st.number_input("Patient's Age", format="%.f",f'<b>Patient\'s Age</b>')
+      AGE = st.number_input(f'<b>Patient\'s Age</b>', format="%.f")
       USER_INPUT[0] = process_input(AGE)
       gender = st.selectbox(f"<b>Patient's Gender</b>", ('Male', 'Female'))
       USER_INPUT[3] = process_input(gender)
-      state=st.text_input('State',f'<b>State</b>')
-      country=st.text_input('Country',f'<b>Country</b>')
+      state=st.text_input(f'<b>State</b>')
+      country=st.text_input(f'<b>Country</b>')
       exposed=st.text_input('Exposed to covid infected zone',f'<b>Exposed to covid infected zone</b>')
       no_of_infected_person=st.text_input('Number of effected person in familiy',f'<b>Number of effected person in familiy</b>')
 # Panel 2: Middle panel
