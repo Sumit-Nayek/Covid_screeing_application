@@ -9,7 +9,7 @@ def header():
              .header{
                 color: #fff;
                 text-align: left;
-                font-size: 44px;
+                font-size: 30px;
                 font-weight: bold;
 
     }
@@ -48,15 +48,15 @@ with col1:
           """,
           unsafe_allow_html=True,
       )
-      patient_name =st.text_input("Patient's Name",f'<b>Patient\'s Name</b>')
+      patient_name =st.text_input("**Patient's Name**")
       AGE = st.number_input("**Patient\'s Age**", format="%.f")
       USER_INPUT[0] = process_input(AGE)
-      gender = st.selectbox(f"<b>Patient's Gender</b>", ('Male', 'Female'))
+      gender = st.selectbox("**Patient's Gender**", ('Male', 'Female'))
       USER_INPUT[3] = process_input(gender)
-      state=st.text_input(f'<b>State</b>')
-      country=st.text_input(f'<b>Country</b>')
-      exposed=st.text_input('Exposed to covid infected zone',f'<b>Exposed to covid infected zone</b>')
-      no_of_infected_person=st.text_input('Number of effected person in familiy',f'<b>Number of effected person in familiy</b>')
+      state=st.text_input('**State**')
+      country=st.text_input("**Country**")
+      exposed=st.text_input("**Exposed to covid infected zone**")
+      no_of_infected_person=st.text_input("**Number of effected person in familiy**")
 # Panel 2: Middle panel
 with col2:
       st.markdown(
@@ -94,9 +94,9 @@ with col2:
           with coll1 if i < 10 else coll2:
               selected = st.checkbox(symptoms[i])
               symptom_values[symptoms[i]] = 1 if selected else 0
-      pre_medical = st.selectbox(f'<b>Comorbidity ?</b>', ('Yes', 'No'))
+      pre_medical = st.selectbox("**Comorbidity ?**", ('Yes', 'No'))
       USER_INPUT[2] = process_input(pre_medical)
-      E_gene = st.number_input(f'<b>RTPCR test (CT value)</b>', step=1.,format="%.f")
+      E_gene = st.number_input("**RTPCR test (CT value)**", step=1.,format="%.f")
       USER_INPUT[1] = process_input(E_gene)
 
       # Append the symptom values to the DataFrame
