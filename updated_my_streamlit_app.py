@@ -99,9 +99,9 @@ with col2:
           with coll1 if i < 10 else coll2:
               selected = st.checkbox(symptoms[i])
               symptom_values[symptoms[i]] = 1 if selected else 0
-      pre_medical = st.selectbox('Comorbidity ?', ('Yes', 'No'),f'<b>Patient\'s Name</b>')
+      pre_medical = st.selectbox(f'<b>Comorbidity ?</b>', ('Yes', 'No'))
       USER_INPUT[2] = process_input(pre_medical)
-      E_gene = st.number_input('RTPCR test (CT value)', step=1.,format="%.f",f'<b>Patient\'s Name</b>')
+      E_gene = st.number_input(f'<b>RTPCR test (CT value)</b>', step=1.,format="%.f")
       USER_INPUT[1] = process_input(E_gene)
 
       # Append the symptom values to the DataFrame
@@ -152,7 +152,7 @@ prediction=0
 CSS = """
     <style>
         .header_pred{
-                text-align: left;
+                text-align: center;
                 font-size: 30px;
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
