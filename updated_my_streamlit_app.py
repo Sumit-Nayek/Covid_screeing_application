@@ -11,22 +11,20 @@ def header():
                 text-align: left;
                 font-size: 66px;
                 font-weight: bold;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+
     }
         </style>
     """
 
     head = """
-        <h1 class="header">
-            <font color="#2d00f7">Web</font>
-            <font color="#6a00f4">-</font>
-            <font color="#8900f2">enable</font>
-            <font color="#a100f2">Diagonosis</font>
-            <font color="#b100e8">for</font>
-            <font color="#d100d1">COVID</font>
-            <font color="#e500a4">-</font>
-            <font color="#f20089">19</font>
-        </h1>
+        <h2 class="header">
+            <font color="#2d00f7">Web-enabled</font>
+            <font color="#2d00f7">Diagonosis</font>
+            <font color="#2d00f7">for</font>
+            <font color="#2d00f7">COVID</font>
+            <font color="#2d00f7">-</font>
+            <font color="#2d00f7">19</font>
+        </h2>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
     st.markdown(head, unsafe_allow_html=True)
@@ -49,21 +47,21 @@ with col1:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h3 style="color: ##00FF00;">Personal and Clinical Data</h3>
+          <h4 style="color: ##00FF00;">Demographic Information</h4>
 
           </div>
           """,
           unsafe_allow_html=True,
       )
-      patient_name =st.text_input('Name')
-      AGE = st.number_input("Age", format="%.f")
+      patient_name =st.text_input('Patient's Name',f'<b>Patient\'s Name</b>')
+      AGE = st.number_input("Patient's Age", format="%.f",f'<b>Patient\'s Age</b>')
       USER_INPUT[0] = process_input(AGE)
-      E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-      USER_INPUT[1] = process_input(E_gene)
-      pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
-      USER_INPUT[2] = process_input(pre_medical)
-      gender = st.selectbox('Gender', ('Male', 'Female'))
+      gender = st.selectbox('Patient's Gender', ('Male', 'Female'),f'<b>Patient\'s Gender</b>')
       USER_INPUT[3] = process_input(gender)
+      state=st.text_input('State',f'<b>State</b>')
+      country=st.text_input('Country',f'<b>Country</b>')
+      exposed=st.text_input('Exposed to covid infected zone',f'<b>Exposed to covid infected zone</b>')
+      no_of_infected_person=st.text_input('Number of effected person in familiy',f'<b>Number of effected person in familiy</b>')
 # Panel 2: Middle panel
 with col2:
       st.markdown(
@@ -74,14 +72,14 @@ with col2:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h3 style="color: ##00FF00;">Symptoms Selection</h3>
+          <h4 style="color: ##00FF00;">Clinical Information</h4>
           </div>
           """,
           unsafe_allow_html=True,
       )
-      symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
-                  'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
-                  'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
+      symptoms = ['Fever', 'Cough', 'Breathlessness', 'Body ache', 'Vomiting', 'Sore throat',
+                  'Diarrhoea', 'Sputum', 'Nausea', 'Nasal discharge', 'Loss of taste', 'Loss of smell',
+                  'Abdominal pain', 'Chest pain', 'Haemoptsis', 'Head ache', 'Body pain', 'Cold']
 
       # Split the symptoms into two columns with 10 rows in each column
       symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
@@ -101,6 +99,10 @@ with col2:
           with coll1 if i < 10 else coll2:
               selected = st.checkbox(symptoms[i])
               symptom_values[symptoms[i]] = 1 if selected else 0
+      pre_medical = st.selectbox('Comorbidity ?', ('Yes', 'No'),f'<b>Patient\'s Name</b>')
+      USER_INPUT[2] = process_input(pre_medical)
+      E_gene = st.number_input('RTPCR test (CT value)', step=1.,format="%.f",f'<b>Patient\'s Name</b>')
+      USER_INPUT[1] = process_input(E_gene)
 
       # Append the symptom values to the DataFrame
       symptom_df = symptom_df.append(symptom_values, ignore_index=True)
@@ -128,12 +130,12 @@ st.markdown(
         border: 1px solid #FFA500;
         border-radius: 5px;text-align: center;
     ">
-    <h3 style="color: ##00FF00;">Diagonostic recomendation</h3>
+    <h3 style="color: ##00FF00;">Diagonostic Recomendation</h3>
     </div>
     """,
     unsafe_allow_html=True,
 )
-st.write('Data Overview')
+st.write('Input Array ')
 st.write(new_table_df)
 bayes = load(open('content/bayes.pkl', 'rb'))
 logistic = load(open('content/logistic.pkl', 'rb'))
@@ -143,7 +145,7 @@ svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
 svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
 tree = load(open('content/tree.pkl', 'rb'))
 # Dropdown menu for model selection
-selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
+selected_model = st.selectbox('Select ML Model', ['Naive Bayes Algorithm', 'Logistic Regression Algorithm', 'Decision Tree Algorithm', 'Random Forest Algorithm', 'SVM (Linear) Algorithm', 'SVM (RBF) Algorithm', 'SVM(Sigmoid) Algorithm'])
 prediction=0
 # Perform predictions based on the selected model
 
