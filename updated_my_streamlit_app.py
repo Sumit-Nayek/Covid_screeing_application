@@ -17,14 +17,14 @@ def header():
     """
 
     head = """
-        <h2 class="header">
-            <font color="#2d00f7">Web-enabled</font>
-            <font color="#2d00f7">Diagonosis</font>
-            <font color="#2d00f7">for</font>
-            <font color="#2d00f7">COVID</font>
-            <font color="#2d00f7">-</font>
-            <font color="#2d00f7">19</font>
-        </h2>
+        <h3 class="header">
+            <font color="#2d00f7">Web-enabled Diagonosis for COVID-19</font>
+            #<font color="#2d00f7">Diagonosis</font>
+            #<font color="#2d00f7">for</font>
+            #<font color="#2d00f7">COVID</font>
+            #<font color="#2d00f7">-</font>
+            #<font color="#2d00f7">19</font>
+        </h3>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
     st.markdown(head, unsafe_allow_html=True)
