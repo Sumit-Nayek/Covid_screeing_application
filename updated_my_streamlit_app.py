@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 from pickle import load
+import base64
 
 def add_bg_from_local(image_file):
     st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
