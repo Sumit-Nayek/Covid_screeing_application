@@ -127,7 +127,7 @@ with col2:
           USER_INPUT[2] = 1
       elif USER_INPUT[2] == 'No':
           USER_INPUT[2] = 0
-      new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[1], 'Pre_medical' : USER_INPUT[2]}, index = [0])
+      new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'RTPCR test(CT value)' : USER_INPUT[1], 'Comorbidity' : USER_INPUT[2]}, index = [0])
       # Concatenate the two DataFrames vertically
       combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
       new_table_df=combined_df
