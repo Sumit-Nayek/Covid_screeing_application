@@ -36,12 +36,13 @@ def header():
 
     head = """
         <h2 class="header">
-            <font color="#2d00f7">Web-enabled Diagonosis for COVID-19</font>
+            <font color="#2d00f7">Web-enabled Diagnosis for COVID-19</font>
         </h2>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
     st.markdown(head, unsafe_allow_html=True)
 header()
+st.write('**A Research Project sponsored by ICMR Govt. of India**')
 # Create two columns for the first two panels
 col1, col2 = st.columns(2)
 USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -60,7 +61,7 @@ with col1:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h4 style="color: ##00FF00;">Patient Information</h4>
+          <h4 style="color: ##00FF00;">Patient's Information</h4>
 
           </div>
           """,
@@ -69,7 +70,7 @@ with col1:
       patient_name =st.text_input("**Patient's Name**")
       AGE = st.number_input("**Patient\'s Age**", format="%.f")
       USER_INPUT[0] = process_input(AGE)
-      gender = st.selectbox("**Patient's Gender**", ('Male', 'Female'))
+      gender = st.selectbox("**Gender**", ('Male', 'Female'))
       USER_INPUT[3] = process_input(gender)
       state=st.text_input('**State**')
       country=st.text_input("**Country**")
