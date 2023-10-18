@@ -20,7 +20,7 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 
-add_bg_from_local('background/test3.jpg')
+add_bg_from_local('background/test2.jpg')
 def header():
     custom_css = """
         <style>
@@ -73,7 +73,7 @@ with col1:
       USER_INPUT[3] = process_input(gender)
       state=st.text_input('**State**')
       country=st.text_input("**Country**")
-      exposed=st.text_input("**Exposed to covid infected zone**")
+      exposed=st.selectbox("**Exposed to covid infected zone**", ('Yes', 'No'))
       no_of_infected_person=st.text_input("**Number of effected person in familiy**")
 # Panel 2: Middle panel
 with col2:
