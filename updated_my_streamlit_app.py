@@ -91,7 +91,7 @@ with col2:
           unsafe_allow_html=True,
       )
       symptoms = ['Fever', 'Cough', 'Loss of smell', 'Loss of taste','Body ache', 'Vomiting', 'Sore throat',
-                  'Diarrhoea', 'Sputum', 'Nausea', 'Nasal discharge', 'Chest pain','Breathlessness',
+                  'Diarrhoea', 'Sputum', 'Nausea', 'Chest pain','Breathlessness','Nasal discharge',
                   'Abdominal pain', 'Haemoptsis', 'Head ache', 'Body pain', 'Cold',"Weakness"]
 
       # Split the symptoms into two columns with 10 rows in each column
