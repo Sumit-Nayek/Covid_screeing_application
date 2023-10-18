@@ -144,7 +144,7 @@ st.markdown(
         border: 1px solid #FFA500;
         border-radius: 5px;text-align: center;
     ">
-    <h3 style="color: ##00FF00;">Diagonostic Recomendation</h3>
+    <h3 style="color: ##00FF00;">Diagnostic Recomendation</h3>
     </div>
     """,
     unsafe_allow_html=True,
