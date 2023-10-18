@@ -90,9 +90,9 @@ with col2:
           """,
           unsafe_allow_html=True,
       )
-      symptoms = ['Fever', 'Cough', 'Breathlessness', 'Body ache', 'Vomiting', 'Sore throat',
-                  'Diarrhoea', 'Sputum', 'Nausea', 'Nasal discharge', 'Loss of taste', 'Loss of smell',
-                  'Abdominal pain', 'Chest pain', 'Haemoptsis', 'Head ache', 'Body pain', 'Cold']
+      symptoms = ['Fever', 'Cough', 'Loss of smell', 'Loss of taste','Body ache', 'Vomiting', 'Sore throat',
+                  'Diarrhoea', 'Sputum', 'Nausea', 'Nasal discharge', 'Chest pain','Breathlessness',
+                  'Abdominal pain', 'Haemoptsis', 'Head ache', 'Body pain', 'Cold',"Weakness"]
 
       # Split the symptoms into two columns with 10 rows in each column
       symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
