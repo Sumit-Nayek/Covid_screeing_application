@@ -148,7 +148,7 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-st.write('Input Data Array')
+st.write('**Input Data Array**')
 st.write(new_table_df)
 bayes = load(open('content/bayes.pkl', 'rb'))
 logistic = load(open('content/logistic.pkl', 'rb'))
@@ -158,7 +158,7 @@ svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
 svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
 tree = load(open('content/tree.pkl', 'rb'))
 # Dropdown menu for model selection
-selected_model = st.selectbox('Select ML Model', ['Naive Bayes Algorithm', 'Logistic Regression Algorithm', 'Decision Tree Algorithm', 'Random Forest Algorithm', 'SVM (Linear) Algorithm', 'SVM (RBF) Algorithm', 'SVM(Sigmoid) Algorithm'])
+selected_model = st.selectbox('**Select ML Model**', ['Naive Bayes Algorithm', 'Logistic Regression Algorithm', 'Decision Tree Algorithm', 'Random Forest Algorithm', 'SVM (Linear) Algorithm', 'SVM (RBF) Algorithm', 'SVM(Sigmoid) Algorithm'])
 prediction=0
 # Perform predictions based on the selected model
 
@@ -180,7 +180,7 @@ HEAD_NO = """
     <h6 class="header_pred" style="color:#affc41"> You Don't Have Covid-19 </h6>
 """
 
-if st.button('Make Prediction'):
+if st.button('**Make Prediction**'):
     if selected_model == 'Naive Bayes Algorithm':
         prediction = bayes.predict(combined_df)
         st.write("Predicted Result:")
