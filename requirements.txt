@@ -6,3 +6,8 @@ streamlit_lottie
 requests
 path
 scikit-learn==1.2.2
+pathlib
+catboost
+pipeline
+imblearn
+imbalanced-learn
