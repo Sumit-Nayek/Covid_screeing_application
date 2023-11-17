@@ -61,7 +61,7 @@ with col1:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h4 class="header" >
+          <h4 >
           <font color="#2d00f7">Patient's Information</font>
           </h4>
 
