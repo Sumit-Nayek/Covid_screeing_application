@@ -42,7 +42,7 @@ def header():
     st.markdown(custom_css, unsafe_allow_html=True)
     st.markdown(head, unsafe_allow_html=True)
 header()
-st.write("<span style='color: #FFA500; font-weight: bold;'>A Research Project sponsored by ICMR Govt. of India</span>", unsafe_allow_html=True)
+st.write("<span style='color: #2d00f7; font-weight: bold;'>A Research Project sponsored by ICMR Govt. of India</span>", unsafe_allow_html=True)
 # Create two columns for the first two panels
 col1, col2 = st.columns(2)
 USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
