@@ -70,7 +70,7 @@ with col1:
           unsafe_allow_html=True,
       )
       patient_name =st.text_input("**Patient's Name**")
-      AGE = st.number_input("**Patient\'s Age**", format="%.f")
+      AGE = st.number_input("<span style='color: #FFA500;'>**Patient\'s Age**</span>", format="%.f", unsafe_allow_html=True)
       USER_INPUT[0] = process_input(AGE)
       gender = st.selectbox("**Gender**", ('Male', 'Female'))
       USER_INPUT[3] = process_input(gender)
