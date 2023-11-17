@@ -36,7 +36,7 @@ def header():
 
     head = """
         <h2 class="header">
-            <font color="#FFC0CB">Web-enabled Diagnosis for COVID-19</font>
+            <font color="#00FF00">Web-enabled Diagnosis for COVID-19</font>
         </h2>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
