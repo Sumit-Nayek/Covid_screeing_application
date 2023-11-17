@@ -88,7 +88,7 @@ with col2:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h4 class="header" >
+          <h4 >
           <font color="#2d00f7">Clinical Information</font>
           </h4>
           </div>
@@ -158,7 +158,9 @@ st.markdown(
         border: 1px solid #FFA500;
         border-radius: 5px;text-align: center;
     ">
-    <h3 style="color: ##00FF00;">Diagnostic Recomendation</h3>
+    <h3>
+    <font color="#2d00f7">Diagnostic Recomendation</font>
+    </h3>
     </div>
     """,
     unsafe_allow_html=True,
