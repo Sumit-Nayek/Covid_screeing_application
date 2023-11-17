@@ -107,6 +107,16 @@ with col2:
 
       # Initialize a dictionary to store symptom values
       symptom_values = {}
+    # Custom CSS for checkbox color
+      checkbox_color_css = """
+    <style>
+        .checkbox-label {
+            color: #fff;  # Change this to the color you want
+        }
+    </style>
+    """
+    
+      st.markdown(checkbox_color_css, unsafe_allow_html=True)
 
       # Ensure the loop doesn't exceed the length of the split list
       for i in range(len(symptoms)):
