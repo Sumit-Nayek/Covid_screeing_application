@@ -61,7 +61,9 @@ with col1:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h4 style="color: ##00FF00;">Patient's Information</h4>
+          <h4 class="header" >
+          <font color="#00FF00">Patient's Information</font>
+          </h4>
 
           </div>
           """,
@@ -86,7 +88,7 @@ with col2:
               border: 1px solid #00FF00;
               border-radius: 5px;text-align: center;
           ">
-          <h4 style="color: ##00FF00;">Clinical Information</h4>
+          <h4 style="color: ##00FF00">Clinical Information</h4>
           </div>
           """,
           unsafe_allow_html=True,
