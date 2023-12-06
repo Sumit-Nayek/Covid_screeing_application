@@ -212,7 +212,7 @@ st.write(
 if st.button('**Make Prediction**'):
     if selected_model == 'Naive Bayes Algorithm':
         prediction = bayes.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -225,7 +225,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'Logistic Regression Algorithm':
         prediction = logistic.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -238,7 +238,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'Decision Tree Algorithm':
         prediction = tree.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -251,7 +251,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'Random Forest Algorithm':
         prediction = random_tree.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -264,7 +264,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'SVM (Linear) Algorithm':
         prediction = svm_linear.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -277,7 +277,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'SVM (RBF) Algorithm':
         prediction = svm_rbf.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
@@ -290,7 +290,7 @@ if st.button('**Make Prediction**'):
             st.cache_data.clear()
     elif selected_model == 'SVM (Sigmoid) Algorithm':
         prediction = svm_sigmoid.predict(combined_df)
-        st.write("Predicted Result:")
+        st.write("Recomendation:")
         #st.write(f"Fraction Value: {prediction*100}")
         if prediction == 1:
             st.markdown(CSS, unsafe_allow_html=True)
