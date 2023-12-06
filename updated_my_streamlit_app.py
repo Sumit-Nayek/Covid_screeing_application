@@ -200,14 +200,16 @@ HEAD_NO = """
 st.write(
     """
     <style>
-    div.stButton > button {
-        width: 50%;
-        display: block;
-        margin: auto;
+    .center-button-container {
+        text-align: center;
     }
     </style>
     """
 )
+
+# Use a div container to center-align the button
+st.markdown('<div class="center-button-container">' + st.button('**Make Prediction**') + '</div>', unsafe_allow_html=True)
+
 
 if st.button('**Make Prediction**'):
     if selected_model == 'Naive Bayes Algorithm':
