@@ -196,6 +196,18 @@ HEAD_YES = """
 HEAD_NO = """
     <h6 class="header_pred" style="color:#affc41"> You Don't Have Covid-19 </h6>
 """
+# Center-align the button using CSS styling
+st.write(
+    """
+    <style>
+    div.stButton > button {
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+    </style>
+    """
+)
 
 if st.button('**Make Prediction**'):
     if selected_model == 'Naive Bayes Algorithm':
