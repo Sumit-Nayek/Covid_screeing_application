@@ -201,7 +201,7 @@ st.write(
     """
     <style>
     div.stButton > button {
-        width: 100%;
+        width: 50%;
         display: block;
         margin: auto;
     }
