@@ -36,7 +36,7 @@ def header():
 
     head = """
         <h2 class="header">
-            <font color="#00FF00">Web-enabled Diagnosis for COVID-19</font>
+            <font color="#2d00f7">Web-enabled Diagnosis for COVID-19</font>
         </h2>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
@@ -70,7 +70,7 @@ with col1:
           unsafe_allow_html=True,
       )
       patient_name =st.text_input("**Patient's Name**")
-      AGE = st.number_input("<span style='color: #FFA500;'>**Patient\'s Age**</span>", format="%.f")
+      AGE = st.number_input("**Patient\'s Age**", format="%.f")
       USER_INPUT[0] = process_input(AGE)
       gender = st.selectbox("**Gender**", ('Male', 'Female'))
       USER_INPUT[3] = process_input(gender)
