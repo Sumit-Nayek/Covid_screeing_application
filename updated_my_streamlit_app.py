@@ -197,19 +197,17 @@ HEAD_NO = """
     <h6 class="header_pred" style="color:#affc41"> You Don't Have Covid-19 </h6>
 """
 # Center-align the button using CSS styling
-st.write(
+# Center-align the button
+st.markdown(
     """
     <style>
-    .center-button-container {
-        text-align: center;
-    }
+        div.center-button > button {
+            width: 50%;
+        }
     </style>
-    """
+    """,
+    unsafe_allow_html=True,
 )
-
-# Use a div container to center-align the button
-st.markdown('<div class="center-button-container">' + st.button('**Make Prediction**') + '</div>', unsafe_allow_html=True)
-
 
 if st.button('**Make Prediction**'):
     if selected_model == 'Naive Bayes Algorithm':
