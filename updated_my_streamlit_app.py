@@ -196,7 +196,7 @@ HEAD_YES = """
 HEAD_NO = """
     <h6 class="header_pred" style="color:#affc41"> You Don't Have Covid-19 </h6>
 """
-col10, col11, col12, col13, col14, col15 = st.columns(5)
+col10, col11, col12, col13, col14 = st.columns(5)
 with col12:
     if st.button('Predictions'):
         if selected_model == 'Naive Bayes Algorithm':
