@@ -198,7 +198,7 @@ HEAD_NO = """
 """
 col10, col11, col12, col13, col14 = st.columns(5)
 with col12:
-    if st.button('Make Prediction'):
+    if st.button('Prediction'):
         if selected_model == 'Naive Bayes Algorithm':
             prediction = bayes.predict(combined_df)
             st.write("Recomendation:")
