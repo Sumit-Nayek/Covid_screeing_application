@@ -1,7 +1,7 @@
 streamlit
 pickleshare
 bs4
-pandas
+pandas==2.1.1
 streamlit_lottie
 requests
 path
