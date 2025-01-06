@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import base64
 # Function to add a background image
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
