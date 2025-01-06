@@ -1,6 +1,22 @@
 import streamlit as st
 import pandas as pd
 
+# Function to add a background image
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+            background-size: cover;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
@@ -25,6 +41,7 @@ def header(title):
 
 # Page 1: Risk Assessment
 if page == "Risk Assessment":
+    add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
     
     st.markdown(
@@ -58,6 +75,7 @@ if page == "Risk Assessment":
 
 # Page 2: Primary Treatment
 elif page == "Primary Treatment":
+    # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
     header("Primary Treatment Instructions")
 
     st.markdown(
