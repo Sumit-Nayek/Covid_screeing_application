@@ -144,7 +144,7 @@ if page == "Risk Assessment":
                   symptom_values[symptoms[i]] = 1 if selected else 0
     
           # Append the symptom values to the DataFrame
-          symptom_df = symptom_df.append(symptom_values, ignore_index=True)
+          symptom_df.loc[len(symptom_df)] = symptom_values
     #              selected = st.checkbox(symptoms_split[2][i])
     #              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
     
