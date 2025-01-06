@@ -22,7 +22,7 @@ import base64
 # add_bg_from_local('content/new_test1.jpg')
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
+page = st.sidebar.selectbox("Go to", ["Screening Tool","Risk Assessment", "Primary Treatment"])
 
 def header():
     custom_css = """
