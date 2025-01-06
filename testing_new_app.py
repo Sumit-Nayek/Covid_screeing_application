@@ -45,34 +45,34 @@ if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
     
-    # st.markdown(
-    #     """
-    #     <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
-    #     """,
-    #     unsafe_allow_html=True,
-    # )
+    st.markdown(
+        """
+        <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
+        """,
+        unsafe_allow_html=True,
+    )
     
-    # # Input fields
-    # name1 = st.text_input("Name")
-    # age1 = st.number_input("Age", min_value=1, step=1)
-    # gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
-    # pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
+    # Input fields
+    name1 = st.text_input("Name")
+    age1 = st.number_input("Age", min_value=1, step=1)
+    gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
+    pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
     
-    # symptoms1 = [
-    #     "Fever", "Cough", "Breathlessness", "Sore Throat",
-    #     "Loss of Taste/Smell", "Body Ache", "Diarrhea"
-    # ]
-    # symptom_check1 = [st.checkbox(symptom) for symptom in symptoms]
+    symptoms1 = [
+        "Fever", "Cough", "Breathlessness", "Sore Throat",
+        "Loss of Taste/Smell", "Body Ache", "Diarrhea"
+    ]
+    symptom_check1 = [st.checkbox(symptom) for symptom in symptoms]
     
-    # # Assess risk
-    # if st.button("Assess Risk"):
-    #     risk_score = sum(symptom_check1) + (1 if pre_medical == "Yes" else 0)
-    #     if risk_score >= 5:
-    #         st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
-    #     elif 3 <= risk_score < 5:
-    #         st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
-    #     else:
-    #         st.success("Low Risk. Continue practicing preventive measures.")
+    # Assess risk
+    if st.button("Assess Risk"):
+        risk_score = sum(symptom_check1) + (1 if pre_medical == "Yes" else 0)
+        if risk_score >= 5:
+            st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
+        elif 3 <= risk_score < 5:
+            st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
+        else:
+            st.success("Low Risk. Continue practicing preventive measures.")
     # Create two columns for the first two panels
     col1, col2 = st.columns(2)
     USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
