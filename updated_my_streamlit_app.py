@@ -133,7 +133,9 @@ with col2:
       USER_INPUT[1] = process_input(E_gene)
 
       # Append the symptom values to the DataFrame
-      symptom_df = symptom_df.append(symptom_values, ignore_index=True)
+    # Add the symptom values as a new row using loc
+      symptom_df.loc[len(symptom_df)] = symptom_values
+      # symptom_df = symptom_df.append(symptom_values, ignore_index=True)
 #              selected = st.checkbox(symptoms_split[2][i])
 #              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
 
