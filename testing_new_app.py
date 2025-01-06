@@ -62,7 +62,7 @@ if page == "Risk Assessment":
         "Fever", "Cough", "Breathlessness", "Sore Throat",
         "Loss of Taste/Smell", "Body Ache", "Diarrhea"
     ]
-    symptom_check1 = [st.checkbox(symptom) for symptom in symptoms]
+    symptom_check1 = [st.checkbox(symptom) for symptom in symptoms1]
     
     # Assess risk
     if st.button("Assess Risk"):
