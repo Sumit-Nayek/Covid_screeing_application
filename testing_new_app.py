@@ -34,7 +34,7 @@ def header(title):
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }}
         </style>
-        <h1 class="header">{Web_based_covid_19_screeing_and_assesment'}</h1>
+        <h1 class="header">{Web_based_covid_19_screeing_and_assesment}</h1>
         """,
         unsafe_allow_html=True,
     )
