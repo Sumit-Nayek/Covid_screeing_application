@@ -4,22 +4,25 @@ import pandas as pd
 from pickle import load
 import base64
 
-def add_bg_from_local(image_file):
-    st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-        f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-        unsafe_allow_html=True
-    )
-add_bg_from_local('content/new_test1.jpg')
+# def add_bg_from_local(image_file):
+#     st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
+#     with open(image_file, "rb") as image_file:
+#         encoded_string = base64.b64encode(image_file.read())
+#     st.markdown(
+#         f"""
+#     <style>
+#     .stApp {{
+#         background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+#         background-size: cover
+#     }}
+#     </style>
+#     """,
+#         unsafe_allow_html=True
+#     )
+# add_bg_from_local('content/new_test1.jpg')
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
 
 def header():
     custom_css = """
