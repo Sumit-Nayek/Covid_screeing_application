@@ -3,6 +3,23 @@ import pickle
 import pandas as pd
 from pickle import load
 
+def add_bg_from_local(image_file):
+    st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+        f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+        unsafe_allow_html=True
+    )
+
+add_bg_from_local('background/new_test1.jpg')
 def header():
     custom_css = """
         <style>
