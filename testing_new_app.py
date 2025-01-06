@@ -97,14 +97,14 @@ if page == "Risk Assessment":
               """,
               unsafe_allow_html=True,
           )
-          patient_name =st.text_input('Name')
-          AGE = st.number_input("Age", format="%.f")
+          # patient_name =st.text_input('Name')
+          AGE = st.number_input("Age1", format="%.f")
           USER_INPUT[0] = process_input(AGE)
           E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
           USER_INPUT[1] = process_input(E_gene)
           pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
           USER_INPUT[2] = process_input(pre_medical)
-          gender = st.selectbox('Gender', ('Male', 'Female'))
+          gender = st.selectbox('Gender1', ('Male1', 'Female1'))
           USER_INPUT[3] = process_input(gender)
     # Panel 2: Middle panel
     with col2:
