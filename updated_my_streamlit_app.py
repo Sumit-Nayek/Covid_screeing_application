@@ -43,8 +43,10 @@ def header():
             <font color="#6a00f4">-</font>
             <font color="#8900f2">based</font>
             <font color="#d100d1">COVID</font>
+            <font color="#d100d1">-19</font>
             <font color="#e500a4">Screening</font>
             <font color="#f20089">System</font>
+            
         </h1>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
