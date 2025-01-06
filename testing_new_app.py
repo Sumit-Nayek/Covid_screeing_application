@@ -66,7 +66,7 @@ if page == "Risk Assessment":
     
     # Assess risk
     if st.button("Assess Risk"):
-        risk_score = sum(symptom_check1) + (1 if pre_medical == "Yes" else 0)
+        risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
         if risk_score >= 5:
             st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
         elif 3 <= risk_score < 5:
