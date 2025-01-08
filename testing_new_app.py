@@ -44,7 +44,7 @@ def header(title):
 if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
-    
+    USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     st.markdown(
         """
         <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
@@ -53,8 +53,9 @@ if page == "Risk Assessment":
     )
     
     # Input fields
+    AGE = st.number_input("Age", format="%.f",min_value=1, step=1)
+    USER_INPUT[0] = process_input(AGE)
     name1 = st.text_input("Name")
-    age1 = st.number_input("Age", min_value=1, step=1)
     gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
     pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
     
@@ -75,7 +76,7 @@ if page == "Risk Assessment":
             st.success("Low Risk. Continue practicing preventive measures.")
     # Create two columns for the first two panels
     col1, col2 = st.columns(2)
-    USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
     ###
     def process_input(input_value):
         result = input_value
@@ -98,14 +99,13 @@ if page == "Risk Assessment":
               unsafe_allow_html=True,
           )
           # patient_name =st.text_input('Name')
-          AGE = st.number_input("Age1", format="%.f")
-          USER_INPUT[0] = process_input(AGE)
+
           E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
           USER_INPUT[1] = process_input(E_gene)
-          pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
-          USER_INPUT[2] = process_input(pre_medical)
-          gender = st.selectbox('Gender1', ('Male1', 'Female1'))
-          USER_INPUT[3] = process_input(gender)
+          # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
+          USER_INPUT[2] = process_input(pre_medical1)
+          # gender = st.selectbox('Gender', ('Male', 'Female'))
+          USER_INPUT[3] = process_input(gender1)
     # Panel 2: Middle panel
     with col2:
           st.markdown(
