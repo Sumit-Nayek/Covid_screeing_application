@@ -55,7 +55,7 @@ if page == "Risk Assessment":
     # Input fields
 
     name1 = st.text_input("Name")
-    AGE = st.number_input("Age", format="%.f",min_value=1, step=1)
+    AGE = st.number_input("Age",min_value=1, step=1)
     USER_INPUT[0] = AGE
     gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
     USER_INPUT[1] = gender1
@@ -104,7 +104,7 @@ if page == "Risk Assessment":
           # patient_name =st.text_input('Name')
 
           E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-          USER_INPUT[3] = st.process_input(E_gene)
+          USER_INPUT[3] = E_gene
           # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
           
           # gender = st.selectbox('Gender', ('Male', 'Female'))
