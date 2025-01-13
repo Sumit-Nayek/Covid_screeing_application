@@ -61,7 +61,10 @@ if page == "Risk Assessment":
     USER_INPUT[1] = gender1
     pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
     USER_INPUT[2] = pre_medical1
-
+    if USER_INPUT[2] == 'Yes':
+        USER_INPUT[2] = 1
+    elif USER_INPUT[2] == 'No':
+        USER_INPUT[2] = 0
     symptoms1 = [
         "Fever", "Cough", "Breathlessness", "Sore Throat",
         "Loss of Taste/Smell", "Body Ache", "Diarrhea"
@@ -153,11 +156,8 @@ if page == "Risk Assessment":
     #              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
     
           #USER_INPUT[4] = process_input(SH)
-          if USER_INPUT[2] == 'Yes':
-              USER_INPUT[2] = 1
-          elif USER_INPUT[2] == 'No':
-              USER_INPUT[2] = 0
-          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[1], 'Pre_medical' : USER_INPUT[2]}, index = [0])
+
+          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
           # Concatenate the two DataFrames vertically
           combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
           new_table_df=combined_df
