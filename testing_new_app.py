@@ -81,7 +81,7 @@ if page == "Risk Assessment":
         else:
             st.success("Low Risk. Continue practicing preventive measures.")
     # Create two columns for the first two panels
-    header("Screening Tools for Covid-19 virus")
+    header("Screening for Covid-19 virus")
     col1, col2 = st.columns(2)
     
     ###
