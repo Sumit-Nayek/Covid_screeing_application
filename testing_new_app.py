@@ -18,6 +18,34 @@ def add_bg_from_local(image_file):
         """,
         unsafe_allow_html=True
     )
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #4CAF50; /* Glowing effect */
+        animation: glowing 1.5s infinite;
+    }
+
+    @keyframes glowing {
+        0% { box-shadow: 0 0 5px #4CAF50; }
+        50% { box-shadow: 0 0 20px #4CAF50; }
+        100% { box-shadow: 0 0 5px #4CAF50; }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
