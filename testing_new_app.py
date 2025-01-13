@@ -84,6 +84,7 @@ if page == "Risk Assessment":
     col1, col2 = st.columns(2)
     
     ###
+    header("Screening Tools for Covid-19 virus")
     def process_input(input_value):
         result = input_value
         return result
