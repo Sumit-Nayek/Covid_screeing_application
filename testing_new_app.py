@@ -292,11 +292,11 @@ if page == "Risk Assessment":
     """
     
     HEAD_YES = """
-            <h6 class="header_pred" style="color:#ff5a5f"> You Have Covid-19 </h6>
+            <h6 class="header_pred" style="color:#ff5a4f"> You Have Covid-19 </h6>
     """
     
     HEAD_NO = """
-        <h6 class="header_pred" style="color:#affc41"> You Don't Have Covid-19 </h6>
+        <h6 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
     """
     
     if st.button('Make Predictions'):
@@ -304,7 +304,7 @@ if page == "Risk Assessment":
         if selected_model == 'Naive Bayes':
             prediction = bayes.predict(combined_df)
             # st.write("Predicted Results:")
-            st.write(f"Fraction Value: {prediction*100}")
+            # st.write(f"Fraction Value: {prediction*100}")
             if prediction == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -317,7 +317,7 @@ if page == "Risk Assessment":
         elif selected_model == 'Logistic Regression':
             prediction = logistic.predict(combined_df)
             # st.write("Predicted Results:")
-            st.write(f"Fraction Value: {prediction*100}")
+            # st.write(f"Fraction Value: {prediction*100}")
             if prediction == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -356,7 +356,7 @@ if page == "Risk Assessment":
         elif selected_model == 'SVM (Linear)':
             prediction = svm_linear.predict(combined_df)
             # st.write("Predicted Results:")
-            st.write(f"Fraction Value: {prediction*100}")
+            # st.write(f"Fraction Value: {prediction*100}")
             if prediction == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -369,7 +369,7 @@ if page == "Risk Assessment":
         elif selected_model == 'SVM (RBF)':
             prediction = svm_rbf.predict(combined_df)
             # st.write("Predicted Results:")
-            st.write(f"Fraction Value: {prediction*100}")
+            # st.write(f"Fraction Value: {prediction*100}")
             if prediction == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
@@ -382,7 +382,7 @@ if page == "Risk Assessment":
         elif selected_model == 'SVM (Sigmoid)':
             prediction = svm_sigmoid.predict(combined_df)
             # st.write("Predicted Results:")
-            st.write(f"Fraction Value: {prediction*100}")
+            # st.write(f"Fraction Value: {prediction*100}")
             if prediction == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
