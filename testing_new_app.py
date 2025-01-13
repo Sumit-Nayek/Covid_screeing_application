@@ -74,7 +74,7 @@ if page == "Risk Assessment":
     st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
     
     # Adding a graph image (JPG format)
-    image_path = "content/age_graph_image.jpg"  # Path to your JPG file
+    image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
     st.image(image_path, caption="Graph Representation", use_column_width=True)
     
     # Additional UI elements (optional)
