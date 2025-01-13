@@ -133,14 +133,39 @@ if page == "Risk Assessment":
     st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
     
     # Assess risk
+    # if st.button("Assess Risk"):
+    #     risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
+    #     if risk_score >= 5:
+    #         st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
+    #     elif 3 <= risk_score < 5:
+    #         st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
+    #     else:
+    #         st.success("Low Risk. Continue practicing preventive measures.")
     if st.button("Assess Risk"):
         risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
+    
         if risk_score >= 5:
-            st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
+            st.markdown(
+                '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
+                "High Risk of COVID-19. Consult a healthcare provider immediately."
+                "</div>",
+                unsafe_allow_html=True,
+            )
         elif 3 <= risk_score < 5:
-            st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
+            st.markdown(
+                '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
+                "Moderate Risk. Self-isolate and monitor symptoms."
+                "</div>",
+                unsafe_allow_html=True,
+            )
         else:
-            st.success("Low Risk. Continue practicing preventive measures.")
+            st.markdown(
+                '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
+                "Low Risk. Continue practicing preventive measures."
+                "</div>",
+                unsafe_allow_html=True,
+            )
+
             
     # Create two columns for the first two panels
     header("Screening for Covid-19 virus")
