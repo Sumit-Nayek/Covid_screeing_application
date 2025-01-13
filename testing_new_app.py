@@ -89,7 +89,9 @@ def header(title):
         """,
         unsafe_allow_html=True,
     )
-header(" Web-based Covid Screening System")
+# header(" Web-based Covid Screening System")
+# Set the title and icon for the web app
+st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Page 1: Risk Assessment
 if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
