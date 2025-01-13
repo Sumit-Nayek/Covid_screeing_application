@@ -68,6 +68,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
@@ -91,7 +92,6 @@ def header(title):
     )
 # header(" Web-based Covid Screening System")
 # Set the title and icon for the web app
-st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Page 1: Risk Assessment
 if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
