@@ -89,7 +89,7 @@ def header(title):
         """,
         unsafe_allow_html=True,
     )
-
+header(" Web-based Covid Screening System")
 # Page 1: Risk Assessment
 if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
