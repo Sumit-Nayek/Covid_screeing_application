@@ -53,12 +53,15 @@ if page == "Risk Assessment":
     )
     
     # Input fields
+
+    name1 = st.text_input("Name")
     AGE = st.number_input("Age", format="%.f",min_value=1, step=1)
     USER_INPUT[0] = process_input(AGE)
-    name1 = st.text_input("Name")
     gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
+    USER_INPUT[1] = process_input(gender1)
     pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
-    
+    USER_INPUT[2] = process_input(pre_medical1)
+
     symptoms1 = [
         "Fever", "Cough", "Breathlessness", "Sore Throat",
         "Loss of Taste/Smell", "Body Ache", "Diarrhea"
@@ -101,11 +104,11 @@ if page == "Risk Assessment":
           # patient_name =st.text_input('Name')
 
           E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-          USER_INPUT[1] = process_input(E_gene)
+          USER_INPUT[3] = process_input(E_gene)
           # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
-          USER_INPUT[2] = process_input(pre_medical1)
+          
           # gender = st.selectbox('Gender', ('Male', 'Female'))
-          USER_INPUT[3] = process_input(gender1)
+          
     # Panel 2: Middle panel
     with col2:
           st.markdown(
