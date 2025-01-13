@@ -56,11 +56,11 @@ if page == "Risk Assessment":
 
     name1 = st.text_input("Name")
     AGE = st.number_input("Age", format="%.f",min_value=1, step=1)
-    USER_INPUT[0] = st.process_input(AGE)
+    USER_INPUT[0] = AGE
     gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
-    USER_INPUT[1] = st.process_input(gender1)
+    USER_INPUT[1] = gender1
     pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
-    USER_INPUT[2] = st.process_input(pre_medical1)
+    USER_INPUT[2] = pre_medical1
 
     symptoms1 = [
         "Fever", "Cough", "Breathlessness", "Sore Throat",
