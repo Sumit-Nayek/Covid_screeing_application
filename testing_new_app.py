@@ -271,7 +271,7 @@ if page == "Risk Assessment":
     st.write(new_table_df)
     bayes = load(open('content/bayes.pkl', 'rb'))
     logistic = load(open('content/logistic.pkl', 'rb'))
-    random_tree =load(open('content/random_tree.pkl', 'rb'))
+    # random_tree =load(open('content/random_tree.pkl', 'rb'))
     svm_linear = load(open('content/svm_linear.pkl', 'rb'))
     svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
     svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
