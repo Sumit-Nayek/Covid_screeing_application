@@ -70,6 +70,15 @@ if page == "Risk Assessment":
         "Loss of Taste/Smell", "Body Ache", "Diarrhea"
     ]
     symptom_check1 = [st.checkbox(symptom) for symptom in symptoms1]
+    # Title of the Streamlit app
+    st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
+    
+    # Adding a graph image (JPG format)
+    image_path = "content/age_graph_image.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Graph Representation", use_column_width=True)
+    
+    # Additional UI elements (optional)
+    # st.write("This is an example of embedding a graph image in a Streamlit application.")
     
     # Assess risk
     if st.button("Assess Risk"):
@@ -80,6 +89,7 @@ if page == "Risk Assessment":
             st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
         else:
             st.success("Low Risk. Continue practicing preventive measures.")
+            
     # Create two columns for the first two panels
     header("Screening for Covid-19 virus")
     col1, col2 = st.columns(2)
