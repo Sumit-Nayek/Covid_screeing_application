@@ -292,7 +292,7 @@ if page == "Risk Assessment":
     """
     
     HEAD_YES = """
-            <h6 class="header_pred" style="color:#ff5a4f"> You Have Covid-19 </h6>
+            <h6 class="header_pred" style="color:#affc42"> You Have Covid-19 </h6>
     """
     
     HEAD_NO = """
