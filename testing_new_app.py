@@ -269,13 +269,13 @@ if page == "Risk Assessment":
     )
     st.write('Data Overview')
     st.write(new_table_df)
-    # bayes = load(open('content/bayes.pkl', 'rb'))
-    # logistic = load(open('content/logistic.pkl', 'rb'))
-    # random_tree =load(open('content/random_tree.pkl', 'rb'))
-    # svm_linear = load(open('content/svm_linear.pkl', 'rb'))
-    # svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
-    # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-    # tree = load(open('content/tree.pkl', 'rb'))
+    bayes = load(open('content/bayes.pkl', 'rb'))
+    logistic = load(open('content/logistic.pkl', 'rb'))
+    random_tree =load(open('content/random_tree.pkl', 'rb'))
+    svm_linear = load(open('content/svm_linear.pkl', 'rb'))
+    svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
+    svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
+    tree = load(open('content/tree.pkl', 'rb'))
     # # Dropdown menu for model selection
     selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
     prediction=0
@@ -301,97 +301,97 @@ if page == "Risk Assessment":
     
     if st.button('Make Predictions'):
         st.write("Predicted Results:")
-        # if selected_model == 'Naive Bayes':
-        #     prediction = bayes.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'Logistic Regression':
-        #     prediction = logistic.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'Decision Tree':
-        #     prediction = tree.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'Random Forest':
-        #     prediction = random_tree.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (Linear)':
-        #     prediction = svm_linear.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (RBF)':
-        #     prediction = svm_rbf.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (Sigmoid)':
-        #     prediction = svm_sigmoid.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
+        if selected_model == 'Naive Bayes':
+            prediction = bayes.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'Logistic Regression':
+            prediction = logistic.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'Decision Tree':
+            prediction = tree.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'Random Forest':
+            prediction = random_tree.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'SVM (Linear)':
+            prediction = svm_linear.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'SVM (RBF)':
+            prediction = svm_rbf.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+        elif selected_model == 'SVM (Sigmoid)':
+            prediction = svm_sigmoid.predict(combined_df)
+            st.write("Predicted Results:")
+            #st.write(f"Fraction Value: {prediction*100}")
+            if prediction == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+            else:
+                st.cache_data.clear()
+                st.markdown(CSS, unsafe_allow_html=True)
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
 # Page 2: Primary Treatment
 elif page == "Primary Treatment":
     # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
