@@ -46,6 +46,28 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+# Custom CSS for radiating effect
+st.markdown(
+    """
+    <style>
+    /* Add a glowing border effect to the sidebar */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(90deg, #ff8a8a, #ffc0c0); /* Radiating color gradient */
+        border: 2px solid #ff6b6b;
+        box-shadow: 0 0 15px #ff6b6b;
+    }
+
+    /* Optional: Customize sidebar title */
+    [data-testid="stSidebar"] h2 {
+        color: #ffffff;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 5px #000000;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
