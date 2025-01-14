@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import base64
 from pickle import load
+from joblib import dump, load
+
 # Function to add a background image
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
