@@ -276,7 +276,7 @@ if page == "Risk Assessment":
     # random_tree =load(open('content/random_tree.pkl', 'rb'))
     svm_linear = load(open('content/svm_linear.pkl', 'rb'))
     svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
-    svm_sigmoid = load('/content/svm_sigmoid.joblib')
+    svm_sigmoid = load('content/svm_sigmoid.joblib')
     # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
     # tree = load(open('content/tree.pkl', 'rb'))
     # # Dropdown menu for model selection
