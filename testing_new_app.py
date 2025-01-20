@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import base64
 from pickle import load
-from joblib import dump, load
+# from joblib import dump, loadx
 
 # Function to add a background image
 def add_bg_from_local(image_file):
@@ -248,7 +248,7 @@ if page == "Risk Assessment":
     
           #USER_INPUT[4] = process_input(SH)
 
-          new_data = pd.DataFrame({'age' : USER_INPUT[0], 'ct_value_rdrp' : USER_INPUT[3], 'underlying_medical_condition' : USER_INPUT[2]}, index = [0])
+          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre-Medical' : USER_INPUT[2]}, index = [0])
           # Concatenate the two DataFrames vertically
           combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
           new_table_df=combined_df
@@ -271,22 +271,22 @@ if page == "Risk Assessment":
     )
     st.write('Data Overview')
     st.write(new_table_df)
-    # bayes = load(open('content/bayes.pkl', 'rb'))
-    # logistic = load(open('content/logistic.pkl', 'rb'))
-    # random_tree =load(open('content/random_tree.pkl', 'rb'))
-    # svm_linear = load(open('content/svm_linear.pkl', 'rb'))
-    # svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
-    # svm_sigmoid = load('content/svm_sigmoid.joblib')
-    # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-    # tree = load(open('content/tree.pkl', 'rb'))
-    bayes = load('content/naive_bayes_model.joblib')
-    logistic = load('content/logistic_regression_model.joblib')
-    random_tree =load('content/random_forest_model.joblib')
-    svm_linear = load('content/svm_linear_model.joblib')
-    svm_rbf = load('content/svm_rbf_model.joblib')
-    svm_sigmoid = load('content/svm_sigmoid_model.joblib')
-    # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-    tree = load('content/decision_tree_model.joblib')
+    bayes = load(open('content/bayes.pkl', 'rb'))
+    logistic = load(open('content/logistic.pkl', 'rb'))
+    random_tree =load(open('content/random_tree.pkl', 'rb'))
+    svm_linear = load(open('content/svm_linear.pkl', 'rb'))
+    svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
+    svm_sigmoid = load('content/svm_sigmoid.joblib')
+    svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
+    tree = load(open('content/tree.pkl', 'rb'))
+    # bayes = load('content/naive_bayes_model.joblib')
+    # logistic = load('content/logistic_regression_model.joblib')
+    # random_tree =load('content/random_forest_model.joblib')
+    # svm_linear = load('content/svm_linear_model.joblib')
+    # svm_rbf = load('content/svm_rbf_model.joblib')
+    # svm_sigmoid = load('content/svm_sigmoid_model.joblib')
+    # # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
+    # tree = load('content/decision_tree_model.joblib')
     # # Dropdown menu for model selection
     selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
     prediction=0
@@ -420,7 +420,7 @@ elif page == "Primary Treatment":
         <h3 style="color: #e500a4;">When to Seek Emergency Care:</h3>
         <ul>
             <li>Difficulty breathing or shortness of breath.</li>
-            <li>Persistent chest pain or pressure.</li>
+            <li>Persistent chest pain or pressure.</li>                             
             <li>Confusion or inability to stay awake.</li>
             <li>Bluish lips or face.</li>
         </ul>
