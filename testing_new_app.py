@@ -248,7 +248,7 @@ if page == "Risk Assessment":
     
           #USER_INPUT[4] = process_input(SH)
 
-          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre-Medical' : USER_INPUT[2]}, index = [0])
+          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
           # Concatenate the two DataFrames vertically
           combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
           new_table_df=combined_df
