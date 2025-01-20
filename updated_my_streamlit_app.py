@@ -137,11 +137,11 @@ st.write('Data Overview')
 st.write(new_table_df)
 bayes = load(open('content/bayes.pkl', 'rb'))
 logistic = load(open('content/logistic.pkl', 'rb'))
-random_tree =load(open('content/random_tree.pkl', 'rb'))
+# random_tree =load(open('content/random_tree.pkl', 'rb'))
 svm_linear = load(open('content/svm_linear.pkl', 'rb'))
 svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
 svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-tree = load(open('content/tree.pkl', 'rb'))
+# tree = load(open('content/tree.pkl', 'rb'))
 # Dropdown menu for model selection
 selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
 prediction=0
