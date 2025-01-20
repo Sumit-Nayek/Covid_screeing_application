@@ -109,7 +109,7 @@ if page == "Risk Assessment":
     # Input fields
 
     name1 = st.text_input("Name")
-    age = st.number_input("Age", step=1.,format="%.f")
+    Age = st.number_input("Age", step=1.,format="%.f")
     USER_INPUT[0] = AGE
     gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
     USER_INPUT[1] = gender1
