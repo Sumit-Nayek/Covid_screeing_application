@@ -2,8 +2,55 @@ import streamlit as st
 import pandas as pd
 import base64
 from pickle import load
+import matplotlib.pyplot as plt
+from matplotlib.patches import Arc
 # from joblib import dump, loadx
-
+def draw_speedometer(risk_score):
+    fig, ax = plt.subplots(figsize=(6, 3))
+    ax.set_xlim(-1.2, 1.2)
+    ax.set_ylim(-0.5, 1.2)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_frame_on(False)
+    
+    # Draw arc (Speedometer regions)
+    arc = Arc((0, 0), 2, 2, theta1=0, theta2=180, color='black', lw=2)
+    ax.add_patch(arc)
+    
+    # Color regions
+    ax.fill_between([-1, -0.3], [0, 1], color='green', alpha=0.6, label='Low Risk')
+    ax.fill_between([-0.3, 0.3], [1, 1], color='yellow', alpha=0.6, label='Moderate Risk')
+    ax.fill_between([0.3, 1], [1, 0], color='red', alpha=0.6, label='High Risk')
+    
+    # Animate needle movement
+    min_angle, max_angle = -90, 90
+    if risk_score >= 5:
+        target_angle = 90  # High risk
+    elif 3 <= risk_score < 5:
+        target_angle = 0  # Moderate risk
+    else:
+        target_angle = -90  # Low risk
+    
+    for angle in np.linspace(min_angle, target_angle, num=30):
+        ax.clear()
+        ax.set_xlim(-1.2, 1.2)
+        ax.set_ylim(-0.5, 1.2)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_frame_on(False)
+        
+        # Redraw arc and regions
+        ax.add_patch(Arc((0, 0), 2, 2, theta1=0, theta2=180, color='black', lw=2))
+        ax.fill_between([-1, -0.3], [0, 1], color='green', alpha=0.6)
+        ax.fill_between([-0.3, 0.3], [1, 1], color='yellow', alpha=0.6)
+        ax.fill_between([0.3, 1], [1, 0], color='red', alpha=0.6)
+        
+        # Draw needle
+        x, y = np.cos(np.radians(angle)), np.sin(np.radians(angle))
+        ax.plot([0, x], [0, y], color='black', lw=3)
+        
+        st.pyplot(fig)
+        time.sleep(0.05)
 # Function to add a background image
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -153,6 +200,7 @@ if page == "Risk Assessment":
                 "</div>",
                 unsafe_allow_html=True,
             )
+            draw_speedometer(risk_score)
         elif 3 <= risk_score < 5:
             st.markdown(
                 '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
@@ -160,6 +208,7 @@ if page == "Risk Assessment":
                 "</div>",
                 unsafe_allow_html=True,
             )
+            draw_speedometer(risk_score)
         else:
             st.markdown(
                 '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
@@ -167,6 +216,7 @@ if page == "Risk Assessment":
                 "</div>",
                 unsafe_allow_html=True,
             )
+            draw_speedometer(risk_score)
 
             
     # Create two columns for the first two panels
