@@ -4,6 +4,7 @@ import base64
 from pickle import load
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 from matplotlib.patches import Arc
 # from joblib import dump, loadx
 def draw_speedometer(risk_score):
