@@ -523,12 +523,12 @@ elif page == "Descriptive Analysis":
     st.image(image_path, caption="Heatmap of covid effected area in India",  use_container_width=True)
     
     # Additional UI elements (optional)
-    st.write("Here the colour shade represent the magnitude of the covid impacted areas. Darker shades represnt the hotspot zones and lighter shades represet less impacted areas")
+    st.write("Here the colour shade represent the magnitude of the covid impacted areas. Darker shades represnt the hotspot zones and lighter shades represent less impacted areas")
     image_path = "content/Heat_map_one.jpg"  # Path to your JPG file
     st.image(image_path, caption="Heatmap of covid effected area in India with satelite view",  use_container_width=True)
     
     # Additional UI elements (optional)
-    st.write("Here the sizes of the buble represent the total number of covid effected people. Larger bubles represnt the most effected region and small bubles represet less effected regions")
+    st.write("Here the sizes of the buble represent the total number of covid effected people. Larger bubles represnt the most effected region and small bubles represent less effected regions")
     image_path = "content/Quaterly_trend_Covid.jpg"  # Path to your JPG file
     st.image(image_path, caption="Multiple bar diagram of covid positive male and female patients in different quarters of year 2020 and 2021.",  use_container_width=True)
     
