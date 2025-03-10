@@ -168,49 +168,41 @@ if page == "Risk Assessment":
         USER_INPUT[2] = 1
     elif USER_INPUT[2] == 'No':
         USER_INPUT[2] = 0
-    symptoms1 = [
-        "Fever", "Cough", "Breathlessness", "Sore Throat",
-        "Loss of Taste/Smell", "Body Ache", "Diarrhea"
+    # Define the list of symptoms
+    symptoms = [
+        "Fever", "Cough", "Breathlessness", "Sore Throat", "Loss of Taste/Smell",
+        "Body Ache", "Diarrhea", "Vomiting", "Sputum", "Nausea", "Nasal Discharge",
+        "Abdominal Pain", "Chest Pain", "Haemoptysis", "Headache", "Body Pain",
+        "Weakness", "Cold"
     ]
-    symptom_check1 = [st.checkbox(symptom) for symptom in symptoms1]
-    # Title of the Streamlit app
-    # st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
     
-        # Assess risk
-    # if st.button("Assess Risk"):
-    #     risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
-    #     if risk_score >= 5:
-    #         st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
-    #     elif 3 <= risk_score < 5:
-    #         st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
-    #     else:
-    #         st.success("Low Risk. Continue practicing preventive measures.")
-    if st.button("Assess Risk"):
-        risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
+    # Function to collect symptom data
+    def collect_symptoms(symptoms):
+        """
+        Collect symptom data using checkboxes.
+        Returns a dictionary with symptom names as keys and their values (1 for selected, 0 for not selected).
+        """
+        symptom_values = {}
+        
+        # Split symptoms into two columns for better UI
+        col1, col2 = st.columns(2)
+        
+        for i, symptom in enumerate(symptoms):
+            with col1 if i < len(symptoms) // 2 else col2:
+                selected = st.checkbox(symptom)
+                symptom_values[symptom] = 1 if selected else 0
+        
+        return symptom_values
+    def calculate_risk_score(symptom_values, pre_medical):
+        """
+        Calculate risk score based on selected symptoms and pre-existing medical conditions.
+        """
+        risk_score = sum(symptom_values.values())  # Sum of selected symptoms
+        if pre_medical == "Yes":
+            risk_score += 1  # Add 1 if pre-existing medical condition exists
+        return risk_score
+        # Step 2: Collect symptom data
     
-        if risk_score >= 5:
-            st.markdown(
-                '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
-                "High Risk of COVID-19. Consult a healthcare provider immediately."
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            # draw_speedometer(risk_score)
-        elif 3 <= risk_score < 5:
-            st.markdown(
-                '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
-                "Moderate Risk. Self-isolate and monitor symptoms."
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            # draw_speedometer(risk_score)
-        else:
-            st.markdown(
-                '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
-                "Low Risk. Continue practicing preventive measures."
-                "</div>",
-                unsafe_allow_html=True,
-            )
             # draw_speedometer(risk_score)
 
             
@@ -264,15 +256,15 @@ if page == "Risk Assessment":
     #           """,
     #           unsafe_allow_html=True,
     #       )
-    #       symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
-    #                   'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
-    #                   'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
+          # symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
+                      # 'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
+                      # 'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
     
     #       # Split the symptoms into two columns with 10 rows in each column
     #       symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
     
     #       # Create a DataFrame to store symptom values
-    #       symptom_df = pd.DataFrame(columns=symptoms)
+          # symptom_df = pd.DataFrame(columns=symptoms)
     
     
     #       # Create columns for checkboxes (e.g., 2 columns)
@@ -294,13 +286,32 @@ if page == "Risk Assessment":
     
           #USER_INPUT[4] = process_input(SH)
 
-    new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
-          # Concatenate the two DataFrames vertically
-    combined_df = pd.concat([new_data, symptom_check1], axis=1, ignore_index=True)
-    new_table_df=combined_df
-    new_table_df.columns = list(new_data.columns) + list(symptom_check1.columns)
+    # new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
+    #       # Concatenate the two DataFrames vertically
+    # combined_df = pd.concat([new_data, symptom_check1], axis=1, ignore_index=True)
+    # new_table_df=combined_df
+    # new_table_df.columns = list(new_data.columns) + list(symptom_check1.columns)
+    def prepare_screening_data(symptom_values, age, e_gene, pre_medical):
+        """
+        Prepare symptom data for predictive screening.
+        Returns a DataFrame with user inputs and symptom values.
+        """
+        # Create a DataFrame for symptoms
+        symptom_df = pd.DataFrame([symptom_values])
     
+        # Add other user inputs (age, e_gene, pre_medical)
+        user_data = {
+            "Age": age,
+            "E_gene": e_gene,
+            "Pre_medical": pre_medical
+        }
+        user_df = pd.DataFrame([user_data])
     
+        # Combine user data and symptom data
+        combined_df = pd.concat([user_df, symptom_df], axis=1)
+        return combined_df
+    new_table_df = prepare_screening_data(symptom_values, age, e_gene, pre_medical)
+
     # Panel 3: Full-width panel
     st.markdown(
         """
@@ -449,6 +460,50 @@ if page == "Risk Assessment":
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
+    symptom_values = collect_symptoms(symptoms)
+    # symptoms1 = [
+    #     "Fever", "Cough", "Breathlessness", "Sore Throat",
+    #     "Loss of Taste/Smell", "Body Ache", "Diarrhea"
+    # ]
+    # symptom_check1 = [st.checkbox(symptom) for symptom in symptoms1]
+    # Title of the Streamlit app
+    # st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
+    
+        # Assess risk
+    # if st.button("Assess Risk"):
+    #     risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
+    #     if risk_score >= 5:
+    #         st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
+    #     elif 3 <= risk_score < 5:
+    #         st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
+    #     else:
+    #         st.success("Low Risk. Continue practicing preventive measures.")
+    if st.button("Assess Risk"):
+        risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
+    
+        if risk_score >= 5:
+            st.markdown(
+                '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
+                "High Risk of COVID-19. Consult a healthcare provider immediately."
+                "</div>",
+                unsafe_allow_html=True,
+            )
+            # draw_speedometer(risk_score)
+        elif 3 <= risk_score < 5:
+            st.markdown(
+                '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
+                "Moderate Risk. Self-isolate and monitor symptoms."
+                "</div>",
+                unsafe_allow_html=True,
+            )
+            # draw_speedometer(risk_score)
+        else:
+            st.markdown(
+                '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
+                "Low Risk. Continue practicing preventive measures."
+                "</div>",
+                unsafe_allow_html=True,
+            )
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
