@@ -312,7 +312,7 @@ if page == "Risk Assessment":
         # Combine user data and symptom data
         combined_df = pd.concat([user_df, symptom_df], axis=1)
         return combined_df
-    new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, pre_medical1)
+    new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, USER_INPUT[2])
 
     # Panel 3: Full-width panel
     st.markdown(
