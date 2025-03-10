@@ -147,36 +147,34 @@ def header(title):
 if page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
-    USER_INPUT = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    # USER_INPUT = [0, 0, 0, 0]
     st.markdown(
         """
         <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
         """,
         unsafe_allow_html=True,
     )
-    
     # Input fields
-
-    name1 = st.text_input("Name")
-    AGE = st.number_input("Age", step=1.,format="%.f")
-    USER_INPUT[0] = AGE
-    gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
-    USER_INPUT[1] = gender1
-    pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
-    USER_INPUT[2] = pre_medical1
-    if USER_INPUT[2] == 'Yes':
-        USER_INPUT[2] = 1
-    elif USER_INPUT[2] == 'No':
-        USER_INPUT[2] = 0
-    E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-    USER_INPUT[3] = E_gene
+    # name1 = st.text_input("Name")
+    # AGE = st.number_input("Age", step=1.,format="%.f")
+    # USER_INPUT[0] = AGE
+    # gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
+    # USER_INPUT[1] = gender1
+    # pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
+    # USER_INPUT[2] = pre_medical1
+    # if USER_INPUT[2] == 'Yes':
+    #     USER_INPUT[2] = 1
+    # elif USER_INPUT[2] == 'No':
+    #     USER_INPUT[2] = 0
+    # E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
+    # USER_INPUT[3] = E_gene
     # Define the list of symptoms
-    symptoms = [
-        "Fever", "Cough", "Breathlessness", "Sore Throat", "Loss of Taste/Smell",
-        "Body Ache", "Diarrhea", "Vomiting", "Sputum", "Nausea", "Nasal Discharge",
-        "Abdominal Pain", "Chest Pain", "Haemoptysis", "Headache", "Body Pain",
-        "Weakness", "Cold"
-    ]
+    # symptoms = [
+    #     "Fever", "Cough", "Breathlessness", "Sore Throat", "Loss of Taste/Smell",
+    #     "Body Ache", "Diarrhea", "Vomiting", "Sputum", "Nausea", "Nasal Discharge",
+    #     "Abdominal Pain", "Chest Pain", "Haemoptysis", "Headache", "Body Pain",
+    #     "Weakness", "Cold"
+    # ]
     
     # Function to collect symptom data
     def collect_symptoms(symptoms):
@@ -312,7 +310,7 @@ if page == "Risk Assessment":
         # Combine user data and symptom data
         combined_df = pd.concat([user_df, symptom_df], axis=1)
         return combined_df
-    new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, USER_INPUT[2])
+    # new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, USER_INPUT[2])
 
     # Panel 3: Full-width panel
     st.markdown(
@@ -328,8 +326,8 @@ if page == "Risk Assessment":
         """,
         unsafe_allow_html=True,
     )
-    st.write('Data Overview')
-    st.write(new_table_df)
+    # st.write('Data Overview')
+    # st.write(new_table_df)
     # bayes = load(open('content/bayes.pkl', 'rb'))
     # logistic = load(open('content/logistic.pkl', 'rb'))
     # # random_tree =load(open('content/random_tree.pkl', 'rb'))
@@ -347,8 +345,8 @@ if page == "Risk Assessment":
     # # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
     # tree = load('content/decision_tree_model.joblib')
     # # Dropdown menu for model selection
-    selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
-    prediction=0
+    # selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
+    # prediction=0
     # Perform predictions based on the selected model
     
     CSS = """
@@ -368,32 +366,134 @@ if page == "Risk Assessment":
     HEAD_NO = """
         <h6 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
     """
-    # combined_df=[new_table_df.values] 
-    scl = load(open('./models/Scaler.pkl', 'rb'))
-    scaler = scl["stdscaler"]
-    max_ct = scl["max_ct"]
-    columnsN = new_table_df.columns
-    new_data_std = scaler.transform(new_table_df) 
-        # st.dataframe(new_data_std, hide_index= True)
-    new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
+    ########################################## (New added part from sumit sir code ############
+    def model_loader(model, new_data):
+        scl = pkl.load(open('./models/Scaler.pkl', 'rb'))
+        scaler = scl["stdscaler"]
+        max_ct = scl["max_ct"]
+        columnsN = new_data.columns
+        new_data_std = scaler.transform(new_data) 
+            # st.dataframe(new_data_std, hide_index= True)
+        new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
+        # st.write("New data scaled")# Apply scaling on the test data
     
-    if st.button('Make Predictions'):
-        st.write("Predicted Results:")
-        st.write(combined_df)
-        if selected_model == 'Naive Bayes':
-            bayes = load(open(f'./models/NB{max_ct}.pkl', 'rb'))
-            prediction = bayes.predict(new_data)
-            # st.write("Predicted Results:")
-            # st.write(f"Fraction Value: {prediction*100}")
-            if prediction == 1:
+        # st.write(f'Using Model: {model}')
+        try:
+            match model:
+                case 'Naive Bayesian':
+                    load_model = pkl.load(open(f'./models/NB{max_ct}.pkl', 'rb'))
+                case 'Decesion Tree':
+                    load_model = pkl.load(open(f'./models/DT{max_ct}.pkl', 'rb'))
+                case 'Random Forest':
+                    load_model = pkl.load(open(f'./models/RF{max_ct}.pkl', 'rb'))
+                case 'SVM (Linear)':
+                    load_model= pkl.load(open(f'./models/SVM_linear{max_ct}.pkl', 'rb'))
+                case 'SVM (RBF)':
+                    load_model= pkl.load(open(f'./models/SVM_rbf{max_ct}.pkl', 'rb'))
+                case 'SVM (Polynomial)':
+                    load_model= pkl.load(open(f'./models/SVM_poly{max_ct}.pkl', 'rb'))
+                case 'SVM (Sigmoidal)':
+                    load_model= pkl.load(open(f'./models/SVM_sigmoid{max_ct}.pkl', 'rb'))
+            
+            result = load_model.predict(new_data)
+            # st.write(result)
+            # result = predict_results(st.session_state.load_model, new_data)        
+            if result[0] == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
                 st.cache_data.clear()
+                # st.subheader(f'You have Covid-19')
             else:
-                st.cache_data.clear()
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
+                # st.subheader(f'You don\'t have Covid-19')
+            
+        except FileNotFoundError:
+                    st.error('Model not found. Please make sure the model file exists.')
+
+   
+
+    load_model = None
+    features = pkl.load(open(f'./models/Features.pkl', 'rb'))
+    keys = [features[x] for x in features.keys()]
+    new_data = pd.DataFrame(columns=keys)
+
+    with st.form('prsnlInfo', clear_on_submit=False):
+        # st.header("Data Collection")
+        c_00, c_01 = st.columns(2, gap="medium", vertical_alignment="top")
+        with c_00:
+            st.subheader('Personal Information')
+            name = st.text_input('Name: ', placeholder='Enter Your Name')#, on_change = check_blank, args=(value,) )
+            age = st.slider('Age: (Select 100 if age is more than 100)', min_value=0, max_value=100, step=1, )
+            new_data.loc[0,'age'] = age
+            sex = st.selectbox('Sex: ', options= ["Male", "Female"],)
+            state = st.text_input('State: ', placeholder='Enter the State you are from')#, on_change=check_blank, args = (value,))
+            country_list = list(pycountry.countries)
+            cn_list = [c.name for c in country_list]
+            country = st.selectbox('Country: ', options=cn_list, placeholder='Select your Country')
+            expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
+            eff_mem = st.slider('No. of effected family members: (Select 10 if number is more than 10) ', max_value=10, min_value=0)
+        # next_sec = st.form_submit_button('Next Section')
+        with c_01:
+            st.subheader('Clinical Information')
+            c_0, c_1 = st.columns(2, gap="medium", vertical_alignment="top")
+            i = 0
+            for feature, key in features.items():
+                if feature not in ('Age','Comorbidity','RTPCR Test(CT VALUE)'): # 'Comorbidity', 
+                    match i%2:
+                        case 0:
+                            with c_0:
+                                new_data.loc[0,key] = 1 if st.checkbox(feature, key=key) else 0
+                        case 1:
+                            with c_1:
+                                new_data.loc[0,key] = 1 if st.checkbox(feature, key=key) else 0
+                    i += 1
+
+                else:
+                    if feature == 'Comorbidity':
+                        new_data.loc[0,key] = 1 if st.selectbox(feature, options=["No", "Yes"]) == 'Yes' else 0
+                                    
+                    if feature == 'RTPCR Test(CT VALUE)':
+                        new_data.loc[0,key] = st.slider(feature+'Select 10 if CT value is more than 50', max_value= 50, min_value=0)
+
+        st.header('Model Selection')
+        modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
+                            'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
+            # kernel = st.selectbox('Select Kernel: ', options=['Linear', 'RBF', 'Polynomial', 'Sigmoidal'],)
+        btn_lm = st.form_submit_button('Predict')#, on_click=model_loader,args=(modeli, pd.DataFrame.from_dict(new_data)))
+    if btn_lm:
+        st.write("New data raw")
+        st.dataframe(new_data)
+        model_loader(modeli, new_data)  # Call model_loader function with selected model and new_data
+     #####################
+
+    # combined_df=[new_table_df.values] 
+    # scl = load(open('./models/Scaler.pkl', 'rb'))
+    # scaler = scl["stdscaler"]
+    # max_ct = scl["max_ct"]
+    # columnsN = new_table_df.columns
+    # new_data_std = scaler.transform(new_table_df) 
+    #     # st.dataframe(new_data_std, hide_index= True)
+    # new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
+    
+    # if st.button('Make Predictions'):
+    #     st.write("Predicted Results:")
+    #     st.write(combined_df)
+    #     if selected_model == 'Naive Bayes':
+    #         bayes = load(open(f'./models/NB{max_ct}.pkl', 'rb'))
+    #         prediction = bayes.predict(new_data)
+    #         # st.write("Predicted Results:")
+    #         # st.write(f"Fraction Value: {prediction*100}")
+    #         if prediction == 1:
+    #             st.markdown(CSS, unsafe_allow_html=True)
+    #             st.markdown(HEAD_YES, unsafe_allow_html=True)
+    #             st.cache_data.clear()
+    #         else:
+    #             st.cache_data.clear()
+    #             st.markdown(CSS, unsafe_allow_html=True)
+    #             st.markdown(HEAD_NO, unsafe_allow_html=True)
+    #             st.cache_data.clear()
         # elif selected_model == 'Logistic Regression':
         #     prediction = logistic.predict(combined_df)
         #     # st.write("Predicted Results:")
@@ -473,49 +573,34 @@ if page == "Risk Assessment":
         #         st.markdown(HEAD_NO, unsafe_allow_html=True)
         #         st.cache_data.clear()
     
-    # symptoms1 = [
-    #     "Fever", "Cough", "Breathlessness", "Sore Throat",
-    #     "Loss of Taste/Smell", "Body Ache", "Diarrhea"
-    # ]
-    # symptom_check1 = [st.checkbox(symptom) for symptom in symptoms1]
-    # Title of the Streamlit app
-    # st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
-    
-        # Assess risk
+ 
+    ### Last edited risk assesment part
     # if st.button("Assess Risk"):
-    #     risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
-    #     if risk_score >= 5:
-    #         st.error("High Risk of COVID-19. Consult a healthcare provider immediately.")
-    #     elif 3 <= risk_score < 5:
-    #         st.warning("Moderate Risk. Self-isolate and monitor symptoms.")
-    #     else:
-    #         st.success("Low Risk. Continue practicing preventive measures.")
-    if st.button("Assess Risk"):
-        risk_score = calculate_risk_score(symptom_values, pre_medical1)
+    #     risk_score = calculate_risk_score(symptom_values, pre_medical1)
     
-        if risk_score >= 5:
-            st.markdown(
-                '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
-                "High Risk of COVID-19. Consult a healthcare provider immediately."
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            # draw_speedometer(risk_score)
-        elif 3 <= risk_score < 5:
-            st.markdown(
-                '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
-                "Moderate Risk. Self-isolate and monitor symptoms."
-                "</div>",
-                unsafe_allow_html=True,
-            )
-            # draw_speedometer(risk_score)
-        else:
-            st.markdown(
-                '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
-                "Low Risk. Continue practicing preventive measures."
-                "</div>",
-                unsafe_allow_html=True,
-            )
+    #     if risk_score >= 5:
+    #         st.markdown(
+    #             '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
+    #             "High Risk of COVID-19. Consult a healthcare provider immediately."
+    #             "</div>",
+    #             unsafe_allow_html=True,
+    #         )
+    #         # draw_speedometer(risk_score)
+    #     elif 3 <= risk_score < 5:
+    #         st.markdown(
+    #             '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
+    #             "Moderate Risk. Self-isolate and monitor symptoms."
+    #             "</div>",
+    #             unsafe_allow_html=True,
+    #         )
+    #         # draw_speedometer(risk_score)
+    #     else:
+    #         st.markdown(
+    #             '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
+    #             "Low Risk. Continue practicing preventive measures."
+    #             "</div>",
+    #             unsafe_allow_html=True,
+    #         )
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
