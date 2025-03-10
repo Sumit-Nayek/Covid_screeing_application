@@ -514,7 +514,7 @@ elif page == "Descriptive Analysis":
     
     # Additional UI elements (optional)
     st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
-    image_path = "content/'Density plot'.jpg"  # Path to your JPG file
+    image_path = "content/Density_plot.jpg"  # Path to your JPG file
     st.image(image_path, caption="Graph Representation",  use_container_width=True)
     
     # Additional UI elements (optional)
