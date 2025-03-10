@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import base64
-from pickle import load
+# from pickle import load
+from pickle import pkl
 import numpy as np
 import matplotlib.pyplot as plt
 import time
