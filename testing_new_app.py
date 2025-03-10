@@ -330,13 +330,13 @@ if page == "Risk Assessment":
     )
     st.write('Data Overview')
     st.write(new_table_df)
-    bayes = load(open('content/bayes.pkl', 'rb'))
-    logistic = load(open('content/logistic.pkl', 'rb'))
-    # random_tree =load(open('content/random_tree.pkl', 'rb'))
-    svm_linear = load(open('content/svm_linear.pkl', 'rb'))
-    svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
-    # svm_sigmoid = load('content/svm_sigmoid.joblib')
-    svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
+    # bayes = load(open('content/bayes.pkl', 'rb'))
+    # logistic = load(open('content/logistic.pkl', 'rb'))
+    # # random_tree =load(open('content/random_tree.pkl', 'rb'))
+    # svm_linear = load(open('content/svm_linear.pkl', 'rb'))
+    # svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
+    # # svm_sigmoid = load('content/svm_sigmoid.joblib')
+    # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
     # tree = load(open('content/tree.pkl', 'rb'))
     # bayes = load('content/naive_bayes_model.joblib')
     # logistic = load('content/logistic_regression_model.joblib')
@@ -369,7 +369,7 @@ if page == "Risk Assessment":
         <h6 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
     """
     # combined_df=[new_table_df.values] 
-    scl = pkl.load(open('./models/Scaler.pkl', 'rb'))
+    scl = load(open('./models/Scaler.pkl', 'rb'))
     scaler = scl["stdscaler"]
     max_ct = scl["max_ct"]
     columnsN = new_table_df.columns
@@ -381,7 +381,7 @@ if page == "Risk Assessment":
         st.write("Predicted Results:")
         st.write(combined_df)
         if selected_model == 'Naive Bayes':
-            bayes = pkl.load(open(f'./models/NB{max_ct}.pkl', 'rb'))
+            bayes = load(open(f'./models/NB{max_ct}.pkl', 'rb'))
             prediction = bayes.predict(new_data)
             # st.write("Predicted Results:")
             # st.write(f"Fraction Value: {prediction*100}")
