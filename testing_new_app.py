@@ -193,6 +193,7 @@ if page == "Risk Assessment":
                 symptom_values[symptom] = 1 if selected else 0
         
         return symptom_values
+    symptom_values = collect_symptoms(symptoms)
     def calculate_risk_score(symptom_values, pre_medical):
         """
         Calculate risk score based on selected symptoms and pre-existing medical conditions.
@@ -460,7 +461,7 @@ if page == "Risk Assessment":
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
-    symptom_values = collect_symptoms(symptoms)
+    
     # symptoms1 = [
     #     "Fever", "Cough", "Breathlessness", "Sore Throat",
     #     "Loss of Taste/Smell", "Body Ache", "Diarrhea"
