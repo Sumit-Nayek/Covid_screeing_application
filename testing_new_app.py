@@ -482,7 +482,7 @@ if page == "Risk Assessment":
     #     else:
     #         st.success("Low Risk. Continue practicing preventive measures.")
     if st.button("Assess Risk"):
-        risk_score = calculate_risk_score(symptom_values, pre_medical)
+        risk_score = calculate_risk_score(symptom_values, pre_medical1)
     
         if risk_score >= 5:
             st.markdown(
