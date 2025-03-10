@@ -193,7 +193,7 @@ if page == "Risk Assessment":
                 symptom_values[symptom] = 1 if selected else 0
         
         return symptom_values
-    symptom_values = collect_symptoms(symptoms)
+    # symptom_values = collect_symptoms(symptoms)
     def calculate_risk_score(symptom_values, pre_medical):
         """
         Calculate risk score based on selected symptoms and pre-existing medical conditions.
