@@ -122,7 +122,7 @@ st.markdown(
 # st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Primary Treatment"])
+page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Descriptive Analysis","Primary Treatment"])
 
 # Header function
 def header(title):
