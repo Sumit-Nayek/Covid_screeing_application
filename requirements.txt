@@ -9,3 +9,4 @@ requests
 path
 numpy
 matplotlib
+pycountry
