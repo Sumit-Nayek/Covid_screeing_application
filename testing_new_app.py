@@ -510,15 +510,15 @@ if page == "Risk Assessment":
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
-    st.image(image_path, caption="Graph Representation",  use_container_width=True)
+    st.image(image_path, caption="Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)",  use_container_width=True)
     
     # Additional UI elements (optional)
-    st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
+    st.write("It was observed that that the bar length is high in positive patients who have comorbidity and symptoms all together.")
     image_path = "content/Density_plot.jpg"  # Path to your JPG file
     st.image(image_path, caption="Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients",  use_container_width=True)
     
     # Additional UI elements (optional)
-    st.write("Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients")
+    st.write("From above plots one can see that for positive patients of comorbidity group the age is denser in the range 45-65 which means that the middle-aged peoples with comorbidity have more probability for coming positive in the RT-PCR test compared to younger peoples")
     image_path = "content/First_heatmap.jpg"  # Path to your JPG file
     st.image(image_path, caption="Heatmap of covid effected area in India",  use_container_width=True)
     
