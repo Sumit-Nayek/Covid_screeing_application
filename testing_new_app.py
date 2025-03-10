@@ -176,14 +176,7 @@ if page == "Risk Assessment":
     # Title of the Streamlit app
     # st.title("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
     
-    # Adding a graph image (JPG format)
-    image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
-    st.image(image_path, caption="Graph Representation",  use_container_width=True)
-    
-    # Additional UI elements (optional)
-    st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
-    
-    # Assess risk
+        # Assess risk
     # if st.button("Assess Risk"):
     #     risk_score = sum(symptom_check1) + (1 if pre_medical1 == "Yes" else 0)
     #     if risk_score >= 5:
@@ -222,89 +215,90 @@ if page == "Risk Assessment":
 
             
     # Create two columns for the first two panels
-    header("Screening for Covid-19 virus")
-    col1, col2 = st.columns(2)
     
-    ###
+    # header("Screening for Covid-19 virus")
+    # col1, col2 = st.columns(2)
     
-    def process_input(input_value):
-        result = input_value
-        return result
+    # ###
     
-    # Panel 1: Left panel
-    with col1:
-          st.markdown(
-              """
-              <div style="
-                  background-color: #ffdb4d;
-                  padding: 5px,3px;
-                  border: 1px solid #00FF00;
-                  border-radius: 5px;text-align: center;
-              ">
-              <h3 style="color: ##00FF00;">Personal and Clinical Data</h3>
+    # def process_input(input_value):
+    #     result = input_value
+    #     return result
     
-              </div>
-              """,
-              unsafe_allow_html=True,
-          )
-          # patient_name =st.text_input('Name')
+    # # Panel 1: Left panel
+    # with col1:
+    #       st.markdown(
+    #           """
+    #           <div style="
+    #               background-color: #ffdb4d;
+    #               padding: 5px,3px;
+    #               border: 1px solid #00FF00;
+    #               border-radius: 5px;text-align: center;
+    #           ">
+    #           <h3 style="color: ##00FF00;">Personal and Clinical Data</h3>
+    
+    #           </div>
+    #           """,
+    #           unsafe_allow_html=True,
+    #       )
+    #       # patient_name =st.text_input('Name')
 
-          E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-          USER_INPUT[3] = E_gene
-          # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
+    #       E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
+    #       USER_INPUT[3] = E_gene
+    #       # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
           
-          # gender = st.selectbox('Gender', ('Male', 'Female'))
+    #       # gender = st.selectbox('Gender', ('Male', 'Female'))
           
-    # Panel 2: Middle panel
-    with col2:
-          st.markdown(
-              """
-              <div style="
-                  background-color: #ffdb4d;
-                  padding: 5px,3px;
-                  border: 1px solid #00FF00;
-                  border-radius: 5px;text-align: center;
-              ">
-              <h3 style="color: ##00FF00;">Symptoms Selection</h3>
-              </div>
-              """,
-              unsafe_allow_html=True,
-          )
-          symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
-                      'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
-                      'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
+    # # Panel 2: Middle panel
+    # with col2:
+    #       st.markdown(
+    #           """
+    #           <div style="
+    #               background-color: #ffdb4d;
+    #               padding: 5px,3px;
+    #               border: 1px solid #00FF00;
+    #               border-radius: 5px;text-align: center;
+    #           ">
+    #           <h3 style="color: ##00FF00;">Symptoms Selection</h3>
+    #           </div>
+    #           """,
+    #           unsafe_allow_html=True,
+    #       )
+    #       symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
+    #                   'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
+    #                   'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
     
-          # Split the symptoms into two columns with 10 rows in each column
-          symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
+    #       # Split the symptoms into two columns with 10 rows in each column
+    #       symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
     
-          # Create a DataFrame to store symptom values
-          symptom_df = pd.DataFrame(columns=symptoms)
+    #       # Create a DataFrame to store symptom values
+    #       symptom_df = pd.DataFrame(columns=symptoms)
     
     
-          # Create columns for checkboxes (e.g., 2 columns)
-          coll1, coll2 = st.columns(2)
+    #       # Create columns for checkboxes (e.g., 2 columns)
+    #       coll1, coll2 = st.columns(2)
     
-          # Initialize a dictionary to store symptom values
-          symptom_values = {}
+    #       # Initialize a dictionary to store symptom values
+    #       symptom_values = {}
     
-          # Ensure the loop doesn't exceed the length of the split list
-          for i in range(len(symptoms)):
-              with coll1 if i < 10 else coll2:
-                  selected = st.checkbox(symptoms[i])
-                  symptom_values[symptoms[i]] = 1 if selected else 0
+    #       # Ensure the loop doesn't exceed the length of the split list
+    #       for i in range(len(symptoms)):
+    #           with coll1 if i < 10 else coll2:
+    #               selected = st.checkbox(symptoms[i])
+    #               symptom_values[symptoms[i]] = 1 if selected else 0
     
-          # Append the symptom values to the DataFrame
-          symptom_df.loc[len(symptom_df)] = symptom_values
+    #       # Append the symptom values to the DataFrame
+    #       symptom_df.loc[len(symptom_df)] = symptom_values
     #              selected = st.checkbox(symptoms_split[2][i])
     #              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
     
           #USER_INPUT[4] = process_input(SH)
 
-          new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
+    new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
           # Concatenate the two DataFrames vertically
-          combined_df = pd.concat([new_data, symptom_df], axis=1, ignore_index=True)
-          new_table_df=combined_df
-          new_table_df.columns = list(new_data.columns) + list(symptom_df.columns)
+    combined_df = pd.concat([new_data, symptom_check1], axis=1, ignore_index=True)
+    new_table_df=combined_df
+    new_table_df.columns = list(new_data.columns) + list(symptom_check1.columns)
     
     
     # Panel 3: Full-width panel
@@ -455,6 +449,15 @@ if page == "Risk Assessment":
                 st.markdown(CSS, unsafe_allow_html=True)
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
+elif page == "Descriptive Analysis":
+  # Adding a graph image (JPG format)
+    image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Graph Representation",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
+    
+  
 # Page 2: Primary Treatment
 elif page == "Primary Treatment":
     # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
