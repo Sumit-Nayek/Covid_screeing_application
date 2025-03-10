@@ -515,12 +515,26 @@ elif page == "Descriptive Analysis":
     # Additional UI elements (optional)
     st.write("Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)")
     image_path = "content/Density_plot.jpg"  # Path to your JPG file
-    st.image(image_path, caption="Graph Representation",  use_container_width=True)
+    st.image(image_path, caption="Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients",  use_container_width=True)
     
     # Additional UI elements (optional)
     st.write("Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients")
-  
-  
+    image_path = "content/First_heatmap.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Heatmap of covid effected area in India",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the colour shade represent the magnitude of the covid impacted areas. Darker shades represnt the hotspot zones and lighter shades represet less impacted areas")
+    image_path = "content/Heat_map_one.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Heatmap of covid effected area in India with satelite view",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the sizes of the buble represent the total number of covid effected people. Larger bubles represnt the most effected region and small bubles represet less effected regions")
+    image_path = "content/Quaterly_trend_Covid.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Multiple bar diagram of covid positive male and female patients in different quarters of year 2020 and 2021.",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the percentage for each quarter is calculated with respect to the total number of positive cases throughout the covid period [Apr. 2020-Dec.2021]")
+
 # Page 2: Primary Treatment
 elif page == "Primary Treatment":
     # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
