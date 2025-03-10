@@ -368,7 +368,7 @@ if page == "Risk Assessment":
     HEAD_NO = """
         <h6 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
     """
-    combined_df=new_table_df.values 
+    combined_df=[for i in new_table_df.values] 
     if st.button('Make Predictions'):
         st.write("Predicted Results:")
         st.write(combined_df)
