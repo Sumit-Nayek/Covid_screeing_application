@@ -513,7 +513,7 @@ elif page == "Descriptive Analysis":
     st.image(image_path, caption="Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)",  use_container_width=True)
     
     # Additional UI elements (optional)
-    st.write("It was observed that that the bar length is high in positive patients who have comorbidity and symptoms all together.")
+    st.write("It was observed that that the bar length is high in positive patients who have comorbidity and symptoms all together. The middle age group shows symptoms with comorbidity; patients are mostly positive compared to other groups.")
     image_path = "content/Density_plot.jpg"  # Path to your JPG file
     st.image(image_path, caption="Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients",  use_container_width=True)
     
