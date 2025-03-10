@@ -168,6 +168,8 @@ if page == "Risk Assessment":
         USER_INPUT[2] = 1
     elif USER_INPUT[2] == 'No':
         USER_INPUT[2] = 0
+    E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
+    USER_INPUT[3] = E_gene
     # Define the list of symptoms
     symptoms = [
         "Fever", "Cough", "Breathlessness", "Sore Throat", "Loss of Taste/Smell",
@@ -236,8 +238,7 @@ if page == "Risk Assessment":
     #       )
     #       # patient_name =st.text_input('Name')
 
-    #       E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-    #       USER_INPUT[3] = E_gene
+
     #       # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
           
     #       # gender = st.selectbox('Gender', ('Male', 'Female'))
@@ -311,7 +312,7 @@ if page == "Risk Assessment":
         # Combine user data and symptom data
         combined_df = pd.concat([user_df, symptom_df], axis=1)
         return combined_df
-    new_table_df = prepare_screening_data(symptom_values, age, e_gene, pre_medical)
+    new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, pre_medical1)
 
     # Panel 3: Full-width panel
     st.markdown(
