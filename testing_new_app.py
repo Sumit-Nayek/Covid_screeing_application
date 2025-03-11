@@ -184,7 +184,8 @@ if page == "Diagonostic recomendation":
                 st.cache_data.clear()
                 # st.subheader(f'You don\'t have Covid-19')
         # except diagonosis    
-          
+        except FileNotFoundError:
+              st.error('Model not found. Please make sure the model file exists.')       
    
 
     load_model = None
