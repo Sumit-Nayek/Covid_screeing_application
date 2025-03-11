@@ -183,10 +183,8 @@ if page == "Diagonostic recomendation":
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
                 # st.subheader(f'You don\'t have Covid-19')
-            
-        except FileNotFoundError:
-                    st.error('Model not found. Please make sure the model file exists.')
-        return diagonosis
+        return diagonosis    
+          
    
 
     load_model = None
