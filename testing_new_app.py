@@ -407,8 +407,8 @@ elif page == "AI Assistant":
         st.warning("No data found! Please upload it on the data page.")
     
     # Initialize chat history
-    # if "messages" not in st.session_state:
-    st.session_state.messages = []
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
     
     # Display chat history
     for message in st.session_state.messages:
