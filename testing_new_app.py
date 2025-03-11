@@ -465,7 +465,9 @@ if page == "Diagonostic recomendation":
                                     
                     if feature == 'RTPCR Test(CT VALUE)':
                         new_data.loc[0,key] = st.number_input('CT value E gene', min_value=0, max_value=50,step=1, format="%d")
-# 
+# if st.button("Save Data"):
+        st.session_state.shared_data = new_data  # Store data globally
+        st.success("Data saved! Go to Risk Assesment Page to access it.")
         st.header('Model Selection')
         modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
@@ -613,7 +615,12 @@ if page == "Diagonostic recomendation":
 elif page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
-    st.dataframe(new_data)
+    # st.dataframe(new_data)
+    # Retrieve shared data
+    if "shared_data" in st.session_state:
+        st.write(f"Retrieved Data: {st.session_state.shared_data}")
+    else:
+        st.warning("No data found. Please enter data on Page 1.")
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
