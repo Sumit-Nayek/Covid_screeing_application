@@ -619,8 +619,39 @@ elif page == "Risk Assessment":
     # Retrieve shared data
     if "shared_data" in st.session_state:
         st.write(f"Retrieved Data: {st.session_state.shared_data}")
+        df=st.session_state.shared_data
+        # Extract symptoms and pre-medical condition
+        symptom_values = df.iloc[0, 2:18]  # Extract all symptom columns
+        pre_medical = df.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
+    
+        # Calculate risk score
+        risk_score = sum(symptom_values.values)  # Sum of selected symptoms
+        if pre_medical == 1:
+            risk_score += 1  # Add 1 if pre-existing medical condition exists
+        if risk_score >= 5:
+            st.markdown(
+                '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
+                "High Risk of COVID-19. Consult a healthcare provider immediately."
+                "</div>",
+                unsafe_allow_html=True,
+            )
+        elif 3 <= risk_score < 5:
+            st.markdown(
+                '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
+                "Moderate Risk. Self-isolate and monitor symptoms."
+                "</div>",
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
+                "Low Risk. Continue practicing preventive measures."
+                "</div>",
+                unsafe_allow_html=True,
+            )
     else:
         st.warning("No data found. Please enter data on Page 1.")
+        
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
