@@ -654,100 +654,49 @@ elif page == "Descriptive Analysis":
 # Page 4: Primary Treatment
 elif page == "AI Assistant":
 
-   
-    # OpenRouter API details
+   # OpenRouter API details
     OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
     OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
     
-    # Custom CSS for chat interface
-    st.markdown(
-        """
-        <style>
-        /* User message styling */
-        .user-message {
-            background-color: #0078D4;
-            color: white;
-            border-radius: 15px 15px 0 15px;
-            padding: 10px;
-            margin: 5px 0;
-            max-width: 70%;
-            margin-left: auto;
-        }
-    
-        /* AI message styling */
-        .ai-message {
-            background-color: #F1F1F1;
-            color: black;
-            border-radius: 15px 15px 15px 0;
-            padding: 10px;
-            margin: 5px 0;
-            max-width: 70%;
-            margin-right: auto;
-        }
-    
-        /* Chat container styling */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
-        }
-    
-        /* Streamlit chat input styling */
-        .stChatInput {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: white;
-            padding: 10px;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-    
-    
-    
-    # Streamlit app title
     st.title("🤖 AI For Your Medical Assistance")
     
-    # Initialize session state to store chat history
+    # Check if DataFrame exists in session state
+    if "df" in st.session_state:
+        df = st.session_state.share_data  # Retrieve stored DataFrame
+        summary = df.describe().to_string()  # Generate a summary
+        st.write("📊 **Initial Data Analysis**")
+        st.dataframe(df.head())  # Display first few rows
+    else:
+        st.warning("No data found! Please upload it on the data page.")
+    
+    # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
     # Display chat history
     for message in st.session_state.messages:
         if message["role"] == "user":
-            st.markdown(
-                f'<div class="chat-container"><div class="user-message">{message["content"]}</div></div>',
-                unsafe_allow_html=True,
-            )
+            st.markdown(f'<div class="chat-container"><div class="user-message">{message["content"]}</div></div>', unsafe_allow_html=True)
         else:
-            st.markdown(
-                f'<div class="chat-container"><div class="ai-message">{message["content"]}</div></div>',
-                unsafe_allow_html=True,
-            )
+            st.markdown(f'<div class="chat-container"><div class="ai-message">{message["content"]}</div></div>', unsafe_allow_html=True)
     
     # Chat input
-    if prompt := st.chat_input("How can I help you?"):
-        # Add user message to chat history
+    if prompt := st.chat_input("Ask something about the data or medical guidance..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
-        st.markdown(
-            f'<div class="chat-container"><div class="user-message">{prompt}</div></div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="chat-container"><div class="user-message">{prompt}</div></div>', unsafe_allow_html=True)
     
         # Prepare the request payload for OpenRouter
+        system_message = "You are a medical AI assistant. Use the provided patient data to give insights and guidelines. Also help them to retrive information from various sources"
+        
+        if "df" in st.session_state:
+            system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
+        
         payload = {
-            "model": "openai/gpt-3.5-turbo",  # Specify the model
-            "messages": st.session_state.messages + [
-                {
-                    "role": "system",
-                    "content": "You are a helpful health advisor providing guidance on COVID-19. Respond in a concise, conversational tone.",
-                }
-            ],
+            "model": "openai/gpt-3.5-turbo",
+            "messages": st.session_state.messages + [{"role": "system", "content": system_message}],
         }
-        # Make the API request to OpenRouter
+    
+        # Send request to OpenRouter
         headers = {
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
             "Content-Type": "application/json",
@@ -755,7 +704,7 @@ elif page == "AI Assistant":
     
         try:
             response = requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
-            response.raise_for_status()  # Raise an error for bad status codes
+            response.raise_for_status()
             ai_response = response.json()["choices"][0]["message"]["content"]
         except requests.exceptions.RequestException as e:
             st.error(f"API request failed: {e}")
@@ -763,10 +712,7 @@ elif page == "AI Assistant":
     
         # Add AI response to chat history
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
-        st.markdown(
-            f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
     # # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
     # header("Primary Treatment Instructions")
 
