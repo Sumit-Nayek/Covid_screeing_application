@@ -427,7 +427,7 @@ if page == "Diagonostic recomendation":
         with c_00:
             st.subheader('Personal Information')
             name = st.text_input('Name: ', placeholder='Enter Your Name')#, on_change = check_blank, args=(value,) )
-            age = st.slider('Age: (Select 100 if age is more than 100)', min_value=0, max_value=100, step=1, )
+            age = st.number_input("Age", step=1.,format="%.f")
             new_data.loc[0,'age'] = age
             sex = st.selectbox('Sex: ', options= ["Male", "Female"],)
             state = st.text_input('State: ', placeholder='Enter the State you are from')#, on_change=check_blank, args = (value,))
@@ -458,7 +458,7 @@ if page == "Diagonostic recomendation":
                                     
                     if feature == 'RTPCR Test(CT VALUE)':
                         new_data.loc[0,key] = st.slider(feature+'Select 10 if CT value is more than 50', max_value= 50, min_value=0)
-
+# st.number_input('CT value E gene', step=1, format="%d")
         st.header('Model Selection')
         modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
