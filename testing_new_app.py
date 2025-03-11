@@ -622,7 +622,9 @@ elif page == "Risk Assessment":
         df=st.session_state.shared_data
         # Extract symptoms and pre-medical condition
         symptom_values = df.iloc[0, 2:18]  # Extract all symptom columns
+        st.write(symptom_values)
         pre_medical = df.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
+        st.write(pre_medical)
     
         # Calculate risk score
         risk_score = sum(symptom_values.values)  # Sum of selected symptoms
