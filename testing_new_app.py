@@ -435,7 +435,7 @@ if page == "Diagonostic recomendation":
             cn_list = [c.name for c in country_list]
             country = st.selectbox('Country: ', options=cn_list, placeholder='Select your Country')
             expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
-            eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
+            # eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
         # next_sec = st.form_submit_button('Next Section')
         with c_01:
             st.subheader('Clinical Information')
