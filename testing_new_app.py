@@ -310,7 +310,7 @@ if page == "Diagonostic recomendation":
             raise ValueError("Invalid response structure from OpenAI API.")
 
     except Exception as e:
-        return f"An error occurred: {str(e)}"
+        st.write(f"An error occurred: {str(e)}")
 #####################
 
         
