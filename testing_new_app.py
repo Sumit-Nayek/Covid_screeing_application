@@ -610,6 +610,10 @@ if page == "Diagonostic recomendation":
     #             "</div>",
     #             unsafe_allow_html=True,
     #         )
+if page == "Diagonostic recomendation":
+    add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
+    header("Risk Assessment of COVID-19")
+    st.dataframe(new_data)
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
