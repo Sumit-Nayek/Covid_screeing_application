@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import time
 from matplotlib.patches import Arc
 import pgeocode
+import requests
 # from joblib import dump, loadx
 # def draw_speedometer(risk_score):
 #     fig, ax = plt.subplots(figsize=(6, 3))
