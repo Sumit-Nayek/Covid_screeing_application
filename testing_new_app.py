@@ -610,7 +610,7 @@ if page == "Diagonostic recomendation":
     #             "</div>",
     #             unsafe_allow_html=True,
     #         )
-elif page == "Diagonostic recomendation":
+elif page == "Risk Assessment":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
     header("Risk Assessment of COVID-19")
     st.dataframe(new_data)
