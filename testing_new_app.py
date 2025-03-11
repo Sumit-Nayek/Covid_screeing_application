@@ -305,7 +305,7 @@ if page == "Diagonostic recomendation":
         )
 
         if completion and completion.choices and completion.choices[0].message:
-            return completion.choices[0].message.content
+            st.write(completion.choices[0].message.content)
         else:
             raise ValueError("Invalid response structure from OpenAI API.")
 
