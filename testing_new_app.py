@@ -124,7 +124,7 @@ st.markdown(
 # st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Assessment", "Descriptive Analysis","Primary Treatment"])
+page = st.sidebar.selectbox("Go to", ["Diagonostic recomendation","Risk Assessment", "Descriptive Analysis","Primary Treatment"])
 
 # Header function
 def header(title):
@@ -146,16 +146,16 @@ def header(title):
 # header(" Web-based Covid Screening System")
 # Set the title and icon for the web app
 # Page 1: Risk Assessment
-if page == "Risk Assessment":
+if page == "Diagonostic recomendation":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
-    header("Risk Assessment of COVID-19")
+    # header("Risk Assessment of COVID-19")
     # USER_INPUT = [0, 0, 0, 0]
-    st.markdown(
-        """
-        <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
-        """,
-        unsafe_allow_html=True,
-    )
+    # st.markdown(
+    #     """
+    #     <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
+    #     """,
+    #     unsafe_allow_html=True,
+    # )
     # Input fields
     # name1 = st.text_input("Name")
     # AGE = st.number_input("Age", step=1.,format="%.f")
