@@ -9,54 +9,11 @@ import time
 from matplotlib.patches import Arc
 import pgeocode
 import requests
-# from joblib import dump, loadx
-# def draw_speedometer(risk_score):
-#     fig, ax = plt.subplots(figsize=(6, 3))
-#     ax.set_xlim(-1.2, 1.2)
-#     ax.set_ylim(-0.5, 1.2)
-#     ax.set_xticks([])
-#     ax.set_yticks([])
-#     ax.set_frame_on(False)
-    
-#     # Draw arc (Speedometer regions)
-#     arc = Arc((0, 0), 2, 2, theta1=0, theta2=180, color='black', lw=2)
-#     ax.add_patch(arc)
-    
-#     # Color regions
-#     ax.fill_between([-1, -0.3], [0, 1], color='green', alpha=0.6, label='Low Risk')
-#     ax.fill_between([-0.3, 0.3], [1, 1], color='yellow', alpha=0.6, label='Moderate Risk')
-#     ax.fill_between([0.3, 1], [1, 0], color='red', alpha=0.6, label='High Risk')
-    
-#     # Animate needle movement
-#     min_angle, max_angle = -90, 90
-#     if risk_score >= 5:
-#         target_angle = 90  # High risk
-#     elif 3 <= risk_score < 5:
-#         target_angle = 0  # Moderate risk
-#     else:
-#         target_angle = -90  # Low risk
-    
-#     for angle in np.linspace(min_angle, target_angle, num=30):
-#         ax.clear()
-#         ax.set_xlim(-1.2, 1.2)
-#         ax.set_ylim(-0.5, 1.2)
-#         ax.set_xticks([])
-#         ax.set_yticks([])
-#         ax.set_frame_on(False)
-        
-#         # Redraw arc and regions
-#         ax.add_patch(Arc((0, 0), 2, 2, theta1=0, theta2=180, color='black', lw=2))
-#         ax.fill_between([-1, -0.3], [0, 1], color='green', alpha=0.6)
-#         ax.fill_between([-0.3, 0.3], [1, 1], color='yellow', alpha=0.6)
-#         ax.fill_between([0.3, 1], [1, 0], color='red', alpha=0.6)
-        
-#         # Draw needle
-#         x, y = np.cos(np.radians(angle)), np.sin(np.radians(angle))
-#         ax.plot([0, x], [0, y], color='black', lw=3)
-        
-#         st.pyplot(fig)
-#         time.sleep(0.05)
 # Function to add a background image
+  # OpenRouter API details
+OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
@@ -149,172 +106,7 @@ def header(title):
 # Page 1: Risk Assessment
 if page == "Diagonostic recomendation":
     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
-    # header("Risk Assessment of COVID-19")
-    # USER_INPUT = [0, 0, 0, 0]
-    # st.markdown(
-    #     """
-    #     <h3 style="color: #ff9933;">Enter Details Below for Risk Assessment:</h3>
-    #     """,
-    #     unsafe_allow_html=True,
-    # )
-    # Input fields
-    # name1 = st.text_input("Name")
-    # AGE = st.number_input("Age", step=1.,format="%.f")
-    # USER_INPUT[0] = AGE
-    # gender1 = st.selectbox("Gender", ["Male", "Female", "Other"])
-    # USER_INPUT[1] = gender1
-    # pre_medical1 = st.selectbox("Pre-Medical Condition", ["Yes", "No"])
-    # USER_INPUT[2] = pre_medical1
-    # if USER_INPUT[2] == 'Yes':
-    #     USER_INPUT[2] = 1
-    # elif USER_INPUT[2] == 'No':
-    #     USER_INPUT[2] = 0
-    # E_gene = st.number_input('CT value E gene', step=1.,format="%.f")
-    # USER_INPUT[3] = E_gene
-    # Define the list of symptoms
-    # symptoms = [
-    #     "Fever", "Cough", "Breathlessness", "Sore Throat", "Loss of Taste/Smell",
-    #     "Body Ache", "Diarrhea", "Vomiting", "Sputum", "Nausea", "Nasal Discharge",
-    #     "Abdominal Pain", "Chest Pain", "Haemoptysis", "Headache", "Body Pain",
-    #     "Weakness", "Cold"
-    # ]
-    
-    # Function to collect symptom data
-    def collect_symptoms(symptoms):
-        """
-        Collect symptom data using checkboxes.
-        Returns a dictionary with symptom names as keys and their values (1 for selected, 0 for not selected).
-        """
-        symptom_values = {}
         
-        # Split symptoms into two columns for better UI
-        col1, col2 = st.columns(2)
-        
-        for i, symptom in enumerate(symptoms):
-            with col1 if i < len(symptoms) // 2 else col2:
-                selected = st.checkbox(symptom)
-                symptom_values[symptom] = 1 if selected else 0
-        
-        return symptom_values
-    # symptom_values = collect_symptoms(symptoms)
-    def calculate_risk_score(symptom_values, pre_medical):
-        """
-        Calculate risk score based on selected symptoms and pre-existing medical conditions.
-        """
-        risk_score = sum(symptom_values.values())  # Sum of selected symptoms
-        if pre_medical == "Yes":
-            risk_score += 1  # Add 1 if pre-existing medical condition exists
-        return risk_score
-        # Step 2: Collect symptom data
-    
-            # draw_speedometer(risk_score)
-
-            
-    # Create two columns for the first two panels
-    
-    # header("Screening for Covid-19 virus")
-    # col1, col2 = st.columns(2)
-    
-    # ###
-    
-    # def process_input(input_value):
-    #     result = input_value
-    #     return result
-    
-    # # Panel 1: Left panel
-    # with col1:
-    #       st.markdown(
-    #           """
-    #           <div style="
-    #               background-color: #ffdb4d;
-    #               padding: 5px,3px;
-    #               border: 1px solid #00FF00;
-    #               border-radius: 5px;text-align: center;
-    #           ">
-    #           <h3 style="color: ##00FF00;">Personal and Clinical Data</h3>
-    
-    #           </div>
-    #           """,
-    #           unsafe_allow_html=True,
-    #       )
-    #       # patient_name =st.text_input('Name')
-
-
-    #       # pre_medical = st.selectbox('Premedical Condition', ('Yes', 'No'))
-          
-    #       # gender = st.selectbox('Gender', ('Male', 'Female'))
-          
-    # # Panel 2: Middle panel
-    # with col2:
-    #       st.markdown(
-    #           """
-    #           <div style="
-    #               background-color: #ffdb4d;
-    #               padding: 5px,3px;
-    #               border: 1px solid #00FF00;
-    #               border-radius: 5px;text-align: center;
-    #           ">
-    #           <h3 style="color: ##00FF00;">Symptoms Selection</h3>
-    #           </div>
-    #           """,
-    #           unsafe_allow_html=True,
-    #       )
-          # symptoms = ['fever', 'cough', 'breathlessness', 'body_ache', 'vomiting', 'sore_throat',
-                      # 'diarrhoea', 'sputum', 'nausea', 'nasal_discharge', 'loss_of_taste', 'loss_of_smell',
-                      # 'abdominal_pain', 'chest_pain', 'haemoptsis', 'head_ache', 'body_pain', 'weak_ness', 'cold']
-    
-    #       # Split the symptoms into two columns with 10 rows in each column
-    #       symptoms_split = [symptoms[:10], symptoms[10:20], symptoms[20:]]
-    
-    #       # Create a DataFrame to store symptom values
-          # symptom_df = pd.DataFrame(columns=symptoms)
-    
-    
-    #       # Create columns for checkboxes (e.g., 2 columns)
-    #       coll1, coll2 = st.columns(2)
-    
-    #       # Initialize a dictionary to store symptom values
-    #       symptom_values = {}
-    
-    #       # Ensure the loop doesn't exceed the length of the split list
-    #       for i in range(len(symptoms)):
-    #           with coll1 if i < 10 else coll2:
-    #               selected = st.checkbox(symptoms[i])
-    #               symptom_values[symptoms[i]] = 1 if selected else 0
-    
-    #       # Append the symptom values to the DataFrame
-    #       symptom_df.loc[len(symptom_df)] = symptom_values
-    #              selected = st.checkbox(symptoms_split[2][i])
-    #              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
-    
-          #USER_INPUT[4] = process_input(SH)
-
-    # new_data = pd.DataFrame({'Age' : USER_INPUT[0], 'E_gene' : USER_INPUT[3], 'Pre_medical' : USER_INPUT[2]}, index = [0])
-    #       # Concatenate the two DataFrames vertically
-    # combined_df = pd.concat([new_data, symptom_check1], axis=1, ignore_index=True)
-    # new_table_df=combined_df
-    # new_table_df.columns = list(new_data.columns) + list(symptom_check1.columns)
-    def prepare_screening_data(symptom_values, age, e_gene, pre_medical):
-        """
-        Prepare symptom data for predictive screening.
-        Returns a DataFrame with user inputs and symptom values.
-        """
-        # Create a DataFrame for symptoms
-        symptom_df = pd.DataFrame([symptom_values])
-    
-        # Add other user inputs (age, e_gene, pre_medical)
-        user_data = {
-            "Age": age,
-            "E_gene": e_gene,
-            "Pre_medical": pre_medical
-        }
-        user_df = pd.DataFrame([user_data])
-    
-        # Combine user data and symptom data
-        combined_df = pd.concat([user_df, symptom_df], axis=1)
-        return combined_df
-    # new_table_df = prepare_screening_data(symptom_values, AGE, E_gene, USER_INPUT[2])
-
     # Panel 3: Full-width panel
     st.markdown(
         """
@@ -329,45 +121,22 @@ if page == "Diagonostic recomendation":
         """,
         unsafe_allow_html=True,
     )
-    # st.write('Data Overview')
-    # st.write(new_table_df)
-    # bayes = load(open('content/bayes.pkl', 'rb'))
-    # logistic = load(open('content/logistic.pkl', 'rb'))
-    # # random_tree =load(open('content/random_tree.pkl', 'rb'))
-    # svm_linear = load(open('content/svm_linear.pkl', 'rb'))
-    # svm_rbf = load(open('content/svm_rbf.pkl', 'rb'))
-    # # svm_sigmoid = load('content/svm_sigmoid.joblib')
-    # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-    # tree = load(open('content/tree.pkl', 'rb'))
-    # bayes = load('content/naive_bayes_model.joblib')
-    # logistic = load('content/logistic_regression_model.joblib')
-    # random_tree =load('content/random_forest_model.joblib')
-    # svm_linear = load('content/svm_linear_model.joblib')
-    # svm_rbf = load('content/svm_rbf_model.joblib')
-    # svm_sigmoid = load('content/svm_sigmoid_model.joblib')
-    # # svm_sigmoid = load(open('content/svm_sigmoid.pkl', 'rb'))
-    # tree = load('content/decision_tree_model.joblib')
-    # # Dropdown menu for model selection
-    # selected_model = st.selectbox('Select a Model', ['Naive Bayes', 'Logistic Regression', 'Decision Tree', 'Random Forest', 'SVM (Linear)', 'SVM (RBF)', 'SVM(Sigmoid)'])
-    # prediction=0
-    # Perform predictions based on the selected model
-    
     CSS = """
         <style>
             .header_pred{
-                    text-align: left;
-                    font-size: 30px;
+                    text-align: center;
+                    font-size: 40px;
                     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                 }
         </style>
     """
     
     HEAD_YES = """
-            <h6 class="header_pred" style="color:#affc42"> You Have Covid-19 </h6>
+            <h4 class="header_pred" style="color:#affc42"> You Have Covid-19 </h6>
     """
     
     HEAD_NO = """
-        <h6 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
+        <h4 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
     """
     ########################################## (New added part from sumit sir code ############
     def model_loader(model, new_data):
@@ -400,21 +169,24 @@ if page == "Diagonostic recomendation":
             
             result = load_model.predict(new_data)
             # st.write(result)
-            # result = predict_results(st.session_state.load_model, new_data)        
+            # result = predict_results(st.session_state.load_model, new_data)
+            diagonosis=None
             if result[0] == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Positive' 
                 st.markdown(HEAD_YES, unsafe_allow_html=True)
                 st.cache_data.clear()
                 # st.subheader(f'You have Covid-19')
             else:
                 st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Negative'
                 st.markdown(HEAD_NO, unsafe_allow_html=True)
                 st.cache_data.clear()
                 # st.subheader(f'You don\'t have Covid-19')
             
         except FileNotFoundError:
                     st.error('Model not found. Please make sure the model file exists.')
-
+        return diagonosis
    
 
     load_model = None
@@ -474,7 +246,10 @@ if page == "Diagonostic recomendation":
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
             # kernel = st.selectbox('Select Kernel: ', options=['Linear', 'RBF', 'Polynomial', 'Sigmoidal'],)
         btn_lm = st.form_submit_button('Predict')#, on_click=model_loader,args=(modeli, pd.DataFrame.from_dict(new_data)))
-
+    if btn_lm:
+        st.write("New data raw")
+        st.dataframe(new_data)
+        model_loader(modeli, new_data)  # Call model_loader function with selected model and new_data
     if st.button("Assess Risk"):
             # risk_score = calculate_risk_score(symptom_values, pre_medical1)
         symptom_values = new_data.iloc[0, 3:22]  # Extract all symptom columns
@@ -509,161 +284,36 @@ if page == "Diagonostic recomendation":
                     "</div>",
                     unsafe_allow_html=True,
                 )
-    if btn_lm:
-        st.write("New data raw")
-        st.dataframe(new_data)
-        model_loader(modeli, new_data)  # Call model_loader function with selected model and new_data
-     #####################
 
-    # combined_df=[new_table_df.values] 
-    # scl = load(open('./models/Scaler.pkl', 'rb'))
-    # scaler = scl["stdscaler"]
-    # max_ct = scl["max_ct"]
-    # columnsN = new_table_df.columns
-    # new_data_std = scaler.transform(new_table_df) 
-    #     # st.dataframe(new_data_std, hide_index= True)
-    # new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
-    
-    # if st.button('Make Predictions'):
-    #     st.write("Predicted Results:")
-    #     st.write(combined_df)
-    #     if selected_model == 'Naive Bayes':
-    #         bayes = load(open(f'./models/NB{max_ct}.pkl', 'rb'))
-    #         prediction = bayes.predict(new_data)
-    #         # st.write("Predicted Results:")
-    #         # st.write(f"Fraction Value: {prediction*100}")
-    #         if prediction == 1:
-    #             st.markdown(CSS, unsafe_allow_html=True)
-    #             st.markdown(HEAD_YES, unsafe_allow_html=True)
-    #             st.cache_data.clear()
-    #         else:
-    #             st.cache_data.clear()
-    #             st.markdown(CSS, unsafe_allow_html=True)
-    #             st.markdown(HEAD_NO, unsafe_allow_html=True)
-    #             st.cache_data.clear()
-        # elif selected_model == 'Logistic Regression':
-        #     prediction = logistic.predict(combined_df)
-        #     # st.write("Predicted Results:")
-        #     # st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'Decision Tree':
-        #     prediction = tree.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'Random Forest':
-        #     prediction = random_tree.predict(combined_df)
-        #     st.write("Predicted Results:")
-        #     #st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (Linear)':
-        #     prediction = svm_linear.predict(combined_df)
-        #     # st.write("Predicted Results:")
-        #     # st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (RBF)':
-        #     prediction = svm_rbf.predict(combined_df)
-        #     # st.write("Predicted Results:")
-        #     # st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        # elif selected_model == 'SVM (Sigmoid)':
-        #     prediction = svm_sigmoid.predict(combined_df)
-        #     # st.write("Predicted Results:")
-        #     # st.write(f"Fraction Value: {prediction*100}")
-        #     if prediction == 1:
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_YES, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-        #     else:
-        #         st.cache_data.clear()
-        #         st.markdown(CSS, unsafe_allow_html=True)
-        #         st.markdown(HEAD_NO, unsafe_allow_html=True)
-        #         st.cache_data.clear()
-    
- 
-    ### Last edited risk assesment part
-    
-# elif page == "Risk Assessment":
-#     add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
-    # header("Risk Assessment of COVID-19")
-    # # st.dataframe(new_data)
-    # # Retrieve shared data
-    # if "shared_data" in st.session_state:
-    #     st.write(f"Retrieved Data: {st.session_state.shared_data}")
-    #     df=st.session_state.shared_data
-    #     # Extract symptoms and pre-medical condition
-    #     symptom_values = df.iloc[0, 3:22]  # Extract all symptom columns
-    #     st.write(symptom_values)
-    #     pre_medical = df.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
-    #     st.write(pre_medical)
-    
-    #     # Calculate risk score
-    #     risk_score = sum(symptom_values.values)  # Sum of selected symptoms
-    #     if pre_medical == 1:
-    #         risk_score += 1  # Add 1 if pre-existing medical condition exists
-    #     if risk_score >= 5:
-    #         st.markdown(
-    #             '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
-    #             "High Risk of COVID-19. Consult a healthcare provider immediately."
-    #             "</div>",
-    #             unsafe_allow_html=True,
-    #         )
-    #     elif 3 <= risk_score < 5:
-    #         st.markdown(
-    #             '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
-    #             "Moderate Risk. Self-isolate and monitor symptoms."
-    #             "</div>",
-    #             unsafe_allow_html=True,
-    #         )
-    #     else:
-    #         st.markdown(
-    #             '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
-    #             "Low Risk. Continue practicing preventive measures."
-    #             "</div>",
-    #             unsafe_allow_html=True,
-    #         )
-    # else:
-    #     st.warning("No data found. Please enter data on Page 1.")
+    prompt = f"""
+        You are a resume parsing tool. Given the following resume text, extract only information that mentioned below but don't include any personal information and return them in a well-structured JSON format.
+        Make sure all keys needs to be lowercase.
+        The resume text:
+        {resume_text}
+        Extract and include the following:
+        - Skills (include all skills at skill section)
+        - Education (Only degree and major, and no university)
+        - Experience (role and details at experience section)
+        Please don't include any extra sentence or disclaimer"
+    """
+    try:
+        completion = client.chat.completions.create(
+            model="meta-llama/llama-3.2-3b-instruct:free",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant for parsing resumes."},
+                {"role": "user", "content": prompt},
+            ]
+        )
+
+        if completion and completion.choices and completion.choices[0].message:
+            return completion.choices[0].message.content
+        else:
+            raise ValueError("Invalid response structure from OpenAI API.")
+
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+#####################
+
         
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
@@ -698,9 +348,6 @@ elif page == "Descriptive Analysis":
 # Page 4: Primary Treatment
 elif page == "AI Assistant":
 
-   # OpenRouter API details
-    OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
-    OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
     # Custom CSS for chat interface
     st.markdown(
         """
@@ -754,9 +401,9 @@ elif page == "AI Assistant":
     # Check if DataFrame exists in session state
     if "shared_data" in st.session_state:
         df = st.session_state.shared_data  # Retrieve stored DataFrame
-        summary = df.describe().to_string()  # Generate a summary
-        st.write("📊 **Initial Data Analysis**")
-        st.dataframe(df.head())  # Display first few rows
+        # summary = df.describe().to_string()  # Generate a summary
+        # st.write("📊 **Initial Data Analysis**")
+        # st.dataframe(df.head())  # Display first few rows
     else:
         st.warning("No data found! Please upload it on the data page.")
     
@@ -779,8 +426,8 @@ elif page == "AI Assistant":
         # Prepare the request payload for OpenRouter
         system_message = "You are a medical AI assistant. Use the provided patient data to give insights and guidelines. Also help them to retrive information from various sources"
         
-        if "shared_data" in st.session_state:
-            system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
+        # if "shared_data" in st.session_state:
+        #     system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
         
         payload = {
             "model": "openai/gpt-3.5-turbo",
