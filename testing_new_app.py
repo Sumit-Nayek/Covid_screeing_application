@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 from matplotlib.patches import Arc
+import pgeocode
 # from joblib import dump, loadx
 # def draw_speedometer(risk_score):
 #     fig, ax = plt.subplots(figsize=(6, 3))
@@ -420,6 +421,7 @@ if page == "Diagonostic recomendation":
     features = pkl.load(open(f'./models/Features.pkl', 'rb'))
     keys = [features[x] for x in features.keys()]
     new_data = pd.DataFrame(columns=keys)
+    # Load Indian postal code data
 
     with st.form('prsnlInfo', clear_on_submit=False):
         # st.header("Data Collection")
@@ -431,10 +433,15 @@ if page == "Diagonostic recomendation":
             new_data.loc[0,'age'] = age
             sex = st.selectbox('Sex: ', options= ["Male", "Female"],)
             state = st.text_input('State: ', placeholder='Enter the State you are from')#, on_change=check_blank, args = (value,))
-            country_list = list(pycountry.countries)
-            cn_list = [c.name for c in country_list]
-            country = st.selectbox('Country: ', options=cn_list, placeholder='Select your Country')
+            # country_list = list(pycountry.countries)
+            # cn_list = [c.name for c in country_list]
+            # Taking Pincode as numeric input
+            pincode = st.text_input("Enter Pincode", max_chars=6, placeholder="e.g., 110001")
+            nomi = pgeocode.Nominatim('IN')
+            location_info = nomi.query_postal_code(pincode)
+            
             expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
+            st.write(location_info)
             # eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
         # next_sec = st.form_submit_button('Next Section')
         with c_01:
