@@ -621,7 +621,7 @@ elif page == "Risk Assessment":
         st.write(f"Retrieved Data: {st.session_state.shared_data}")
         df=st.session_state.shared_data
         # Extract symptoms and pre-medical condition
-        symptom_values = df.iloc[0, 2:18]  # Extract all symptom columns
+        symptom_values = df.iloc[0, 3:22]  # Extract all symptom columns
         st.write(symptom_values)
         pre_medical = df.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
         st.write(pre_medical)
