@@ -657,7 +657,54 @@ elif page == "AI Assistant":
    # OpenRouter API details
     OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
     OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+    # Custom CSS for chat interface
+    st.markdown(
+        """
+        <style>
+        /* User message styling */
+        .user-message {
+            background-color: #0078D4;
+            color: white;
+            border-radius: 15px 15px 0 15px;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            margin-left: auto;
+        }
     
+        /* AI message styling */
+        .ai-message {
+            background-color: #F1F1F1;
+            color: black;
+            border-radius: 15px 15px 15px 0;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            margin-right: auto;
+        }
+    
+        /* Chat container styling */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+    
+        /* Streamlit chat input styling */
+        .stChatInput {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    
+
     st.title("🤖 AI For Your Medical Assistance")
     
     # Check if DataFrame exists in session state
