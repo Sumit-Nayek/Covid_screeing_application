@@ -662,7 +662,7 @@ elif page == "AI Assistant":
     
     # Check if DataFrame exists in session state
     if "shared_data" in st.session_state:
-        df = st.session_state.share_data  # Retrieve stored DataFrame
+        df = st.session_state.shared_data  # Retrieve stored DataFrame
         summary = df.describe().to_string()  # Generate a summary
         st.write("📊 **Initial Data Analysis**")
         st.dataframe(df.head())  # Display first few rows
