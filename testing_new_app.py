@@ -467,50 +467,48 @@ if page == "Diagonostic recomendation":
                         new_data.loc[0,key] = st.number_input('CT value E gene', min_value=0, max_value=50,step=1, format="%d")
 # if st.button("Save Data"):
         st.session_state.shared_data = new_data  # Store data globally
-        # st.success("Data saved! Go to Risk Assesment Page to access it.")
-        
-        if st.button("Assess Risk"):
-            # risk_score = calculate_risk_score(symptom_values, pre_medical1)
-            symptom_values = new_data.iloc[0, 3:22]  # Extract all symptom columns
-            # st.write(symptom_values)
-            pre_medical = new_data.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
-            # st.write(pre_medical)
-        
-            # Calculate risk score
-            risk_score = sum(symptom_values.values)  # Sum of selected symptoms
-            if pre_medical == 1:
-                risk_score += 1  # Add 1 if pre-existing medical condition exists  
-            if risk_score >= 5:
-                st.markdown(
-                    '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
-                    "High Risk of COVID-19. Consult a healthcare provider immediately."
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
-                # draw_speedometer(risk_score)
-            elif 3 <= risk_score < 5:
-                st.markdown(
-                    '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
-                    "Moderate Risk. Self-isolate and monitor symptoms."
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
-                # draw_speedometer(risk_score)
-            else:
-                st.markdown(
-                    '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
-                    "Low Risk. Continue practicing preventive measures."
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
-               
+        # st.success("Data saved! Go to Risk Assesment Page to access it.")           
         
         st.header('Model Selection')
         modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
             # kernel = st.selectbox('Select Kernel: ', options=['Linear', 'RBF', 'Polynomial', 'Sigmoidal'],)
         btn_lm = st.form_submit_button('Predict')#, on_click=model_loader,args=(modeli, pd.DataFrame.from_dict(new_data)))
-            
+
+    if st.button("Assess Risk"):
+            # risk_score = calculate_risk_score(symptom_values, pre_medical1)
+        symptom_values = new_data.iloc[0, 3:22]  # Extract all symptom columns
+            # st.write(symptom_values)
+        pre_medical = new_data.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
+            # st.write(pre_medical)
+        
+            # Calculate risk score
+        risk_score = sum(symptom_values.values)  # Sum of selected symptoms
+        if pre_medical == 1:
+            risk_score += 1  # Add 1 if pre-existing medical condition exists  
+        if risk_score >= 5:
+            st.markdown(
+                    '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
+                    "High Risk of COVID-19. Consult a healthcare provider immediately."
+                    "</div>",
+                    unsafe_allow_html=True,
+                )
+                # draw_speedometer(risk_score)
+        elif 3 <= risk_score < 5:
+            st.markdown(
+                    '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
+                    "Moderate Risk. Self-isolate and monitor symptoms."
+                    "</div>",
+                    unsafe_allow_html=True,
+                )
+                # draw_speedometer(risk_score)
+        else:
+            st.markdown(
+                    '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
+                    "Low Risk. Continue practicing preventive measures."
+                    "</div>",
+                    unsafe_allow_html=True,
+                )
     if btn_lm:
         st.write("New data raw")
         st.dataframe(new_data)
