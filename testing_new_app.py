@@ -257,6 +257,7 @@ if page == "Diagonostic recomendation":
         
             # Calculate risk score
         risk_score = sum(symptom_values.values)  # Sum of selected symptoms
+        risk=None
         if pre_medical == 1:
             risk_score += 1  # Add 1 if pre-existing medical condition exists  
         if risk_score >= 5:
@@ -266,6 +267,7 @@ if page == "Diagonostic recomendation":
                     "</div>",
                     unsafe_allow_html=True,
                 )
+            risk="High Risk"
                 # draw_speedometer(risk_score)
         elif 3 <= risk_score < 5:
             st.markdown(
@@ -275,6 +277,7 @@ if page == "Diagonostic recomendation":
                     unsafe_allow_html=True,
                 )
                 # draw_speedometer(risk_score)
+            risk="Moderate Risk"
         else:
             st.markdown(
                     '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
@@ -282,16 +285,13 @@ if page == "Diagonostic recomendation":
                     "</div>",
                     unsafe_allow_html=True,
                 )
-
+            risk="Low Risk"
     prompt = f"""
-        You are a resume parsing tool. Given the following resume text, extract only information that mentioned below but don't include any personal information and return them in a well-structured JSON format.
-        Make sure all keys needs to be lowercase.
-        The resume text:
-        {resume_text}
-        Extract and include the following:
-        - Skills (include all skills at skill section)
-        - Education (Only degree and major, and no university)
-        - Experience (role and details at experience section)
+        You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
+        The predicted diagonosis result:
+        {diagonosis}
+        The predicted risk assesment result: {risk} 
+        Patient location {location_info}
         Please don't include any extra sentence or disclaimer"
     """
     try:
