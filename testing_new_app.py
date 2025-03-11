@@ -688,7 +688,7 @@ elif page == "AI Assistant":
         # Prepare the request payload for OpenRouter
         system_message = "You are a medical AI assistant. Use the provided patient data to give insights and guidelines. Also help them to retrive information from various sources"
         
-        if "df" in st.session_state:
+        if "shared_data" in st.session_state:
             system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
         
         payload = {
