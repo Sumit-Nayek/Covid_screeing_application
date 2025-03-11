@@ -661,7 +661,7 @@ elif page == "AI Assistant":
     st.title("🤖 AI For Your Medical Assistance")
     
     # Check if DataFrame exists in session state
-    if "df" in st.session_state:
+    if "shared_data" in st.session_state:
         df = st.session_state.share_data  # Retrieve stored DataFrame
         summary = df.describe().to_string()  # Generate a summary
         st.write("📊 **Initial Data Analysis**")
