@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import base64
 # from pickle import load
-import pycountry
 import pickle as pkl
 import numpy as np
 import matplotlib.pyplot as plt
