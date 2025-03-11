@@ -441,7 +441,7 @@ if page == "Diagonostic recomendation":
             location_info = nomi.query_postal_code(pincode)
             
             expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
-            st.write(location_info)
+            # st.write(location_info)
             # eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
         # next_sec = st.form_submit_button('Next Section')
         with c_01:
