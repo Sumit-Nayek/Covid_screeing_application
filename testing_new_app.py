@@ -435,7 +435,7 @@ if page == "Diagonostic recomendation":
             cn_list = [c.name for c in country_list]
             country = st.selectbox('Country: ', options=cn_list, placeholder='Select your Country')
             expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
-            eff_mem = st.slider('No. of effected family members: (Select 10 if number is more than 10) ', max_value=10, min_value=0)
+            eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
         # next_sec = st.form_submit_button('Next Section')
         with c_01:
             st.subheader('Clinical Information')
@@ -457,8 +457,8 @@ if page == "Diagonostic recomendation":
                         new_data.loc[0,key] = 1 if st.selectbox(feature, options=["No", "Yes"]) == 'Yes' else 0
                                     
                     if feature == 'RTPCR Test(CT VALUE)':
-                        new_data.loc[0,key] = st.slider(feature+'Select 10 if CT value is more than 50', max_value= 50, min_value=0)
-# st.number_input('CT value E gene', step=1, format="%d")
+                        new_data.loc[0,key] = st.number_input('CT value E gene', min_value=0, max_value=50,step=1, format="%d")
+# 
         st.header('Model Selection')
         modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
