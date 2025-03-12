@@ -289,8 +289,7 @@ if page == "Diagonostic recomendation":
             risk="Low Risk"
     prompt = f"""
         You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
-        The predicted diagonosis result:
-        {diagonosis}
+        The predicted diagonosis result:{diagonosis}
         The predicted risk assesment result: {risk} 
         Patient location {location_info}
         Please don't include any extra sentence or disclaimer"
@@ -397,19 +396,23 @@ elif page == "AI Assistant":
 
     st.title("🤖 AI For Your Medical Assistance")
     
-    # Check if DataFrame exists in session state
-    if "shared_data" in st.session_state:
-        df = st.session_state.shared_data  # Retrieve stored DataFrame
-        # summary = df.describe().to_string()  # Generate a summary
-        # st.write("📊 **Initial Data Analysis**")
-        # st.dataframe(df.head())  # Display first few rows
-    else:
-        st.warning("No data found! Please upload it on the data page.")
-    
+    # # Check if DataFrame exists in session state
+    # if "shared_data" in st.session_state:
+    #     df = st.session_state.shared_data  # Retrieve stored DataFrame
+    #     # summary = df.describe().to_string()  # Generate a summary
+    #     # st.write("📊 **Initial Data Analysis**")
+    #     # st.dataframe(df.head())  # Display first few rows
+    # else:
+    #     st.warning("No data found! Please upload it on the data page.")
+  
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
-    
+    # **Manual button to clear chat history**
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.messages = []  # Reset chat history
+        st.success("Chat history cleared!") 
+      
     # Display chat history
     for message in st.session_state.messages:
         if message["role"] == "user":
