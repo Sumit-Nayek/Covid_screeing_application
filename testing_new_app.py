@@ -170,7 +170,7 @@ if page == "Diagonostic recomendation":
             result = load_model.predict(new_data)
             # st.write(result)
             # result = predict_results(st.session_state.load_model, new_data)
-            diagonosis=None
+            diagonosis=""
             if result[0] == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
                 diagonosis='Covid-19 Positive' 
