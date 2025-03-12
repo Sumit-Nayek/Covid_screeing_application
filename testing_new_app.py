@@ -303,6 +303,8 @@ if page == "Diagonostic recomendation":
               # Risk assessment
             risk_score = sum(new_data.iloc[0].values)  
             risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
+            st.write(risk)
+            st.write(diagonosis)
   
             prompt = f"""
                 You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
@@ -320,11 +322,29 @@ if page == "Diagonostic recomendation":
                     ]
                 )
         
-                if completion and completion.choices and completion.choices[0].message:
-                    st.write(completion.choices[0].message.content)
+               if completion and completion.choices and completion.choices[0].message:
+                    llm_output = completion.choices[0].message.content
+                    
+                    # Display the LLM output in a styled white box
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: white; 
+                            color: black; 
+                            padding: 15px; 
+                            border-radius: 8px; 
+                            border: 1px solid #ddd;
+                            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+                        ">
+                            <strong>Recommendations & Preventive Measures:</strong>
+                            <p>{llm_output}</p>
+                        </div>
+                        """, 
+                        unsafe_allow_html=True
+                    )
                 else:
                     raise ValueError("Invalid response structure from OpenAI API.")
-        
+
             except Exception as e:
                 st.write(f"An error occurred: {str(e)}")
 #####################
