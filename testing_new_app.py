@@ -170,22 +170,28 @@ if page == "Diagonostic recomendation":
             result = load_model.predict(new_data)
             # st.write(result)
             # result = predict_results(st.session_state.load_model, new_data)
-            diagonosis=""
-            if result[0] == 1:
-                st.markdown(CSS, unsafe_allow_html=True)
-                diagonosis='Covid-19 Positive' 
-                st.markdown(HEAD_YES, unsafe_allow_html=True)
-                st.cache_data.clear()
-                # st.subheader(f'You have Covid-19')
-            else:
-                st.markdown(CSS, unsafe_allow_html=True)
-                diagonosis='Covid-19 Negative'
-                st.markdown(HEAD_NO, unsafe_allow_html=True)
-                st.cache_data.clear()
-                # st.subheader(f'You don\'t have Covid-19')
+            result = load_model.predict(new_data)
+            diagonosis = "Covid-19 Positive" if result[0] == 1 else "Covid-19 Negative"
+            return diagonosis  # ✅ Return diagonosis
+            # diagonosis=""
+            # if result[0] == 1:
+            #     st.markdown(CSS, unsafe_allow_html=True)
+            #     diagonosis='Covid-19 Positive' 
+            #     st.markdown(HEAD_YES, unsafe_allow_html=True)
+            #     st.cache_data.clear()
+            #     # st.subheader(f'You have Covid-19')
+            # else:
+            #     st.markdown(CSS, unsafe_allow_html=True)
+            #     diagonosis='Covid-19 Negative'
+            #     st.markdown(HEAD_NO, unsafe_allow_html=True)
+            #     st.cache_data.clear()
+            #     # st.subheader(f'You don\'t have Covid-19')
         # except diagonosis    
         except FileNotFoundError:
               st.error('Model not found. Please make sure the model file exists.')       
+              return None  # Return None if the model is missing
+        # except FileNotFoundError:
+              # st.error('Model not found. Please make sure the model file exists.')       
    
 
     load_model = None
