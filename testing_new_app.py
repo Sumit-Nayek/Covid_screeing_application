@@ -322,7 +322,7 @@ if page == "Diagonostic recomendation":
                     ]
                 )
         
-               if completion and completion.choices and completion.choices[0].message:
+                if completion and completion.choices and completion.choices[0].message:
                     llm_output = completion.choices[0].message.content
                     
                     # Display the LLM output in a styled white box
