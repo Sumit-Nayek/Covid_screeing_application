@@ -9,6 +9,7 @@ import time
 from matplotlib.patches import Arc
 import pgeocode
 import requests
+from openai import OpenAI
 # Function to add a background image
   # OpenRouter API details
 OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
