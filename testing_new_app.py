@@ -408,10 +408,10 @@ elif page == "AI Assistant":
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
-    # **Manual button to clear chat history**
-    if st.button("🗑️ Clear Chat"):
-        st.session_state.messages = []  # Reset chat history
-        st.success("Chat history cleared!") 
+    # # **Manual button to clear chat history**
+    # if st.button("🗑️ Clear Chat"):
+    #     st.session_state.messages = []  # Reset chat history
+    #     st.success("Chat history cleared!") 
       
     # Display chat history
     for message in st.session_state.messages:
