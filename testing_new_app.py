@@ -294,35 +294,35 @@ if page == "Diagonostic recomendation":
     #             )
     #         risk="Low Risk"
       if btn_lm:
-        diagonosis = model_loader(modeli, new_data)  # ✅ Capture returned diagonosis
+          diagonosis = model_loader(modeli, new_data)  # ✅ Capture returned diagonosis
+        
+            # Risk assessment
+          risk_score = sum(new_data.iloc[0].values)  
+          risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
+
+          prompt = f"""
+              You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
+              The predicted diagonosis result:{diagonosis}
+              The predicted risk assesment result: {risk} 
+              Patient location {location_info}
+              Please don't include any extra sentence or disclaimer"
+          """
+          try:
+              completion = client.chat.completions.create(
+                  model="meta-llama/llama-3.2-3b-instruct:free",
+                  messages=[
+                      {"role": "system", "content": "You are a helpful assistant for parsing resumes."},
+                      {"role": "user", "content": prompt},
+                  ]
+              )
       
-          # Risk assessment
-        risk_score = sum(new_data.iloc[0].values)  
-        risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
-
-    prompt = f"""
-        You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
-        The predicted diagonosis result:{diagonosis}
-        The predicted risk assesment result: {risk} 
-        Patient location {location_info}
-        Please don't include any extra sentence or disclaimer"
-    """
-    try:
-        completion = client.chat.completions.create(
-            model="meta-llama/llama-3.2-3b-instruct:free",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant for parsing resumes."},
-                {"role": "user", "content": prompt},
-            ]
-        )
-
-        if completion and completion.choices and completion.choices[0].message:
-            st.write(completion.choices[0].message.content)
-        else:
-            raise ValueError("Invalid response structure from OpenAI API.")
-
-    except Exception as e:
-        st.write(f"An error occurred: {str(e)}")
+              if completion and completion.choices and completion.choices[0].message:
+                  st.write(completion.choices[0].message.content)
+              else:
+                  raise ValueError("Invalid response structure from OpenAI API.")
+      
+          except Exception as e:
+              st.write(f"An error occurred: {str(e)}")
 #####################
 
         
