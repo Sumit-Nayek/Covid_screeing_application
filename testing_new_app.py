@@ -431,7 +431,7 @@ elif page == "AI Assistant":
     )
     
 
-    st.title("🤖 AI For Your Medical Assistance")
+    st.title("🤖 AI For Your Personal Medical Assistance")
     
     # # Check if DataFrame exists in session state
     # if "shared_data" in st.session_state:
