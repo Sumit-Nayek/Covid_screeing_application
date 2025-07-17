@@ -14,7 +14,7 @@ import os
 # Function to add a background image
   # OpenRouter API details
 # Hugging Face API details
-HF_API_KEY = st.secrets.grt("HF_API_KEY",os.getenv("HF_API_KEY"))  # Store your Hugging Face API key in Streamlit secrets
+HF_API_KEY = st.secrets.get("HF_API_KEY",os.getenv("HF_API_KEY"))  # Store your Hugging Face API key in Streamlit secrets
 HF_API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct"  # Replace with your preferred model
 
 # client = OpenAI(
