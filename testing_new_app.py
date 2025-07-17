@@ -15,7 +15,7 @@ import os
   # OpenRouter API details
 # Hugging Face API details
 HF_API_KEY = st.secrets.get("HF_API_KEY",os.getenv("HF_API_KEY"))  # Store your Hugging Face API key in Streamlit secrets
-HF_API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"  # Replace with your preferred model
+HF_API_URL = "https://api-inference.huggingface.co/models/FreedomIntelligence/medical_o1_verifier_3B"  # Replace with your preferred model
 
 # client = OpenAI(
 #     base_url="https://openrouter.ai/api/v1",
