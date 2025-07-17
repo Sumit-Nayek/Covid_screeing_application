@@ -12,12 +12,14 @@ import requests
 from openai import OpenAI
 # Function to add a background image
   # OpenRouter API details
-OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]
-OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=OPENROUTER_API_KEY,
-)
+# Hugging Face API details
+HF_API_KEY = st.secrets["HF_API_KEY"]  # Store your Hugging Face API key in Streamlit secrets
+HF_API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct"  # Replace with your preferred model
+
+# client = OpenAI(
+#     base_url="https://openrouter.ai/api/v1",
+#     api_key=OPENROUTER_API_KEY,
+# )
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
@@ -177,19 +179,19 @@ if page == "Diagonostic recomendation":
             result = load_model.predict(new_data)
             diagonosis = "Covid-19 Positive" if result[0] == 1 else "Covid-19 Negative"
             return diagonosis  # ✅ Return diagonosis
-            # diagonosis=""
-            # if result[0] == 1:
-            #     st.markdown(CSS, unsafe_allow_html=True)
-            #     diagonosis='Covid-19 Positive' 
-            #     st.markdown(HEAD_YES, unsafe_allow_html=True)
-            #     st.cache_data.clear()
-            #     # st.subheader(f'You have Covid-19')
-            # else:
-            #     st.markdown(CSS, unsafe_allow_html=True)
-            #     diagonosis='Covid-19 Negative'
-            #     st.markdown(HEAD_NO, unsafe_allow_html=True)
-            #     st.cache_data.clear()
-            #     # st.subheader(f'You don\'t have Covid-19')
+
+            if result[0] == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Positive' 
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+                # st.subheader(f'You have Covid-19')
+            else:
+                st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Negative'
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+                # st.subheader(f'You don\'t have Covid-19')
         # except diagonosis    
         except FileNotFoundError:
               st.error('Model not found. Please make sure the model file exists.')       
@@ -296,55 +298,64 @@ if page == "Diagonostic recomendation":
     #                 "</div>",
     #                 unsafe_allow_html=True,
     #             )
-    #         risk="Low Risk"
+            #         risk="Low Risk"
         if btn_lm:
-            diagonosis = model_loader(modeli, new_data)  # ✅ Capture returned diagonosis
-          
-              # Risk assessment
+            diagonosis = model_loader(modeli, new_data)  # Capture returned diagonosis
+            
+            # Risk assessment
             risk_score = sum(new_data.iloc[0].values)  
             risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
             st.write(risk)
             st.write(diagonosis)
-  
+          
             prompt = f"""
-                You are a helpful assistant. Given the following results and data, provide neccessary recomendation and preventive measaures.
-                The predicted diagonosis result:{diagonosis}
-                The predicted risk assesment result: {risk} 
-                Patient location {location_info}
-                Please don't include any extra sentence or disclaimer"
+                You are a helpful assistant. Given the following results and data, provide necessary recommendation and preventive measures.
+                The predicted diagnosis result: {diagonosis}
+                The predicted risk assessment result: {risk} 
+                Patient location: {location_info}
+                Please don't include any extra sentence or disclaimer
             """
             try:
-                completion = client.chat.completions.create(
-                    model="meta-llama/llama-3.2-3b-instruct:free",
-                    messages=[
-                        {"role": "system", "content": "You are a helpful assistant for parsing resumes."},
-                        {"role": "user", "content": prompt},
-                    ]
+                # Prepare payload for Hugging Face API
+                payload = {
+                    "inputs": prompt,
+                    "parameters": {
+                        "max_new_tokens": 512,
+                        "temperature": 0.7,
+                        "top_p": 0.9,
+                        "do_sample": True,
+                        "return_full_text": False
+                    }
+                }
+                headers = {
+                    "Authorization": f"Bearer {HF_API_KEY}",
+                    "Content-Type": "application/json"
+                }
+                
+                # Send request to Hugging Face API
+                response = requests.post(HF_API_URL, json=payload, headers=headers)
+                response.raise_for_status()
+                
+                # Extract response
+                llm_output = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
+                
+                # Display the LLM output in a styled white box
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: white; 
+                        color: black; 
+                        padding: 15px; 
+                        border-radius: 8px; 
+                        border: 1px solid #ddd;
+                        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+                    ">
+                        <strong>Recommendations & Preventive Measures:</strong>
+                        <p>{llm_output}</p>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
                 )
-        
-                if completion and completion.choices and completion.choices[0].message:
-                    llm_output = completion.choices[0].message.content
-                    
-                    # Display the LLM output in a styled white box
-                    st.markdown(
-                        f"""
-                        <div style="
-                            background-color: white; 
-                            color: black; 
-                            padding: 15px; 
-                            border-radius: 8px; 
-                            border: 1px solid #ddd;
-                            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-                        ">
-                            <strong>Recommendations & Preventive Measures:</strong>
-                            <p>{llm_output}</p>
-                        </div>
-                        """, 
-                        unsafe_allow_html=True
-                    )
-                else:
-                    raise ValueError("Invalid response structure from OpenAI API.")
-
             except Exception as e:
                 st.write(f"An error occurred: {str(e)}")
 #####################
@@ -446,9 +457,9 @@ elif page == "AI Assistant":
     if "messages" not in st.session_state:
         st.session_state.messages = []
     # # **Manual button to clear chat history**
-    # if st.button("🗑️ Clear Chat"):
-    #     st.session_state.messages = []  # Reset chat history
-    #     st.success("Chat history cleared!") 
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.messages = []  # Reset chat history
+        st.success("Chat history cleared!") 
       
     # Display chat history
     for message in st.session_state.messages:
