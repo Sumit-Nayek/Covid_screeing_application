@@ -470,33 +470,54 @@ elif page == "AI Assistant":
     
     # Chat input
     if prompt := st.chat_input("Ask something about the data or medical guidance..."):
+        # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.markdown(f'<div class="chat-container"><div class="user-message">{prompt}</div></div>', unsafe_allow_html=True)
-    
-        # Prepare the request payload for OpenRouter
-        system_message = "You are a medical AI assistant. Use the provided patient data to give insights and guidelines. Also help them to retrive information from various sources"
         
+        # Prepare the conversation for Hugging Face API
+        system_message = "You are a medical AI assistant. Provide accurate and helpful medical guidance based on user queries."
+        
+        # # Optionally include patient data if available
         # if "shared_data" in st.session_state:
+        #     summary = st.session_state.shared_data.describe().to_string()
         #     system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
         
+        # Format the prompt with system message and chat history
+        chat_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
+        full_prompt = f"{system_message}\n\n{chat_history}"
+        
+        # Prepare payload for Hugging Face API
         payload = {
-            "model": "openai/gpt-3.5-turbo",
-            "messages": st.session_state.messages + [{"role": "system", "content": system_message}],
+            "inputs": full_prompt,
+            "parameters": {
+                "max_new_tokens": 512,
+                "temperature": 0.7,
+                "top_p": 0.9,
+                "do_sample": True,
+                "return_full_text": False
+            }
         }
-    
-        # Send request to OpenRouter
+        
+        # Send request to Hugging Face API
         headers = {
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json",
+            "Authorization": f"Bearer {HF_API_KEY}",
+            "Content-Type": "application/json"
         }
-    
+        
         try:
-            response = requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
+            response = requests.post(HF_API_URL, json=payload, headers=headers)
             response.raise_for_status()
-            ai_response = response.json()["choices"][0]["message"]["content"]
+            # Extract response
+            ai_response = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
+            
+            # Add AI response to chat history
+            st.session_state.messages.append({"role": "assistant", "content": ai_response})
+            st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
         except requests.exceptions.RequestException as e:
             st.error(f"API request failed: {e}")
             ai_response = "Sorry, I couldn't process your request. Please try again."
+            st.session_state.messages.append({"role": "assistant", "content": ai_response})
+            st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
     
         # Add AI response to chat history
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
