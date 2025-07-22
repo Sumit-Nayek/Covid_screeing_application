@@ -86,7 +86,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
+st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Diagonostic recomendation", "Descriptive Analysis","AI Assistant"])
