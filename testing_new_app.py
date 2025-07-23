@@ -431,8 +431,6 @@ elif page == "Descriptive Analysis":
     # Additional UI elements (optional)
     st.write("Here the percentage for each quarter is calculated with respect to the total number of positive cases throughout the covid period [Apr. 2020-Dec.2021]")
 
-
-
 # Page 4: Primary Treatment
 elif page == "AI Assistant":
 
