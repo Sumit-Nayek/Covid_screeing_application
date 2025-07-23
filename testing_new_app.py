@@ -11,17 +11,27 @@ import pgeocode
 import requests
 from openai import OpenAI
 import os
-# Function to add a background image
-  # OpenRouter API details
-# Hugging Face API details
-HF_API_KEY = st.secrets.get("HF_API_KEY",os.getenv("HF_API_KEY"))  # Store your Hugging Face API key in Streamlit secrets
-HF_API_URL = "https://api-inference.huggingface.co/models/microsoft/phi-2"  # Replace with your preferred model
+import os
+import requests
+import streamlit as st
 
-# result = client.text_generation(
-#     "Can you please let us know more details about your ",
-#     model="microsoft/phi-2",
-# )
+# Hugging Face API configuration
+HF_API_URL = "https://api-inference.huggingface.co/models/microsoft/phi-2"
+HF_API_KEY = st.secrets.get("HF_API_KEY", os.getenv("HF_API_KEY"))
 
+headers = {
+    "Authorization": f"Bearer {HF_API_KEY}",
+    "Content-Type": "application/json"
+}
+
+def query(payload):
+    try:
+        response = requests.post(HF_API_URL, headers=headers, json=payload)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        st.error(f"API request failed: {e}")
+        return None
 
 # client = OpenAI(
 #     base_url="https://openrouter.ai/api/v1",
@@ -340,31 +350,56 @@ if page == "Diagonostic recomendation":
                 }
                 
                 # Send request to Hugging Face API
-                response = requests.post(HF_API_URL, json=payload, headers=headers)
-                response.raise_for_status()
+                # response = requests.post(HF_API_URL, json=payload, headers=headers)
+                response=query(payload)
+                if response:
+            # Extract response (handle list or dict response)
+                          llm_output = response[0]["generated_text"] if isinstance(response, list) else response.get("generated_text", "Error: No response text")
+              
+                          # Display the LLM output in a styled white box
+                          st.markdown(
+                              f"""
+                              <div style="
+                                  background-color: white; 
+                                  color: black; 
+                                  padding: 15px; 
+                                  border-radius: 8px; 
+                                  border: 1px solid #ddd;
+                                  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+                              ">
+                                  <strong>Recommendations & Preventive Measures:</strong>
+                                  <p>{llm_output}</p>
+                              </div>
+                              """, 
+                              unsafe_allow_html=True
+                          )
+                else:
+                          st.error("Failed to get a response from the Hugging Face API. Please check your API key and model availability.")
+
+# response.raise_for_status()
                 
                 # Extract response
-                llm_output = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
+                # llm_output = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
                 
                 # Display the LLM output in a styled white box
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: white; 
-                        color: black; 
-                        padding: 15px; 
-                        border-radius: 8px; 
-                        border: 1px solid #ddd;
-                        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-                    ">
-                        <strong>Recommendations & Preventive Measures:</strong>
-                        <p>{llm_output}</p>
-                    </div>
-                    """, 
-                    unsafe_allow_html=True
-                )
-            except Exception as e:
-                st.write(f"An error occurred: {str(e)}")
+            #     st.markdown(
+            #         f"""
+            #         <div style="
+            #             background-color: white; 
+            #             color: black; 
+            #             padding: 15px; 
+            #             border-radius: 8px; 
+            #             border: 1px solid #ddd;
+            #             box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            #         ">
+            #             <strong>Recommendations & Preventive Measures:</strong>
+            #             <p>{llm_output}</p>
+            #         </div>
+            #         """, 
+            #         unsafe_allow_html=True
+            #     )
+            # except Exception as e:
+            #     st.write(f"An error occurred: {str(e)}")
 #####################
 
         
