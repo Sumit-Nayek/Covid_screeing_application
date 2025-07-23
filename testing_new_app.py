@@ -15,7 +15,7 @@ import os
   # OpenRouter API details
 # Hugging Face API details
 HF_API_KEY = st.secrets.get("HF_API_KEY",os.getenv("HF_API_KEY"))  # Store your Hugging Face API key in Streamlit secrets
-HF_API_URL = "https://router.huggingface.co/featherless-ai/v1/completions"  # Replace with your preferred model
+HF_API_URL = "https://api-inference.huggingface.co/models/microsoft/phi-2"  # Replace with your preferred model
 
 # result = client.text_generation(
 #     "Can you please let us know more details about your ",
