@@ -375,7 +375,8 @@ if page == "Diagonostic recomendation":
                           )
                 else:
                           st.error("Failed to get a response from the Hugging Face API. Please check your API key and model availability.")
-
+            except Exception as e:
+                            st.error(f"An error occurred: {str(e)}")
 # response.raise_for_status()
                 
                 # Extract response
