@@ -546,15 +546,15 @@ elif page == "AI Assistant":
         }
         
         try:
-            response = requests.post(HF_API_URL, json=payload, headers=headers)
-            response.raise_for_status()
-            # Extract response
-            ai_response = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
+            response = query(payload)
+            if response:
+                ai_response = response[0]["generated_text"] if isinstance(response, list) else response.get("generated_text", "Error: No response text")
+            else:
+                ai_response = "Sorry, I couldn't process your request. Please try again."
             
-            # Add AI response to chat history
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
             st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             st.error(f"API request failed: {e}")
             ai_response = "Sorry, I couldn't process your request. Please try again."
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
