@@ -4,22 +4,6 @@ import pandas as pd
 from pickle import load
 import base64
 
-# def add_bg_from_local(image_file):
-#     st.write('<style>div.block-container{padding-top:0rem;}</style>', unsafe_allow_html=True)
-#     with open(image_file, "rb") as image_file:
-#         encoded_string = base64.b64encode(image_file.read())
-#     st.markdown(
-#         f"""
-#     <style>
-#     .stApp {{
-#         background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
-#         background-size: cover
-#     }}
-#     </style>
-#     """,
-#         unsafe_allow_html=True
-#     )
-# add_bg_from_local('content/new_test1.jpg')
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Screening Tool","Risk Assessment", "Primary Treatment"])
@@ -125,10 +109,7 @@ with col2:
 
       # Append the symptom values to the DataFrame
       symptom_df = symptom_df.append(symptom_values, ignore_index=True)
-#              selected = st.checkbox(symptoms_split[2][i])
-#              symptom_df[symptoms_split[2][i]] = [1] if selected else [0]
 
-      #USER_INPUT[4] = process_input(SH)
       if USER_INPUT[2] == 'Yes':
           USER_INPUT[2] = 1
       elif USER_INPUT[2] == 'No':
