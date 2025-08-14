@@ -20,7 +20,7 @@ HF_API_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_API_KEY=st.secrets.get("OPENROUTER_API_KEY", None)
 
 headers = {
-    "Authorization": f"Bearer {HF_API_KEY}",
+    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
     "Content-Type": "application/json"
 }
 
