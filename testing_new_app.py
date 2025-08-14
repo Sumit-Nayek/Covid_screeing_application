@@ -436,6 +436,21 @@ elif page == "Descriptive Analysis":
 elif page == "AI Assistant":
 
     # Custom CSS for chat interface
+    import streamlit as st
+    from openai import OpenAI
+    
+    # Initialize OpenAI client for OpenRouter
+    OPENROUTER_API_KEY = st.secrets.get("OPENROUTER_API_KEY", None)
+    if not OPENROUTER_API_KEY:
+        st.error("API key not found. Please set OPENROUTER_API_KEY in Streamlit secrets.")
+        st.stop()
+    
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=OPENROUTER_API_KEY,
+    )
+    
+    # Custom CSS for chat interface
     st.markdown(
         """
         <style>
@@ -482,106 +497,65 @@ elif page == "AI Assistant":
         unsafe_allow_html=True,
     )
     
-
-    st.title("🤖 AI For Your Personal Medical Assistance")
+    # Streamlit app title
+    st.title("🤖 AI For Your Medical Assistance")
     
-    # # Check if DataFrame exists in session state
-    # if "shared_data" in st.session_state:
-    #     df = st.session_state.shared_data  # Retrieve stored DataFrame
-    #     # summary = df.describe().to_string()  # Generate a summary
-    #     # st.write("📊 **Initial Data Analysis**")
-    #     # st.dataframe(df.head())  # Display first few rows
-    # else:
-    #     st.warning("No data found! Please upload it on the data page.")
-  
-    # Initialize chat history
+    # Initialize session state to store chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
-    # # **Manual button to clear chat history**
+    
+    ## Mannual button to clear the chat history
     if st.button("🗑️ Clear Chat"):
-        st.session_state.messages = []  # Reset chat history
-        st.success("Chat history cleared!") 
-      
+        st.session_state.messages = []
+        st.success("Chat history cleared!")
     # Display chat history
     for message in st.session_state.messages:
         if message["role"] == "user":
-            st.markdown(f'<div class="chat-container"><div class="user-message">{message["content"]}</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="chat-container"><div class="user-message">{message["content"]}</div></div>',
+                unsafe_allow_html=True,
+            )
         else:
-            st.markdown(f'<div class="chat-container"><div class="ai-message">{message["content"]}</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="chat-container"><div class="ai-message">{message["content"]}</div></div>',
+                unsafe_allow_html=True,
+            )
     
     # Chat input
-    if prompt := st.chat_input("Ask something about the data or medical guidance..."):
+    if prompt := st.chat_input("How can I help you?"):
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
-        st.markdown(f'<div class="chat-container"><div class="user-message">{prompt}</div></div>', unsafe_allow_html=True)
-        
-        # Prepare the conversation for Hugging Face API
-        system_message = "You are a medical AI assistant. Provide accurate and helpful medical guidance based on user queries."
-        
-        # # Optionally include patient data if available
-        # if "shared_data" in st.session_state:
-        #     summary = st.session_state.shared_data.describe().to_string()
-        #     system_message += f"\n\nHere is a summary of the patient data:\n{summary}"
-        
-        # Format the prompt with system message and chat history
-        chat_history = "\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
-        full_prompt = f"{system_message}\n\n{chat_history}"
-        
-        # Prepare payload for Hugging Face API
-        payload = {
-            "inputs": full_prompt,
-            "parameters": {
-                "max_new_tokens": 512,
-                "temperature": 0.7,
-                "top_p": 0.9,
-                "do_sample": True,
-                "return_full_text": False
+        st.markdown(
+            f'<div class="chat-container"><div class="user-message">{prompt}</div></div>',
+            unsafe_allow_html=True,
+        )
+    
+        # Prepare messages for OpenRouter, including system prompt
+        messages = st.session_state.messages + [
+            {
+                "role": "system",
+                "content": "You are a helpful health advisor providing guidance on COVID-19. Respond in a concise, conversational tone and give location specific suggestion for hospitalization.",
             }
-        }
-        
-        # Send request to Hugging Face API
-        headers = {
-            "Authorization": f"Bearer {HF_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        
+        ]
+    
+        # Make the API request to OpenRouter using OpenAI client
         try:
-            response = query(payload)
-            if response:
-                ai_response = response[0]["generated_text"] if isinstance(response, list) else response.get("generated_text", "Error: No response text")
-            else:
-                ai_response = "Sorry, I couldn't process your request. Please try again."
-            
-            st.session_state.messages.append({"role": "assistant", "content": ai_response})
-            st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
+            completion = client.chat.completions.create(
+                extra_headers={
+                    "HTTP-Referer": "http://localhost:8501",  # Replace with your site URL
+                    "X-Title": "Medical Assistance App",      # Replace with your app name
+                },
+                model="deepseek/deepseek-r1:free",  # Use the model you want
+                messages=messages,
+            )
+            ai_response = completion.choices[0].message.content
         except Exception as e:
-            st.error(f"API request failed: {e}")
+            st.error(f"API request failed: {str(e)}")
             ai_response = "Sorry, I couldn't process your request. Please try again."
-            st.session_state.messages.append({"role": "assistant", "content": ai_response})
-            st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
     
         # Add AI response to chat history
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
-        st.markdown(f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>', unsafe_allow_html=True)
-    # # add_bg_from_local("content/primary_treatment_bg.jpg")  # Background for Primary Treatment page
-    # header("Primary Treatment Instructions")
-
-    # st.markdown(
-    #     """
-    #     <h3 style="color: #2d00f7;">General Guidelines for COVID-19 Management:</h3>
-    #     <ul>
-    #         <li>Isolate yourself to prevent the spread of infection.</li>
-    #         <li>Stay hydrated and maintain a balanced diet.</li>
-    #         <li>Monitor your symptoms regularly.</li>
-    #         <li>Take over-the-counter medications for fever or pain as advised by your doctor.</li>
-    #     </ul>
-    #     <h3 style="color: #e500a4;">When to Seek Emergency Care:</h3>
-    #     <ul>
-    #         <li>Difficulty breathing or shortness of breath.</li>
-    #         <li>Persistent chest pain or pressure.</li>                             
-    #         <li>Confusion or inability to stay awake.</li>
-    #         <li>Bluish lips or face.</li>
-    #     </ul>
-    #     """,
-    #     unsafe_allow_html=True,
-    # )
+        st.markdown(
+            f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>',
+            unsafe_allow_html=True,
+        )
