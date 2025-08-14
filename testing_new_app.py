@@ -376,11 +376,11 @@ if page == "Diagonostic recomendation":
                                 """, 
                                 unsafe_allow_html=True
                             )
-                        else:
-                            st.error(f"API request failed with status {response.status_code}: {response.text}")
+                else:
+                    st.error(f"API request failed with status {response.status_code}: {response.text}")
                 
-                    except Exception as e:
-                        st.error(f"An error occurred: {str(e)}")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 # response.raise_for_status()
                 
                 # Extract response
