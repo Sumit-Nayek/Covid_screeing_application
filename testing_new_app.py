@@ -16,8 +16,8 @@ import requests
 import streamlit as st
 
 # Hugging Face API configuration
-HF_API_URL = "https://api-inference.huggingface.co/models/microsoft/phi-2"
-HF_API_KEY = st.secrets.get("HF_API_KEY", os.getenv("HF_API_KEY"))
+HF_API_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_API_KEY=st.secrets.get("OPENROUTER_API_KEY", None)
 
 headers = {
     "Authorization": f"Bearer {HF_API_KEY}",
@@ -334,49 +334,53 @@ if page == "Diagonostic recomendation":
             """
             try:
                 # Prepare payload for Hugging Face API
+                # OpenRouter API URL (use your preferred model)
+                OPENROUTER_API_URL = "https://openrouter.ai/api/v1"
+        
                 payload = {
-                    "inputs": prompt,
-                    "parameters": {
-                        "max_new_tokens": 512,
-                        "temperature": 0.7,
-                        "top_p": 0.9,
-                        "do_sample": True,
-                        "return_full_text": False
-                    }
+                    "model": "deepseek/deepseek-r1:free",  # or another model from OpenRouter
+                    "messages": [
+                        {"role": "system", "content": "You are a helpful medical assistant."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    "max_tokens": 512,
+                    "temperature": 0.7,
+                    "top_p": 0.9
                 }
                 headers = {
-                    "Authorization": f"Bearer {HF_API_KEY}",
+                    "Authorization": f"Bearer {OPENROUTER_API_KEY }",
                     "Content-Type": "application/json"
                 }
                 
                 # Send request to Hugging Face API
                 # response = requests.post(HF_API_URL, json=payload, headers=headers)
-                response=query(payload)
-                if response:
+                response=requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
+                if response.status_code == 200:
             # Extract response (handle list or dict response)
-                          llm_output = response[0]["generated_text"] if isinstance(response, list) else response.get("generated_text", "Error: No response text")
-              
-                          # Display the LLM output in a styled white box
-                          st.markdown(
-                              f"""
-                              <div style="
-                                  background-color: white; 
-                                  color: black; 
-                                  padding: 15px; 
-                                  border-radius: 8px; 
-                                  border: 1px solid #ddd;
-                                  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-                              ">
-                                  <strong>Recommendations & Preventive Measures:</strong>
-                                  <p>{llm_output}</p>
-                              </div>
-                              """, 
-                              unsafe_allow_html=True
-                          )
-                else:
-                          st.error("Failed to get a response from the Hugging Face API. Please check your API key and model availability.")
-            except Exception as e:
-                            st.error(f"An error occurred: {str(e)}")
+                            res_data = response.json()
+                            llm_output = res_data['choices'][0]['message']['content']
+                
+                            st.markdown(
+                                f"""
+                                <div style="
+                                    background-color: white; 
+                                    color: black; 
+                                    padding: 15px; 
+                                    border-radius: 8px; 
+                                    border: 1px solid #ddd;
+                                    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+                                ">
+                                    <strong>Recommendations & Preventive Measures:</strong>
+                                    <p>{llm_output}</p>
+                                </div>
+                                """, 
+                                unsafe_allow_html=True
+                            )
+                        else:
+                            st.error(f"API request failed with status {response.status_code}: {response.text}")
+                
+                    except Exception as e:
+                        st.error(f"An error occurred: {str(e)}")
 # response.raise_for_status()
                 
                 # Extract response
