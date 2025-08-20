@@ -11,9 +11,9 @@ import pgeocode
 import requests
 from openai import OpenAI
 import os
-import os
+
 import requests
-import streamlit as st
+
 
 # Hugging Face API configuration
 HF_API_URL = "https://openrouter.ai/api/v1"
