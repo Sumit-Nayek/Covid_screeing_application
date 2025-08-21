@@ -11,7 +11,6 @@ import pgeocode
 import requests
 from openai import OpenAI
 import os
-
 import requests
 
 
@@ -33,10 +32,6 @@ def query(payload):
         st.error(f"API request failed: {e}")
         return None
 
-# client = OpenAI(
-#     base_url="https://openrouter.ai/api/v1",
-#     api_key=OPENROUTER_API_KEY,
-# )
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
@@ -170,7 +165,6 @@ if page == "Diagonostic recomendation":
         new_data_std = scaler.transform(new_data) 
             # st.dataframe(new_data_std, hide_index= True)
         new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
-        # st.write("New data scaled")# Apply scaling on the test data
     
         # st.write(f'Using Model: {model}')
         try:
@@ -195,7 +189,7 @@ if page == "Diagonostic recomendation":
             # result = predict_results(st.session_state.load_model, new_data)
             result = load_model.predict(new_data)
             diagonosis = "Covid-19 Positive" if result[0] == 1 else "Covid-19 Negative"
-            return diagonosis  # ✅ Return diagonosis
+            return diagonosis  # Return diagonosis
 
             if result[0] == 1:
                 st.markdown(CSS, unsafe_allow_html=True)
@@ -213,10 +207,8 @@ if page == "Diagonostic recomendation":
         except FileNotFoundError:
               st.error('Model not found. Please make sure the model file exists.')       
               return None  # Return None if the model is missing
-        # except FileNotFoundError:
-              # st.error('Model not found. Please make sure the model file exists.')       
+    
    
-
     load_model = None
     features = pkl.load(open(f'./models/Features.pkl', 'rb'))
     keys = [features[x] for x in features.keys()]
@@ -233,8 +225,6 @@ if page == "Diagonostic recomendation":
             new_data.loc[0,'age'] = age
             sex = st.selectbox('Sex: ', options= ["Male", "Female"],)
             state = st.text_input('State: ', placeholder='Enter the State you are from')#, on_change=check_blank, args = (value,))
-            # country_list = list(pycountry.countries)
-            # cn_list = [c.name for c in country_list]
             # Taking Pincode as numeric input
             pincode = st.text_input("Enter Pincode", max_chars=6, placeholder="e.g., 110001")
             nomi = pgeocode.Nominatim('IN')
@@ -274,51 +264,8 @@ if page == "Diagonostic recomendation":
                             'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
             # kernel = st.selectbox('Select Kernel: ', options=['Linear', 'RBF', 'Polynomial', 'Sigmoidal'],)
         btn_lm = st.form_submit_button('Predict')#, on_click=model_loader,args=(modeli, pd.DataFrame.from_dict(new_data)))
-    # if btn_lm:
-    #     st.write("New data raw")
-    #     st.dataframe(new_data)
-    #     model_loader(modeli, new_data)  # Call model_loader function with selected model and new_data
-    # if st.button("Assess Risk"):
-    #         # risk_score = calculate_risk_score(symptom_values, pre_medical1)
-    #     symptom_values = new_data.iloc[0, 3:22]  # Extract all symptom columns
-    #         # st.write(symptom_values)
-    #     pre_medical = new_data.iloc[0, 1]  # Extract the last column (Pre-Medical Condition)
-    #         # st.write(pre_medical)
-        
-    #         # Calculate risk score
-    #     risk_score = sum(symptom_values.values)  # Sum of selected symptoms
-    #     risk=None
-    #     if pre_medical == 1:
-    #         risk_score += 1  # Add 1 if pre-existing medical condition exists  
-    #     if risk_score >= 5:
-    #         st.markdown(
-    #                 '<div style="background-color: white; color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">'
-    #                 "High Risk of COVID-19. Consult a healthcare provider immediately."
-    #                 "</div>",
-    #                 unsafe_allow_html=True,
-    #             )
-    #         risk="High Risk"
-    #             # draw_speedometer(risk_score)
-    #     elif 3 <= risk_score < 5:
-    #         st.markdown(
-    #                 '<div style="background-color: white; color: orange; padding: 10px; border: 1px solid orange; border-radius: 5px;">'
-    #                 "Moderate Risk. Self-isolate and monitor symptoms."
-    #                 "</div>",
-    #                 unsafe_allow_html=True,
-    #             )
-    #             # draw_speedometer(risk_score)
-    #         risk="Moderate Risk"
-    #     else:
-    #         st.markdown(
-    #                 '<div style="background-color: white; color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">'
-    #                 "Low Risk. Continue practicing preventive measures."
-    #                 "</div>",
-    #                 unsafe_allow_html=True,
-    #             )
-            #         risk="Low Risk"
         if btn_lm:
             diagonosis = model_loader(modeli, new_data)  # Capture returned diagonosis
-            
             # Risk assessment
             risk_score = sum(new_data.iloc[0].values)  
             risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
@@ -333,7 +280,6 @@ if page == "Diagonostic recomendation":
                 Please don't include any extra sentence or disclaimer
             """
             try:
-                # Prepare payload for Hugging Face API
                 # OpenRouter API URL (use your preferred model)
                 OPENROUTER_API_URL = "https://openrouter.ai/api/v1"
         
@@ -353,61 +299,36 @@ if page == "Diagonostic recomendation":
                 }
                 
                 # Send request to Hugging Face API
-                # response = requests.post(HF_API_URL, json=payload, headers=headers)
-                response=requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
-                if response.status_code == 200:
-            # Extract response (handle list or dict response)
-                            res_data = response.json()
-                            llm_output = res_data['choices'][0]['message']['content']
+       
+            #     response=requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
+            #     if response.status_code == 200:
+            # # Extract response (handle list or dict response)
+            #                 res_data = response.json()
+            #                 llm_output = res_data['choices'][0]['message']['content']
                 
-                            st.markdown(
-                                f"""
-                                <div style="
-                                    background-color: white; 
-                                    color: black; 
-                                    padding: 15px; 
-                                    border-radius: 8px; 
-                                    border: 1px solid #ddd;
-                                    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-                                ">
-                                    <strong>Recommendations & Preventive Measures:</strong>
-                                    <p>{llm_output}</p>
-                                </div>
-                                """, 
-                                unsafe_allow_html=True
-                            )
-                else:
-                    st.error(f"API request failed with status {response.status_code}: {response.text}")
+            #                 st.markdown(
+            #                     f"""
+            #                     <div style="
+            #                         background-color: white; 
+            #                         color: black; 
+            #                         padding: 15px; 
+            #                         border-radius: 8px; 
+            #                         border: 1px solid #ddd;
+            #                         box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            #                     ">
+            #                         <strong>Recommendations & Preventive Measures:</strong>
+            #                         <p>{llm_output}</p>
+            #                     </div>
+            #                     """, 
+            #                     unsafe_allow_html=True
+            #                 )
+            #     else:
+            #         st.error(f"API request failed with status {response.status_code}: {response.text}")
                 
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
-# response.raise_for_status()
-                
-                # Extract response
-                # llm_output = response.json()[0]["generated_text"] if isinstance(response.json(), list) else response.json().get("generated_text", "Error: No response text")
-                
-                # Display the LLM output in a styled white box
-            #     st.markdown(
-            #         f"""
-            #         <div style="
-            #             background-color: white; 
-            #             color: black; 
-            #             padding: 15px; 
-            #             border-radius: 8px; 
-            #             border: 1px solid #ddd;
-            #             box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            #         ">
-            #             <strong>Recommendations & Preventive Measures:</strong>
-            #             <p>{llm_output}</p>
-            #         </div>
-            #         """, 
-            #         unsafe_allow_html=True
-            #     )
             # except Exception as e:
-            #     st.write(f"An error occurred: {str(e)}")
+            #     st.error(f"An error occurred: {str(e)}")
 #####################
-
-        
+       
 elif page == "Descriptive Analysis":
   # Adding a graph image (JPG format)
     image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
