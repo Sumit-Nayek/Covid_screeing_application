@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-
 # from pickle import load
 import pickle as pkl
 import numpy as np
@@ -12,7 +11,6 @@ import requests
 from openai import OpenAI
 import os
 import requests
-
 
 # Hugging Face API configuration
 HF_API_URL = "https://openrouter.ai/api/v1"
@@ -255,7 +253,7 @@ if page == "Diagonostic recomendation":
                                     
                     if feature == 'RTPCR Test(CT VALUE)':
                         new_data.loc[0,key] = st.number_input('CT value E gene', min_value=0, max_value=50,step=1, format="%d")
-# if st.button("Save Data"):
+
         st.session_state.shared_data = new_data  # Store data globally
         # st.success("Data saved! Go to Risk Assesment Page to access it.")           
         
