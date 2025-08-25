@@ -295,7 +295,8 @@ if page == "Diagonostic recomendation":
                     "Authorization": f"Bearer {OPENROUTER_API_KEY }",
                     "Content-Type": "application/json"
                 }
-                
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")                
                 # Send request to Hugging Face API
        
             #     response=requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
@@ -323,8 +324,7 @@ if page == "Diagonostic recomendation":
             #     else:
             #         st.error(f"API request failed with status {response.status_code}: {response.text}")
                 
-            # except Exception as e:
-            #     st.error(f"An error occurred: {str(e)}")
+
 #####################
        
 elif page == "Descriptive Analysis":
