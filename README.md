@@ -1,4 +1,4 @@
-###COVID-19 Screening System 🌡️
+# COVID-19 Screening System 🌡️
 
 A web-based application to detect COVID-19 using demographic data, symptoms, and RT-PCR parameters, powered by Streamlit and machine learning models. Developed to assist healthcare professionals and individuals in early screening and risk assessment.
 📖 Overview
