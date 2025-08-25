@@ -1,0 +1,484 @@
+import streamlit as st
+import pandas as pd
+# from pickle import load
+import pickle as pkl
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+from matplotlib.patches import Arc
+import pgeocode
+import requests
+from openai import OpenAI
+import os
+import requests
+
+# Hugging Face API configuration
+HF_API_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_API_KEY=st.secrets.get("OPENROUTER_API_KEY", None)
+
+headers = {
+    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+    "Content-Type": "application/json"
+}
+
+def query(payload):
+    try:
+        response = requests.post(HF_API_URL, headers=headers, json=payload)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        st.error(f"API request failed: {e}")
+        return None
+
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+            background-size: cover;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #4CAF50; /* Glowing effect */
+        animation: glowing 1.5s infinite;
+    }
+
+    @keyframes glowing {
+        0% { box-shadow: 0 0 5px #4CAF50; }
+        50% { box-shadow: 0 0 20px #4CAF50; }
+        100% { box-shadow: 0 0 5px #4CAF50; }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+# Custom CSS for radiating effect
+st.markdown(
+    """
+    <style>
+    /* Add a glowing border effect to the sidebar */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(90deg, #ff8a8a, #ffc0c0); /* Radiating color gradient */
+        border: 2px solid #ff6b6b;
+        box-shadow: 0 0 15px #ff6b6b;
+    }
+
+    /* Optional: Customize sidebar title */
+    [data-testid="stSidebar"] h2 {
+        color: #ffffff;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 5px #000000;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.set_page_config(page_title="Web-based Covid Screening System", page_icon="🌟")
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.selectbox("Go to", ["Diagonostic recomendation", "Descriptive Analysis","AI Assistant"])
+
+# Header function
+def header(title):
+    st.markdown(
+        f"""
+        <style>
+        .header {{
+            color: #fff;
+            text-align: left;
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }}
+        </style>
+        <h1 class="header">{title}</h1>
+        """,
+        unsafe_allow_html=True,
+    )
+# header(" Web-based Covid Screening System")
+# Set the title and icon for the web app
+# Page 1: Risk Assessment
+if page == "Diagonostic recomendation":
+    add_bg_from_local("content/new_test1.jpg")  # Background for Risk Assessment page
+        
+    # Panel 3: Full-width panel
+    st.markdown(
+        """
+        <div style="
+            background-color: #ff9933;
+            padding: 5px;
+            border: 1px solid #FFA500;
+            border-radius: 5px;text-align: center;
+        ">
+        <h3 style="color: ##00FF00;">Diagonostic recomendation</h3>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    CSS = """
+        <style>
+            .header_pred{
+                    text-align: center;
+                    font-size: 40px;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                }
+        </style>
+    """
+    
+    HEAD_YES = """
+            <h4 class="header_pred" style="color:#affc42"> You Have Covid-19 </h6>
+    """
+    
+    HEAD_NO = """
+        <h4 class="header_pred" style="color:#affc42"> You Don't Have Covid-19 </h6>
+    """
+    ########################################## (New added part from sumit sir code ############
+    def model_loader(model, new_data):
+        scl = pkl.load(open('./models/Scaler.pkl', 'rb'))
+        scaler = scl["stdscaler"]
+        max_ct = scl["max_ct"]
+        columnsN = new_data.columns
+        new_data_std = scaler.transform(new_data) 
+            # st.dataframe(new_data_std, hide_index= True)
+        new_data =  pd.DataFrame(new_data_std,columns=columnsN) 
+    
+        # st.write(f'Using Model: {model}')
+        try:
+            match model:
+                case 'Naive Bayesian':
+                    load_model = pkl.load(open(f'./models/NB{max_ct}.pkl', 'rb'))
+                case 'Decesion Tree':
+                    load_model = pkl.load(open(f'./models/DT{max_ct}.pkl', 'rb'))
+                case 'Random Forest':
+                    load_model = pkl.load(open(f'./models/RF{max_ct}.pkl', 'rb'))
+                case 'SVM (Linear)':
+                    load_model= pkl.load(open(f'./models/SVM_linear{max_ct}.pkl', 'rb'))
+                case 'SVM (RBF)':
+                    load_model= pkl.load(open(f'./models/SVM_rbf{max_ct}.pkl', 'rb'))
+                case 'SVM (Polynomial)':
+                    load_model= pkl.load(open(f'./models/SVM_poly{max_ct}.pkl', 'rb'))
+                case 'SVM (Sigmoidal)':
+                    load_model= pkl.load(open(f'./models/SVM_sigmoid{max_ct}.pkl', 'rb'))
+            
+            result = load_model.predict(new_data)
+            # st.write(result)
+            # result = predict_results(st.session_state.load_model, new_data)
+            result = load_model.predict(new_data)
+            diagonosis = "Covid-19 Positive" if result[0] == 1 else "Covid-19 Negative"
+            return diagonosis  # Return diagonosis
+
+            if result[0] == 1:
+                st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Positive' 
+                st.markdown(HEAD_YES, unsafe_allow_html=True)
+                st.cache_data.clear()
+                # st.subheader(f'You have Covid-19')
+            else:
+                st.markdown(CSS, unsafe_allow_html=True)
+                diagonosis='Covid-19 Negative'
+                st.markdown(HEAD_NO, unsafe_allow_html=True)
+                st.cache_data.clear()
+                # st.subheader(f'You don\'t have Covid-19')
+        # except diagonosis    
+        except FileNotFoundError:
+              st.error('Model not found. Please make sure the model file exists.')       
+              return None  # Return None if the model is missing
+    
+   
+    load_model = None
+    features = pkl.load(open(f'./models/Features.pkl', 'rb'))
+    keys = [features[x] for x in features.keys()]
+    new_data = pd.DataFrame(columns=keys)
+    # Load Indian postal code data
+
+    with st.form('prsnlInfo', clear_on_submit=False):
+        # st.header("Data Collection")
+        c_00, c_01 = st.columns(2, gap="medium", vertical_alignment="top")
+        with c_00:
+            st.subheader('Personal Information')
+            name = st.text_input('Name: ', placeholder='Enter Your Name')#, on_change = check_blank, args=(value,) )
+            age = st.number_input("Age", step=1.,format="%.f")
+            new_data.loc[0,'age'] = age
+            sex = st.selectbox('Sex: ', options= ["Male", "Female"],)
+            state = st.text_input('State: ', placeholder='Enter the State you are from')#, on_change=check_blank, args = (value,))
+            # Taking Pincode as numeric input
+            pincode = st.text_input("Enter Pincode", max_chars=6, placeholder="e.g., 110001")
+            nomi = pgeocode.Nominatim('IN')
+            location_info = nomi.query_postal_code(pincode)
+            
+            expo_infec = st.selectbox('Exposed to infected zone: ', options=["No", "Yes"])
+            # st.write(location_info)
+            # eff_mem = st.number_input('CT value E gene', min_value=0, max_value=10,step=1, format="%d")
+        # next_sec = st.form_submit_button('Next Section')
+        with c_01:
+            st.subheader('Clinical Information')
+            c_0, c_1 = st.columns(2, gap="medium", vertical_alignment="top")
+            i = 0
+            for feature, key in features.items():
+                if feature not in ('Age','Comorbidity','RTPCR Test(CT VALUE)'): # 'Comorbidity', 
+                    match i%2:
+                        case 0:
+                            with c_0:
+                                new_data.loc[0,key] = 1 if st.checkbox(feature, key=key) else 0
+                        case 1:
+                            with c_1:
+                                new_data.loc[0,key] = 1 if st.checkbox(feature, key=key) else 0
+                    i += 1
+
+                else:
+                    if feature == 'Comorbidity':
+                        new_data.loc[0,key] = 1 if st.selectbox(feature, options=["No", "Yes"]) == 'Yes' else 0
+                                    
+                    if feature == 'RTPCR Test(CT VALUE)':
+                        new_data.loc[0,key] = st.number_input('CT value E gene', min_value=0, max_value=50,step=1, format="%d")
+
+        st.session_state.shared_data = new_data  # Store data globally
+        # st.success("Data saved! Go to Risk Assesment Page to access it.")           
+        
+        st.header('Model Selection')
+        modeli = st.selectbox('Select Model: ', options=['Naive Bayesian', 'Decesion Tree', 'Random Forest',
+                            'SVM (Linear)', 'SVM (RBF)', 'SVM (Polynomial)', 'SVM (Sigmoidal)'],)
+            # kernel = st.selectbox('Select Kernel: ', options=['Linear', 'RBF', 'Polynomial', 'Sigmoidal'],)
+        btn_lm = st.form_submit_button('Predict')#, on_click=model_loader,args=(modeli, pd.DataFrame.from_dict(new_data)))
+        if btn_lm:
+            diagonosis = model_loader(modeli, new_data)  # Capture returned diagonosis
+            # Risk assessment
+            risk_score = sum(new_data.iloc[0].values)  
+            risk = "High Risk" if risk_score >= 5 else "Moderate Risk" if 3 <= risk_score < 5 else "Low Risk"
+            st.write(risk)
+            st.write(diagonosis)
+          
+            prompt = f"""
+                You are a helpful assistant. Given the following results and data, provide necessary recommendation and preventive measures.
+                The predicted diagnosis result: {diagonosis}
+                The predicted risk assessment result: {risk} 
+                Patient location: {location_info}
+                Please don't include any extra sentence or disclaimer
+            """
+            try:
+                # OpenRouter API URL (use your preferred model)
+                OPENROUTER_API_URL = "https://openrouter.ai/api/v1"
+        
+                payload = {
+                    "model": "deepseek/deepseek-r1:free",  # or another model from OpenRouter
+                    "messages": [
+                        {"role": "system", "content": "You are a helpful medical assistant."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    "max_tokens": 512,
+                    "temperature": 0.7,
+                    "top_p": 0.9
+                }
+                headers = {
+                    "Authorization": f"Bearer {OPENROUTER_API_KEY }",
+                    "Content-Type": "application/json"
+                }
+                
+                # Send request to Hugging Face API
+       
+            #     response=requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
+            #     if response.status_code == 200:
+            # # Extract response (handle list or dict response)
+            #                 res_data = response.json()
+            #                 llm_output = res_data['choices'][0]['message']['content']
+                
+            #                 st.markdown(
+            #                     f"""
+            #                     <div style="
+            #                         background-color: white; 
+            #                         color: black; 
+            #                         padding: 15px; 
+            #                         border-radius: 8px; 
+            #                         border: 1px solid #ddd;
+            #                         box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            #                     ">
+            #                         <strong>Recommendations & Preventive Measures:</strong>
+            #                         <p>{llm_output}</p>
+            #                     </div>
+            #                     """, 
+            #                     unsafe_allow_html=True
+            #                 )
+            #     else:
+            #         st.error(f"API request failed with status {response.status_code}: {response.text}")
+                
+            # except Exception as e:
+            #     st.error(f"An error occurred: {str(e)}")
+#####################
+       
+elif page == "Descriptive Analysis":
+  # Adding a graph image (JPG format)
+    image_path = "content/Risk_stratification_bar_diagram.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Multiple bar diagram of covid positive patients with comorbidity and symptoms of COVID-19 over different age groups and different risk labels (infectious nature)",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("It was observed that that the bar length is high in positive patients who have comorbidity and symptoms all together. The middle age group shows symptoms with comorbidity; patients are mostly positive compared to other groups.")
+    image_path = "content/Density_plot.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Density plot shows the distribution of age variable over symptomatic and comorbid covid positive patients",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("From above plots one can see that for positive patients of comorbidity group the age is denser in the range 45-65 which means that the middle-aged peoples with comorbidity have more probability for coming positive in the RT-PCR test compared to younger peoples")
+    image_path = "content/First_heatmap.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Heatmap of covid effected area in India",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the colour shade represent the magnitude of the covid impacted areas. Darker shades represnt the hotspot zones and lighter shades represent less impacted areas")
+    image_path = "content/Heat_map_one.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Heatmap of covid effected area in India with satelite view",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the sizes of the buble represent the total number of covid effected people. Larger bubles represnt the most effected region and small bubles represent less effected regions")
+    image_path = "content/Quaterly_trend_Covid.jpg"  # Path to your JPG file
+    st.image(image_path, caption="Multiple bar diagram of covid positive male and female patients in different quarters of year 2020 and 2021.",  use_container_width=True)
+    
+    # Additional UI elements (optional)
+    st.write("Here the percentage for each quarter is calculated with respect to the total number of positive cases throughout the covid period [Apr. 2020-Dec.2021]")
+
+# Page 4: Primary Treatment
+elif page == "AI Assistant":
+
+    # Custom CSS for chat interface
+    import streamlit as st
+    from openai import OpenAI
+    
+    # Initialize OpenAI client for OpenRouter
+    OPENROUTER_API_KEY = st.secrets.get("OPENROUTER_API_KEY", None)
+    if not OPENROUTER_API_KEY:
+        st.error("API key not found. Please set OPENROUTER_API_KEY in Streamlit secrets.")
+        st.stop()
+    
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=OPENROUTER_API_KEY,
+    )
+    
+    # Custom CSS for chat interface
+    st.markdown(
+        """
+        <style>
+        /* User message styling */
+        .user-message {
+            background-color: #0078D4;
+            color: white;
+            border-radius: 15px 15px 0 15px;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            margin-left: auto;
+        }
+    
+        /* AI message styling */
+        .ai-message {
+            background-color: #F1F1F1;
+            color: black;
+            border-radius: 15px 15px 15px 0;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            margin-right: auto;
+        }
+    
+        /* Chat container styling */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+    
+        /* Streamlit chat input styling */
+        .stChatInput {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    
+    # Streamlit app title
+    st.title("🤖 AI For Your Medical Assistance")
+    
+    # Initialize session state to store chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    ## Mannual button to clear the chat history
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.messages = []
+        st.success("Chat history cleared!")
+    # Display chat history
+    for message in st.session_state.messages:
+        if message["role"] == "user":
+            st.markdown(
+                f'<div class="chat-container"><div class="user-message">{message["content"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f'<div class="chat-container"><div class="ai-message">{message["content"]}</div></div>',
+                unsafe_allow_html=True,
+            )
+    
+    # Chat input
+    if prompt := st.chat_input("How can I help you?"):
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.markdown(
+            f'<div class="chat-container"><div class="user-message">{prompt}</div></div>',
+            unsafe_allow_html=True,
+        )
+    
+        # Prepare messages for OpenRouter, including system prompt
+        messages = st.session_state.messages + [
+            {
+                "role": "system",
+                "content": "You are a helpful health advisor providing guidance on COVID-19. Respond in a concise, conversational tone and give location specific suggestion for hospitalization.",
+            }
+        ]
+    
+        # Make the API request to OpenRouter using OpenAI client
+        try:
+            completion = client.chat.completions.create(
+                extra_headers={
+                    "HTTP-Referer": "http://localhost:8501",  # Replace with your site URL
+                    "X-Title": "Medical Assistance App",      # Replace with your app name
+                },
+                model="deepseek/deepseek-r1:free",  # Use the model you want
+                messages=messages,
+            )
+            ai_response = completion.choices[0].message.content
+        except Exception as e:
+            st.error(f"API request failed: {str(e)}")
+            ai_response = "Sorry, I couldn't process your request. Please try again."
+    
+        # Add AI response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+        st.markdown(
+            f'<div class="chat-container"><div class="ai-message">{ai_response}</div></div>',
+            unsafe_allow_html=True,
+        )
