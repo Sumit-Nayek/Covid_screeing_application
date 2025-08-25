@@ -51,10 +51,8 @@ Make your changes and commit (git commit -m "Add feature").
 Push to the branch (git push origin feature-branch).
 Open a Pull Request.
 
-Please ensure your code follows the project’s coding style and includes relevant documentation.
-📧 Contact
+## 📧 Contact
 For questions or feedback, reach out to Sumit Nayek:
-
 Email: sumitnayek1998@gmail.com
 GitHub: Sumit-Nayek
 Portfolio: View Experience
