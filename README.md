@@ -44,6 +44,8 @@ Covid_screeing_application/
 ├── updated_my_streamlit_app.py  # Main Streamlit application
 └── README.md             # Project documentation
 <img width="1136" height="629" alt="image" src="https://github.com/user-attachments/assets/e8f1ffd1-07e5-4e73-9334-e51c5cb9b786" />
+<img width="1210" height="259" alt="image" src="https://github.com/user-attachments/assets/66d1249a-7dc8-426e-b570-3ae13429128c" />
+
 
 ## 🤝 Contributing
 Contributions are welcome! To contribute:
