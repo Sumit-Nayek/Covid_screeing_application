@@ -43,6 +43,7 @@ Covid_screeing_application/
 ├── requirements.txt      # Python dependencies
 ├── updated_my_streamlit_app.py  # Main Streamlit application
 └── README.md             # Project documentation
+<img width="1136" height="629" alt="image" src="https://github.com/user-attachments/assets/e8f1ffd1-07e5-4e73-9334-e51c5cb9b786" />
 
 ## 🤝 Contributing
 Contributions are welcome! To contribute:
