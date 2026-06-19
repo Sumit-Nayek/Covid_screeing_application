@@ -369,7 +369,7 @@ elif page == "AI Assistant":
 
     # ✅ CHANGE 2: Replace base_url and api_key
     client = OpenAI(
-        base_url="https://integrate.api.nvidia.com/moonshotai/kimi-k2.6",
+        base_url="https://integrate.api.nvidia.com/v1",
         api_key=NVIDIA_API_KEY,
     )
 
