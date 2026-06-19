@@ -16,7 +16,9 @@ Multi-Model Predictions: Compare results from Naive Bayes, Logistic Regression, 
 Data Visualization: Displays input data in a structured table for clarity.
 Navigation: Sidebar with options for Screening Tool, Risk Assessment, and Primary Treatment.
 Custom Styling: Colorful, responsive design with HTML/CSS enhancements for a professional look.
+## 🎥 Demo
 
+![App Demo](demo.gif)
 ## 📋 Requirements
 
 Python 3.8+
