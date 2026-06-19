@@ -451,7 +451,7 @@ elif page == "AI Assistant":
         try:
             completion = client.chat.completions.create(
                 # ✅ CHANGE 3: Remove extra_headers, change model name
-                model="moonshotai/kimi-k2-instruct",
+                model="meta/llama-3.1-8b-instruct",
                 messages=messages,
                 max_tokens=512,
                 temperature=0.7,
