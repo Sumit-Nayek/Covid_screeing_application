@@ -18,7 +18,7 @@ Navigation: Sidebar with options for Screening Tool, Risk Assessment, and Primar
 Custom Styling: Colorful, responsive design with HTML/CSS enhancements for a professional look.
 ## 🎥 Demo
 
-![App Demo](demo.gif)
+![App Demo](WhatsAppVideo2026-06-19at11.16.52PM-ezgif.com-video-to-gif-converter.gif)
 ## 📋 Requirements
 
 Python 3.8+
