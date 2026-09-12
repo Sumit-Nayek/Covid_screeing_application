@@ -37,13 +37,6 @@ Choose a Model: Select a machine learning model from the dropdown (e.g., Naive B
 Get Predictions: Click "Make Predictions" to view the diagnostic result ("You Have COVID-19" or "You Don't Have COVID-19").
 Navigate Sections: Use the sidebar to explore Screening Tool, Risk Assessment, or Primary Treatment.
 
-## 📊 Project Structure
-Covid_screeing_application/
-├── content/              # Model files (e.g., bayes.pkl, logistic.pkl)
-├── requirements.txt      # Python dependencies
-├── updated_my_streamlit_app.py  # Main Streamlit application
-└── README.md             # Project documentation
-
 ## 🤝 Contributing
 Contributions are welcome! To contribute:
 
