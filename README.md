@@ -12,7 +12,7 @@ The application leverages machine learning models, including Naive Bayes, Logist
 ## ✨ Features
 
 Interactive UI: Input personal data, select symptoms via checkboxes, and choose from multiple ML models for predictions.
-Multi-Model Predictions: Compare results from Naive Bayes, Logistic Regression, Decision Tree, Random Forest, and SVM variants.
+Multimodel Predictions: Compare results from Naive Bayes, Logistic Regression, Decision Tree, Random Forest, and SVM variants.
 Data Visualization: Displays input data in a structured table for clarity.
 Navigation: Sidebar with options for Screening Tool, Risk Assessment, and Primary Treatment.
 Custom Styling: Colorful, responsive design with HTML/CSS enhancements for a professional look.
